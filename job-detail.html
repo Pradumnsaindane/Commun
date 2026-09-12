@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Details | Senior Frontend Engineer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Public+Sans:wght@400;700&amp;family=Geist:wght@400;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        blue: {
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                        }
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    fontFamily: {
+                        "headline": ["Geist", "sans-serif"],
+                        "display": ["Geist", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Public Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .terminal-glow {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+        .radial-progress {
+            --value: 98;
+            --size: 6rem;
+            --thickness: 0.5rem;
+            display: grid;
+            place-content: center;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            background: radial-gradient(closest-side, #0f172a 80%, transparent 0 100%), conic-gradient(#3b82f6 calc(var(--value) * 1%), #1e293b 0);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-slate-950 text-slate-200 font-body selection:bg-blue-500/30">
+<!-- TopAppBar -->
+<nav class="bg-slate-950 dark:bg-slate-950 border-b border-slate-800 fixed top-0 w-full z-50">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-500 dark:text-blue-400" data-icon="terminal">terminal</span>
+<span class="font-display text-xl font-black text-blue-500 dark:text-blue-400 italic">DevPath</span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-400 dark:text-slate-500 hover:text-blue-400 dark:hover:text-blue-300 transition-colors font-body text-label-md" href="#">Dashboard</a>
+<a class="text-blue-500 dark:text-blue-400 font-bold underline underline-offset-8 transition-colors font-body text-label-md" href="#">Pathways</a>
+<a class="text-slate-400 dark:text-slate-500 hover:text-blue-400 dark:hover:text-blue-300 transition-colors font-body text-label-md" href="#">Jobs</a>
+<a class="text-slate-400 dark:text-slate-500 hover:text-blue-400 dark:hover:text-blue-300 transition-colors font-body text-label-md" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-700">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a software engineer in a high-tech studio setting, featuring soft rim lighting and a deep blue color palette. The engineer is wearing a minimalist dark hoodie, looking confident. The background is a blurred server room with flickering LED lights, maintaining a clean and developer-centric aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ6qv2n2EBJLVh6mHP7ahEx004J5ReDknN3SzR1vsf0wsd2oQriF46BYgKSXyH7Z8rrUkm99JLDBtlYfj6ir40XH_XK7pV2WNvdL0TpfzX21FWhuN9Go--9bqIdBVq3-l-t_uDj9vpFNblGpIsg4auRUr2qUCyY8AIlCqS43TFM-sgIrUvJBxb8Y_FMBxulNbB9hJnayhU3-tQotcvg2PEum_50Ic0wERP3sT7DTL2s23nT8TJYQyTohJu_YWs_fQJTYTkj8Yyfdk"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-32 px-4 max-w-4xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="flex items-start gap-6">
+<div class="w-20 h-20 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center p-4">
+<img class="w-full h-full object-contain" data-alt="A minimalist geometric prism logo for a tech company called Vortex Systems. The logo features sharp edges and glass-like transparency with refractive blue and slate light effects. It is set against a pitch-black background, conveying a high-end, futuristic, and precise corporate identity for a top-tier engineering firm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj4n-tCpmHur2e29Kv0PUswFEqc417ATXxHr_RZo9BCInU9kZDuLJNzwAGC6PVKnP6vqW8OJpzkLdikd9meKcUej3XhD3rvRS06LZ4v6cXgZPyglPp01s6p8NwK0jhFzH6MBozEx32nyvSgNrEFuvzAKyOi8Jzl-aYF9tUA0l7wKeO83m3Cmcep0BuDj5si5ALKGUHY0XBtJM5S0MOukKfnz0ZVz8nhxYtgpwgdgqTD-Tuuh5wupJ_kvxUmj9n89RNA7cgaHNKNg8"/>
+</div>
+<div>
+<h1 class="font-display text-4xl font-black text-white tracking-tight leading-none mb-2">Senior Frontend Engineer</h1>
+<div class="flex items-center gap-3 text-slate-400 font-mono text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span> San Francisco, CA</span>
+<span class="w-1 h-1 rounded-full bg-slate-700"></span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="work">work</span> Full-time</span>
+</div>
+</div>
+</div>
+<!-- Match Score -->
+<div class="flex flex-col items-center bg-slate-900/50 p-6 rounded-2xl border border-slate-800 terminal-glow">
+<div class="radial-progress font-display text-2xl font-black text-blue-400 mb-2">
+                    98%
+                </div>
+<span class="font-label text-[10px] uppercase tracking-widest text-slate-500">Match Score</span>
+</div>
+</header>
+<!-- Skill Mapping Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+<div class="md:col-span-2 bg-slate-900 border border-slate-800 p-6 rounded-xl">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-display font-bold text-lg text-white">Skill Verification</h2>
+<span class="font-mono text-[10px] text-blue-500">SYSTEM_CHECK: OK</span>
+</div>
+<div class="space-y-6">
+<!-- Skill 1 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-blue-500/10 rounded flex items-center justify-center text-blue-400">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white">React Hooks</p>
+<p class="text-xs text-slate-500">Requirement: Expert</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono px-2 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/20">COMPLETED</span>
+</div>
+</div>
+<!-- Skill 2 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-blue-500/10 rounded flex items-center justify-center text-blue-400">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white">TypeScript</p>
+<p class="text-xs text-slate-500">Requirement: Advanced</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono px-2 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">ADVANCED</span>
+</div>
+</div>
+<!-- Skill 3 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-slate-800 rounded flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white">System Design</p>
+<p class="text-xs text-slate-500">Requirement: Professional</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-mono px-2 py-1 rounded bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 italic">IN PROGRESS</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-blue-600 p-6 rounded-xl flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-20">
+<span class="material-symbols-outlined text-6xl" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-display font-black text-2xl text-white mb-2 leading-tight">Fast-track Interview</h3>
+<p class="text-blue-100 text-sm">Your profile score meets the direct-to-recruiter threshold for Vortex Systems.</p>
+</div>
+<button class="mt-4 bg-white text-blue-600 font-bold py-2 rounded text-sm hover:bg-blue-50 transition-colors">
+                    Claim Fast-track
+                </button>
+</div>
+</section>
+<!-- Job Description Terminal -->
+<section class="mb-12">
+<div class="rounded-t-lg bg-slate-800 px-4 py-2 flex items-center gap-2 border-x border-t border-slate-700">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+</div>
+<span class="font-mono text-xs text-slate-400 ml-4">cat job_description.txt</span>
+</div>
+<div class="bg-slate-900 border-x border-b border-slate-800 p-8 font-mono text-sm leading-relaxed text-slate-300">
+<p class="mb-6"><span class="text-blue-400"># About the role</span></p>
+<p class="mb-4">Vortex Systems is building the next generation of real-time collaborative development tools. As a Senior Frontend Engineer, you will lead the architecture of our cloud IDE platform using React and TypeScript.</p>
+<p class="mb-4"><span class="text-blue-400"># Responsibilities</span></p>
+<ul class="list-none space-y-2 mb-6">
+<li class="flex items-start gap-2"><span class="text-slate-600">-</span> Design and implement high-performance UI components with sub-millisecond response times.</li>
+<li class="flex items-start gap-2"><span class="text-slate-600">-</span> Collaborate with the backend team to optimize WebSocket-based state synchronization.</li>
+<li class="flex items-start gap-2"><span class="text-slate-600">-</span> Mentor junior engineers and drive frontend engineering excellence across the stack.</li>
+</ul>
+<p class="mb-4"><span class="text-blue-400"># Stack</span></p>
+<p class="text-blue-200">React 18, TypeScript, Tailwind CSS, WebAssembly, GraphQL, tRPC.</p>
+<div class="mt-8 flex items-center gap-2 animate-pulse">
+<span class="text-blue-500">_</span>
+</div>
+</div>
+</section>
+<!-- Primary Action -->
+<section class="flex justify-center">
+<button class="group relative w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white font-mono py-4 px-12 rounded-xl transition-all duration-200 active:scale-95 terminal-glow overflow-hidden">
+<div class="relative z-10 flex items-center justify-center gap-3">
+<span class="text-blue-300 opacity-70">&gt;</span>
+<span class="font-bold tracking-tight">deploy application --force</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+</button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-md bg-slate-950/90 dark:bg-slate-950/90 border-t border-slate-800 md:hidden">
+<div class="flex justify-around items-center h-16 px-4">
+<div class="flex flex-col items-center justify-center text-slate-500 active:scale-90 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label text-[10px] uppercase tracking-widest mt-1">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 active:scale-90 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-label text-[10px] uppercase tracking-widest mt-1">Learning</span>
+</div>
+<div class="flex flex-col items-center justify-center text-blue-400 font-bold active:scale-90 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="send" data-weight="fill">send</span>
+<span class="font-label text-[10px] uppercase tracking-widest mt-1">Applications</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 active:scale-90 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person_outline">person_outline</span>
+<span class="font-label text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</div>
+</div>
+</nav>
+<script>
+        // Micro-interaction for the Deploy Button
+        const deployBtn = document.querySelector('button.group');
+        if (deployBtn) {
+            deployBtn.addEventListener('mousedown', () => {
+                deployBtn.style.transform = 'scale(0.98)';
+            });
+            deployBtn.addEventListener('mouseup', () => {
+                deployBtn.style.transform = 'scale(1)';
+            });
+        }
+    </script>
+</body></html>

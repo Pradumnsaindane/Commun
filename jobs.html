@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Commun.dev | Mentorship &amp; Jobs</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#EF4444", // Vibrant Red
+                        "on-primary": "#FFFFFF",
+                        "secondary": "#00E0FF", // Electric Blue
+                        "on-secondary": "#000000",
+                        "background": "#000000", // Pure Black
+                        "surface": "#000000",
+                        "on-surface": "#FFFFFF",
+                        "surface-container": "#0A0A0A",
+                        "surface-container-high": "#141414",
+                        "surface-variant": "#1A1A1A",
+                        "outline": "#333333",
+                        "outline-variant": "#222222",
+                        "on-surface-variant": "#A1A1A1",
+                        "growth-green": "#00FF41",
+                        "caution-amber": "#FFFF00",
+                        "border-glass": "rgba(255, 255, 255, 0.15)",
+                        "surface-glass": "rgba(0, 0, 0, 0.8)"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "max-width": "1280px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px"
+                    },
+                    fontFamily: {
+                        "button": ["JetBrains Mono", "monospace"],
+                        "headline-lg": ["Geist", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Geist", "sans-serif"],
+                        "title-md": ["JetBrains Mono", "monospace"],
+                        "label-sm": ["JetBrains Mono", "monospace"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"]
+                    },
+                    fontSize: {
+                        "button": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+        }
+        .protocol-border {
+            border: 1px solid #333333;
+            transition: border-color 0.2s ease;
+        }
+        .protocol-border:hover {
+            border-color: #EF4444;
+        }
+        .text-glow-red {
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #EF4444;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden pb-24">
+
+<!-- Top Navigation Bar -->
+<header class="w-full sticky top-0 bg-black border-b border-outline z-50 h-16">
+    <div class="flex justify-between items-center px-gutter max-w-max-width mx-auto h-full">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+            <span class="font-display-lg text-2xl tracking-tighter text-white">Commun.dev</span>
+        </div>
+        <div class="hidden md:flex gap-8 items-center h-full font-label-sm uppercase tracking-widest">
+            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="index.html">Home</a>
+            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="learning-path.html">Learn</a>
+            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="community.html">Community</a>
+            <a class="text-primary font-bold transition-colors text-sm uppercase tracking-widest border-b-2 border-primary h-full flex items-center" href="jobs.html">Jobs</a>
+            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="mcp.html">MCP Control</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 border border-outline p-0.5 grayscale hover:grayscale-0 transition-all cursor-pointer">
+                <img class="w-full h-full object-cover" data-alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXlutlHyVHffFggmeLTVmseSQn87BaUy9qQ7rfJNbAsC_Q3-3I6oB1jD2l4PUoURgEAQKO5hGG0KZXGQJd0OYCOxT42FUbjV1JhRZpMRaxzH1C8wk_f6J-HNUjDip9jO1MPFwsirgSRCqNpEnF-cgVKF0QNjdNW8o8F6oDEsmxlkwX9Ndvq9zl7J75qnnyn6xUrLJsqE7o5w9InmbtztLLYuYmVuRB8xLShRv4nv4ee6fgT0ZLOdvEJGPbo-R_ISeGY8JgSv0jkg"/>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-gutter mt-12">
+    <!-- Hero -->
+    <section class="mb-16 border-l-4 border-primary pl-6 py-2">
+        <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-4 text-white uppercase tracking-tighter">Elevate Your Career</h1>
+        <p class="text-on-surface-variant max-w-2xl font-body-md border-b border-outline-variant pb-6">Connect with world-class mentors and explore hand-picked opportunities designed for the next generation of developers.</p>
+        <div class="flex gap-2 mt-8 overflow-x-auto pb-2 scrollbar-hide">
+            <button class="px-6 py-2 bg-primary text-on-primary font-button uppercase text-xs tracking-widest">Mentorship</button>
+            <button class="px-6 py-2 border border-outline text-on-surface-variant font-button uppercase text-xs tracking-widest hover:border-primary hover:text-white transition-all">Jobs</button>
+            <button class="px-6 py-2 border border-outline text-on-surface-variant font-button uppercase text-xs tracking-widest hover:border-primary hover:text-white transition-all">Internships</button>
+        </div>
+    </section>
+
+    <!-- Mentorship Bento Grid -->
+    <section class="mb-20">
+        <div class="flex justify-between items-end mb-8 border-b border-outline pb-4">
+            <div>
+                <h2 class="font-title-md text-xl text-white uppercase tracking-wider">Top-Tier Mentors</h2>
+                <p class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mt-1">Status: Online // Ready for session</p>
+            </div>
+            <button class="text-primary font-button text-xs uppercase flex items-center gap-2 hover:translate-x-1 transition-transform">View all <span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Mentor Card 1 -->
+            <div class="bg-surface-container protocol-border p-6 flex flex-col gap-4 group">
+                <div class="flex items-start justify-between">
+                    <div class="w-16 h-16 border border-outline grayscale group-hover:grayscale-0 transition-all">
+                        <img class="w-full h-full object-cover" data-alt="Alex Rivera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbTnm-pKyDO3w589JiJmnSzG2fwXA2enYwFZmWuPSGypr4EaW6uo2ETWrgBnPm6KjbY3ufGrZApgtLtkpLaEwPBqVd07Ko9aN3zQmdGSeUo-2fMWCf3OFWIyOzLfjfKRus6t8yIJ4yHLwa5hkrbqgMyDj-yE063AxfCeSmdN6W43cNiKvS5QB2O2xm5_yWHD2t3RPuBKGF7IT7FCWU2c2dzVdbCicGvrSo3w1sIVTQ4ETRK9X_8kGPBJ9bY4WEedcmQX5dP9c0JA"/>
+                    </div>
+                    <div class="border border-secondary/30 text-secondary px-2 py-0.5 font-label-sm text-[10px] uppercase tracking-tighter">
+                        GOOGLE
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-title-md text-white uppercase">Alex Rivera</h3>
+                    <p class="text-on-surface-variant text-xs font-label-sm uppercase tracking-wider mt-1">Senior Frontend Architect</p>
+                    <div class="flex gap-2 mt-4 flex-wrap">
+                        <span class="border border-outline-variant text-secondary font-label-sm text-[10px] px-2 py-0.5 uppercase">React</span>
+                        <span class="border border-outline-variant text-secondary font-label-sm text-[10px] px-2 py-0.5 uppercase">TypeScript</span>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-outline-variant">
+                        <p class="text-label-sm font-label-sm text-primary uppercase mb-2">Recent Log</p>
+                        <p class="text-on-surface-variant text-[13px] italic leading-tight">"Helped 3 students land roles at Stripe this month"</p>
+                        <div class="flex items-center gap-2 mt-4">
+                            <span class="text-[10px] font-label-sm text-on-surface-variant uppercase tracking-widest">+12 ENDORSEMENTS</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="mt-4 w-full py-3 bg-primary text-on-primary font-button uppercase text-xs tracking-widest active:scale-95 transition-all">Book Session</button>
+            </div>
+            <!-- Mentor Card 2 -->
+            <div class="bg-surface-container protocol-border p-6 flex flex-col gap-4 group">
+                <div class="flex items-start justify-between">
+                    <div class="w-16 h-16 border border-outline grayscale group-hover:grayscale-0 transition-all">
+                        <img class="w-full h-full object-cover" data-alt="Sarah Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKS2yDG6Y0qiFfsvFGGXTEPUQC278kctO6V8Sh4_yylbnQqlzSn8n94ifZpMScmrpsXACeBZrJbxHVjEKg2YyyiDFhnWd0UVIjROGxWdGMhtr5dzZYbsnCwe6FakGc_7PUjo-xwNKoi49SwaDuWt0VCr0CRbIh7G1xec-fxybRKn7iEPOq3Xrr19T7nu_Uq-_Ql1qT_eyWF4ghU6cXBNaIF4HEWW-85pk2oPC1BWgXVL46NSV2KBPEngmZXPXhNBHxFgKZkIK9yw"/>
+                    </div>
+                    <div class="border border-secondary/30 text-secondary px-2 py-0.5 font-label-sm text-[10px] uppercase tracking-tighter">
+                        META
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-title-md text-white uppercase">Sarah Chen</h3>
+                    <p class="text-on-surface-variant text-xs font-label-sm uppercase tracking-wider mt-1">Engineering Manager</p>
+                    <div class="flex gap-2 mt-4 flex-wrap">
+                        <span class="border border-outline-variant text-secondary font-label-sm text-[10px] px-2 py-0.5 uppercase">Leadership</span>
+                        <span class="border border-outline-variant text-secondary font-label-sm text-[10px] px-2 py-0.5 uppercase">System Design</span>
+                    </div>
+                </div>
+                <div class="mt-auto">
+                    <button class="mt-4 w-full py-3 bg-primary text-on-primary font-button uppercase text-xs tracking-widest active:scale-95 transition-all">Book Session</button>
+                </div>
+            </div>
+            <!-- Mentor Card 3 -->
+            <div class="bg-surface-container protocol-border p-6 flex flex-col gap-4 group">
+                <div class="flex items-start justify-between">
+                    <div class="w-16 h-16 border border-outline grayscale group-hover:grayscale-0 transition-all">
+                        <img class="w-full h-full object-cover" data-alt="Marcus Thorne" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2WZ86WAlrcqld05PDmrUacW6wAmoNkE_Qfb3B6eb9ZQyZ6h5YTzWevjJjjUAbyv443MJhsZIUtkmyQp0znFFn24kW6BXQVUg7ExEVOBc1hm_ehasMfYa8R_vaQ5E472UXDCmtkHbxehyETXeDp7sqgcdR2-4bkAi3zcNv6KSdjoQJUhG04PYExSdt4wuppJfhcQc-uxmjvIfazY_3jgkYJbt8gurWHWhNwHpDtSO1toE3ON5ZKrLbwu_Omj3D7yNGCPFpIBoM8w"/>
+                    </div>
+                    <div class="border border-secondary/30 text-secondary px-2 py-0.5 font-label-sm text-[10px] uppercase tracking-tighter">
+                        NETFLIX
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-title-md text-white uppercase">Marcus Thorne</h3>
+                    <p class="text-on-surface-variant text-xs font-label-sm uppercase tracking-wider mt-1">Staff Security Engineer</p>
+                    <div class="flex gap-2 mt-4 flex-wrap">
+                        <span class="border border-outline-variant text-secondary font-label-sm text-[10px] px-2 py-0.5 uppercase">Rust</span>
+                        <span class="border border-outline-variant text-secondary font-label-sm text-[10px] px-2 py-0.5 uppercase">Infra</span>
+                    </div>
+                </div>
+                <div class="mt-auto">
+                    <button class="mt-4 w-full py-3 bg-primary text-on-primary font-button uppercase text-xs tracking-widest active:scale-95 transition-all">Book Session</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section class="mb-20">
+        <div class="flex justify-between items-end mb-8 border-b border-outline pb-4">
+            <div>
+                <h2 class="font-title-md text-xl text-white uppercase tracking-wider">Open Opportunities</h2>
+                <p class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mt-1">Filter: All Active Roles</p>
+            </div>
+            <div class="flex items-center gap-2 text-on-surface-variant hover:text-white cursor-pointer transition-colors">
+                <span class="material-symbols-outlined text-sm">filter_list</span>
+                <span class="font-label-sm text-[10px] uppercase tracking-widest">Filter</span>
+            </div>
+        </div>
+        <div class="flex flex-col gap-1">
+            <!-- Job List Item 1 -->
+            <div class="bg-surface-container-high border border-outline-variant p-5 hover:border-primary transition-all cursor-pointer group">
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 bg-white flex items-center justify-center shrink-0 border border-outline">
+                        <img class="w-full h-full object-contain p-2 grayscale group-hover:grayscale-0 transition-all" data-alt="Anthropic Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGhRDCjNsBLZ5Cu0LmU6VcaqzYKD4JIMGG9CPaRIMEgSJ5e-lXqPVR12g_iLJPm6y8L45bBpAAlOSPSsPRieAo7vJ84Qfu5U33Lbb1liBcoDfDY680K4NKSWVTK47U31uqVH_d9DkHWYIJlGjniZtFtJLHkamlRS3QkJGGdZLuUA18594c0nfwV1ieihFawzDeiTbCD59TwyZYfQfrIxh5fK-b8z_Yxf7BcZHuimh6e-dBd-E8DMTzxjdsTj6ysozG8qzLxFOLxw"/>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-title-md text-white uppercase tracking-tight">Software Engineer Intern</h4>
+                                <p class="text-on-surface-variant text-xs font-label-sm uppercase mt-1">Anthropic • SF / Remote</p>
+                                <div class="flex gap-4 mt-3">
+                                    <span class="text-[10px] font-label-sm text-secondary uppercase flex items-center gap-1 tracking-widest font-mono">High-trust</span>
+                                    <span class="text-[10px] font-label-sm text-secondary uppercase flex items-center gap-1 tracking-widest font-mono">Collaborative</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-primary font-label-sm text-xs">$45 - $60 / HR</p>
+                                <div class="flex items-center justify-end gap-1 text-growth-green mt-1">
+                                    <span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                    <span class="text-[10px] font-label-sm uppercase">Applied</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Job List Item 2 -->
+            <div class="bg-surface-container-high border border-outline-variant p-5 hover:border-primary transition-all cursor-pointer group">
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 bg-[#5865F2] flex items-center justify-center shrink-0 border border-outline">
+                        <img class="w-full h-full object-contain p-2 grayscale group-hover:grayscale-0 transition-all" data-alt="Discord Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkxMMf05k7WLF8U2hsit4PuJzJnqRdQf1QW5tkrfHjFB532eIY6tmEWwP6NOhmBpId7Yp4hVXQ7GCBs4aDUWbMLO98UbLazZ88vn4dpbAcCyxn67cfZZg-DxQQRRyeaC-RlCeIvjdAftvMi9cDRsAtDJCBK-FpfkynCcybcNlh-lfjDo6XukUhdrqDrgd40H3nZiigwXCRdZch0wD-GvYccmcxrpG4WEB4hLnqxUwpS6-Pj_8E_PJRE5p7alP4Z6xr-wAB8JAERA"/>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-title-md text-white uppercase tracking-tight">Entry-Level Backend Dev</h4>
+                                <p class="text-on-surface-variant text-xs font-label-sm uppercase mt-1">Discord • Remote</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-primary font-label-sm text-xs">$120K - $155K</p>
+                                <div class="flex items-center justify-end gap-1 text-caution-amber mt-1">
+                                    <span class="material-symbols-outlined text-[14px]">pending</span>
+                                    <span class="text-[10px] font-label-sm uppercase">Reviewing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Job List Item 3 -->
+            <div class="bg-surface-container-high border border-outline-variant p-5 hover:border-primary transition-all cursor-pointer group">
+                <div class="flex gap-6">
+                    <div class="w-12 h-12 bg-black flex items-center justify-center shrink-0 border border-outline">
+                        <img class="w-full h-full object-contain p-2" data-alt="Stripe Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9sio2_omJ9ehYBwAdkvK5ERD-1j2oqgj0xre_8GlXhyZNniqF_6WDquO8cOKIJq50RaEzXSPAbI838ujUySlVxXggMVQulZ9IeTNfNGIb-voo7IutXoRb-7rkUw-NDtWQKk62OPxnzkYU_iVfEQWb6XDQoH0Tcjrg8U9d7sTnifviXNpCmTLYqGqnHQ-T-Ix7lRVNqsSENrfCmFA4-AWRo97PhJ-RcAEO1bjwq28kutbwESDJA-iELOiKI6DtvDke1W7GEmeL8g"/>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-title-md text-white uppercase tracking-tight">Junior Fullstack Engineer</h4>
+                                <p class="text-on-surface-variant text-xs font-label-sm uppercase mt-1">Stripe • New York</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-primary font-label-sm text-xs">$135K - $170K</p>
+                                <div class="flex items-center justify-end gap-1 text-white mt-1">
+                                    <span class="material-symbols-outlined text-[14px]">send</span>
+                                    <span class="text-[10px] font-label-sm uppercase">View Role</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-1 mb-20 border border-outline">
+        <div class="bg-background p-8 flex flex-col items-center justify-center text-center border-r border-outline md:border-r">
+            <span class="font-display-lg text-3xl text-primary tracking-tighter">12K+</span>
+            <span class="text-[10px] font-label-sm text-on-surface-variant uppercase tracking-widest mt-2">Active Jobs</span>
+        </div>
+        <div class="bg-background p-8 flex flex-col items-center justify-center text-center border-outline md:border-r">
+            <span class="font-display-lg text-3xl text-secondary tracking-tighter">500+</span>
+            <span class="text-[10px] font-label-sm text-on-surface-variant uppercase tracking-widest mt-2">Expert Mentors</span>
+        </div>
+        <div class="bg-background p-8 flex flex-col items-center justify-center text-center border-r border-outline md:border-r">
+            <span class="font-display-lg text-3xl text-white tracking-tighter">92%</span>
+            <span class="text-[10px] font-label-sm text-on-surface-variant uppercase tracking-widest mt-2">Success Rate</span>
+        </div>
+        <div class="bg-background p-8 flex flex-col items-center justify-center text-center">
+            <span class="font-display-lg text-3xl text-growth-green tracking-tighter">100%</span>
+            <span class="text-[10px] font-label-sm text-on-surface-variant uppercase tracking-widest mt-2">Free Access</span>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="w-full pt-20 pb-32 bg-black border-t border-outline">
+    <div class="max-w-max-width mx-auto px-gutter grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div class="col-span-1 md:col-span-1">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+                <span class="font-title-md text-white uppercase tracking-tighter">COMMUN.DEV</span>
+            </div>
+            <p class="text-on-surface-variant font-label-sm text-xs leading-relaxed uppercase tracking-tight">Accelerating developer careers through community and mentorship. v4.0.2 // STABLE</p>
+        </div>
+        <div>
+            <h5 class="text-white font-bold text-[11px] uppercase tracking-[0.2em] mb-6 border-b border-outline pb-2">Platform</h5>
+            <ul class="space-y-3 font-label-sm text-[11px] uppercase tracking-widest">
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors" href="learning-path.html">Mentorship</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors" href="jobs.html">Jobs Board</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors" href="learning-path.html">Career Path</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5 class="text-white font-bold text-[11px] uppercase tracking-[0.2em] mb-6 border-b border-outline pb-2">Resources</h5>
+            <ul class="space-y-3 font-label-sm text-[11px] uppercase tracking-widest">
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors" href="mcp.html">MCP Specs</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors" href="community.html">Community Forums</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5 class="text-white font-bold text-[11px] uppercase tracking-[0.2em] mb-6 border-b border-outline pb-2">System</h5>
+            <ul class="space-y-3 font-label-sm text-[11px] uppercase tracking-widest">
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Use</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-max-width mx-auto px-gutter mt-16 pt-8 border-t border-outline text-center">
+        <p class="text-on-surface-variant font-label-sm text-[10px] uppercase tracking-[0.3em]">© 2024 COMMUN.DEV - PROTOCOL INITIATED</p>
+    </div>
+</footer>
+
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center py-4 px-4 pb-safe bg-background border-t border-primary">
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white transition-all" href="index.html">
+        <span class="material-symbols-outlined text-xl">home</span>
+        <span class="text-[9px] uppercase font-label-sm mt-1">Home</span>
+    </a>
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white transition-all" href="learning-path.html">
+        <span class="material-symbols-outlined text-xl">local_library</span>
+        <span class="text-[9px] uppercase font-label-sm mt-1">Learn</span>
+    </a>
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white transition-all" href="community.html">
+        <span class="material-symbols-outlined text-xl">groups</span>
+        <span class="text-[9px] uppercase font-label-sm mt-1">Forum</span>
+    </a>
+    <a class="flex flex-col items-center text-primary transition-all" href="jobs.html">
+        <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">work</span>
+        <span class="text-[9px] uppercase font-label-sm mt-1 font-bold">Jobs</span>
+    </a>
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white transition-all" href="mcp.html">
+        <span class="material-symbols-outlined text-xl">terminal</span>
+        <span class="text-[9px] uppercase font-label-sm mt-1">MCP</span>
+    </a>
+</nav>
+
+<script>
+    const protocolItems = document.querySelectorAll('.bg-surface-container, .bg-surface-container-high');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-10');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    protocolItems.forEach(item => {
+        item.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+        observer.observe(item);
+    });
+</script>
+</body>
+</html>

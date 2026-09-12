@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Commun.dev | The Developer Growth Platform</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: #0A0A0A;
+            border: 1px solid #333333;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: #ef4444;
+            transform: translateY(-4px);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.05) 0%, transparent 50%);
+        }
+        .progress-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#EF4444", // Vibrant Red
+                        "on-primary": "#FFFFFF",
+                        "secondary": "#00E0FF", // Electric Blue
+                        "on-secondary": "#000000",
+                        "background": "#000000", // Pure Black
+                        "surface": "#000000",
+                        "on-surface": "#FFFFFF",
+                        "surface-container": "#0A0A0A",
+                        "surface-container-high": "#141414",
+                        "surface-variant": "#1A1A1A",
+                        "outline": "#333333",
+                        "outline-variant": "#222222",
+                        "on-surface-variant": "#A1A1A1",
+                        "growth-green": "#00FF41",
+                        "caution-amber": "#FFFF00",
+                        "border-glass": "rgba(255, 255, 255, 0.15)",
+                        "surface-glass": "rgba(0, 0, 0, 0.8)"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "max-width": "1280px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px"
+                    },
+                    fontFamily: {
+                        "button": ["JetBrains Mono", "monospace"],
+                        "headline-lg": ["Geist", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Geist", "sans-serif"],
+                        "title-md": ["Geist", "sans-serif"],
+                        "label-sm": ["JetBrains Mono", "monospace"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"]
+                    },
+                    fontSize: {
+                        "button": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+
+<!-- TopAppBar -->
+<header class="bg-black/90 w-full sticky top-0 backdrop-blur-sm border-b border-white/10 z-50">
+    <div class="flex justify-between items-center px-gutter max-w-max-width mx-auto h-16">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-3xl">terminal</span>
+            <span class="font-display-lg text-2xl tracking-tighter text-white">Commun.dev</span>
+        </div>
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex gap-8 items-center">
+            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="index.html">Home</a>
+            <a class="text-on-surface-variant font-medium hover:text-white transition-colors duration-200" href="learning-path.html">Learn</a>
+            <a class="text-on-surface-variant font-medium hover:text-white transition-colors duration-200" href="community.html">Community</a>
+            <a class="text-on-surface-variant font-medium hover:text-white transition-colors duration-200" href="jobs.html">Jobs</a>
+            <a class="text-on-surface-variant font-medium hover:text-white transition-colors duration-200" href="mcp.html">MCP Control</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+            <div class="w-10 h-10 border border-white/20 overflow-hidden active:scale-95 transition-transform grayscale hover:grayscale-0">
+                <img class="w-full h-full object-cover" data-alt="Profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6qO_AZPdbDuY8nXw8yVvhlvEMBQFAxcILl9OJEZc-ZbwOQF-e1B01L5mgFZib4bxZ_qgTOSepQSIALWu4MCVlti2ZP4V7AivxpIh_MRml9Cg2_aSXpZQWKnf4Q2nE1541NM7ebYVU4lLFsBeH3t0ANr54OkgxoIzycr3pbygLZL6jYyjWd-HWbv7dh37wC7W9DJ2BdKOPwGDPBW_YDrwDo3VNl8Laucw6MCR2v1r8stuV5bVAIDVPYIt4QEBG66G6gF2x9Vvjxg"/>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="relative">
+    <!-- Hero Section -->
+    <section class="relative pt-12 md:pt-24 pb-16 px-gutter max-w-max-width mx-auto overflow-hidden">
+        <div class="hero-gradient absolute inset-0 -z-10"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="z-10">
+                <h1 class="font-display-lg text-display-lg md:text-6xl text-white mb-6 leading-none tracking-tighter uppercase">Developers <span class="text-primary">grow</span>. <span class="text-primary">build</span>. <span class="text-primary">hired</span>.</h1>
+                <p class="font-body-lg text-on-surface-variant mb-8 max-w-xl">120,000+ engineers building real software with mentorship from industry leaders. High-contrast, high-performance.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="px-8 py-4 bg-primary text-white font-button text-button uppercase hover:bg-red-600 transition-colors" onclick="window.location.href='learning-path.html'">Start your journey</button>
+                    <button class="px-8 py-4 border border-white/20 bg-black text-white font-button text-button uppercase hover:bg-white hover:text-black transition-all" onclick="window.location.href='community.html'">
+                        Explore Community
+                    </button>
+                </div>
+            </div>
+            <!-- Hero Visual: Mobile Dashboard Illustration -->
+            <div class="relative flex justify-center items-center">
+                <div class="relative w-full max-w-sm aspect-[9/16] bg-black border-[1px] border-white/20 shadow-2xl overflow-hidden">
+                    <!-- Simulated App Interface -->
+                    <div class="p-6 h-full flex flex-col bg-black">
+                        <div class="flex justify-between items-center mb-8">
+                            <div class="w-12 h-12 bg-white/5 border border-white/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary">person</span>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-label-sm text-label-sm text-secondary">LEVEL 42</div>
+                                <div class="font-title-md text-title-md text-white">PRO_MEMBER</div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-label-sm text-label-sm uppercase">Learning Progress</span>
+                                <span class="font-label-sm text-label-sm text-secondary">78%</span>
+                            </div>
+                            <div class="w-full h-1 bg-white/10 overflow-hidden">
+                                <div class="w-[78%] h-full bg-secondary"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-white/5 border border-white/10 flex items-center gap-4">
+                                <span class="material-symbols-outlined text-secondary">code</span>
+                                <div>
+                                    <div class="font-label-sm text-label-sm">Project: DevFlow UI</div>
+                                    <div class="text-[10px] text-outline">STATUS: ACTIVE</div>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-white/5 border border-white/10 flex items-center gap-4">
+                                <span class="material-symbols-outlined text-primary">psychology</span>
+                                <div>
+                                    <div class="font-label-sm text-label-sm">Next: AI Logic Path</div>
+                                    <div class="text-[10px] text-outline">TIME: 14:00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-auto h-40 overflow-hidden border border-white/10 relative grayscale">
+                            <img class="w-full h-full object-cover" data-alt="Technical dashboard visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy3szM9NRaFFCrrn9Zk-Aj8NeaHP9YBneqo6HzrS4fVsllw0XmRG6O13cIAT07Kq32PE7lQfmtjKKAw1TLFy4OAOBUQ7WMiwXOi4wpmM2fIcKxs_K3uGCTpV7YxyVcR6N-or5qWDm58PX8kP1hiS4Y7kLrHmjx7nhZHnxIPfRdDRmnoRcjAkBL45h3250VtLzU8OcgmpjP9L1_W5bg2dYLX1HJKJ2DCtgF8Q9m5wPRPIqe-KCFJGnm9nJLA_ERMBg6Ub5YzbFdFg"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Grid Section -->
+    <section class="py-20 px-gutter max-w-max-width mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="font-headline-lg text-headline-lg text-white mb-4 uppercase tracking-tighter">Engineered for Growth</h2>
+            <p class="font-body-md text-on-surface-variant max-w-2xl mx-auto">High-performance tools for high-performance engineers.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass-card p-8 rounded-none">
+                <div class="w-12 h-12 border border-white/10 flex items-center justify-center mb-6 text-primary">
+                    <span class="material-symbols-outlined">menu_book</span>
+                </div>
+                <h3 class="font-title-md text-white mb-3 uppercase tracking-tight">Structured Learning</h3>
+                <p class="font-body-md text-on-surface-variant">Step-by-step tracks from fundamentals to expert-level architecture.</p>
+            </div>
+            <div class="glass-card p-8 rounded-none">
+                <div class="w-12 h-12 border border-white/10 flex items-center justify-center mb-6 text-primary">
+                    <span class="material-symbols-outlined">terminal</span>
+                </div>
+                <h3 class="font-title-md text-white mb-3 uppercase tracking-tight">Real-World Projects</h3>
+                <p class="font-body-md text-on-surface-variant">Build production-grade apps with real APIs and collaborative teams.</p>
+            </div>
+            <div class="glass-card p-8 rounded-none">
+                <div class="w-12 h-12 border border-white/10 flex items-center justify-center mb-6 text-primary">
+                    <span class="material-symbols-outlined">groups</span>
+                </div>
+                <h3 class="font-title-md text-white mb-3 uppercase tracking-tight">Expert Mentorship</h3>
+                <p class="font-body-md text-on-surface-variant">Get direct feedback and career guidance from senior engineers.</p>
+            </div>
+            <div class="glass-card p-8 rounded-none">
+                <div class="w-12 h-12 border border-white/10 flex items-center justify-center mb-6 text-primary">
+                    <span class="material-symbols-outlined">auto_awesome</span>
+                </div>
+                <h3 class="font-title-md text-white mb-3 uppercase tracking-tight">Career Co-Pilot</h3>
+                <p class="font-body-md text-on-surface-variant">Personalized feedback on your portfolio and practice interviews.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Platform Tracks -->
+    <section class="bg-[#0a0a0a] py-20 overflow-hidden border-y border-white/5">
+        <div class="max-w-max-width mx-auto px-gutter">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <h2 class="font-headline-lg text-white mb-4 uppercase tracking-tighter">Mastery Paths</h2>
+                    <p class="font-body-md text-on-surface-variant">Deep-dive learning paths designed by industry veterans.</p>
+                </div>
+                <button class="text-primary font-button flex items-center gap-2 group hover:gap-3 transition-all uppercase" onclick="window.location.href='learning-path.html'">
+                    View All Tracks <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+            <div class="flex gap-6 overflow-x-auto pb-8 hide-scrollbar snap-x">
+                <!-- Frontend -->
+                <div class="min-w-[320px] snap-start glass-card p-0 overflow-hidden group">
+                    <div class="h-48 relative grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Frontend mastery visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3BxTS-Hx3yv250A0K3z1t8Llf_xEXsO1n4yNAnMOQiGMLpIKVJZ3Yiqjq2rzor4Rt8_8Xw175dGs1HIFF1q1IoxjV3cOpQwnAGs6tsk7kFo0SxvdyzZ2GNaF3QvbRF4m5s3il08M_0an8OoumH5RG-2gi9QZvMb0-VmbuXztZDsJxGk5OkK6qhRccI_Ztz-DRIClC_TFDqo1toTEv9LX-MdUt1z2woyqnNJDkNkzI-oAsdNNCaQsjaq69iYEKEWWKG_IJgXXlCQ"/>
+                        <div class="absolute top-4 left-4 bg-primary px-3 py-1 text-white font-label-sm text-[10px] uppercase">TOP SELLER</div>
+                        <div class="absolute top-4 right-4 bg-black/80 border border-white/20 px-3 py-1 text-secondary font-label-sm text-[10px] flex items-center gap-1 uppercase">EXPERT-LED</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-title-md text-white mb-2 uppercase">Modern Frontend Mastery</h3>
+                        <p class="text-on-surface-variant text-sm mb-6">React 18, Next.js 14, and Advanced Design Systems.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-label-sm text-secondary uppercase tracking-widest">12 Modules · 48h</span>
+                            <span class="material-symbols-outlined text-primary cursor-pointer" onclick="window.location.href='learning-path.html'">play_circle</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Backend -->
+                <div class="min-w-[320px] snap-start glass-card p-0 overflow-hidden group">
+                    <div class="h-48 relative grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Backend engineering visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_FHN9TTnlY-DxqwbERJ4PnhxNQdd2YDPcYcc4SI3AZ-sXWQv55A_O7AH-Yvl2zvplA3nyHDB7OxYAnltsePp-IdA3e0XCxHFdC4vNNQUGGhg_2G4nh_p0uL_KLD-6sve9vlVIdS0IxA_WcgLKqsBZatT8nQpaxPlevQzzQPApGgD-Eki6JVLdWcGdcgdivtWdTwD8J-yNlZ3LZLa1KMJ7SONGZbj_-ODeTQjSdeGFFYTXV-iGqce1lhUVkspLmeu3P2z2WtpdHQ"/>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-title-md text-white mb-2 uppercase">Scalable Backend Systems</h3>
+                        <p class="text-on-surface-variant text-sm mb-6">Node.js, Rust, and Cloud Infrastructure Patterns.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-label-sm text-secondary uppercase tracking-widest">15 Modules · 60h</span>
+                            <span class="material-symbols-outlined text-primary cursor-pointer" onclick="window.location.href='learning-path.html'">play_circle</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-20 px-gutter max-w-max-width mx-auto">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="font-display-lg text-display-lg text-white mb-2">120K+</div>
+                <div class="font-label-sm text-secondary uppercase tracking-widest">DEVELOPERS</div>
+            </div>
+            <div class="text-center">
+                <div class="font-display-lg text-display-lg text-white mb-2">45K+</div>
+                <div class="font-label-sm text-secondary uppercase tracking-widest">PROJECTS</div>
+            </div>
+            <div class="text-center">
+                <div class="font-display-lg text-display-lg text-white mb-2">2.5K+</div>
+                <div class="font-label-sm text-secondary uppercase tracking-widest">MENTORS</div>
+            </div>
+            <div class="text-center">
+                <div class="font-display-lg text-display-lg text-primary mb-2">92%</div>
+                <div class="font-label-sm text-primary uppercase tracking-widest">GROWTH RATE</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-black">
+        <div class="max-w-max-width mx-auto px-gutter">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 relative">
+                    <span class="material-symbols-outlined text-white/10 text-6xl absolute top-4 right-8">format_quote</span>
+                    <p class="font-body-md text-white mb-8 italic">"Commun.dev completely changed my career trajectory. The mentorship and real projects gave me the confidence to apply to FAANG."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/10 overflow-hidden grayscale">
+                            <img class="w-full h-full object-cover" data-alt="Sarah Jenkins portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRw7A6tQWyL5V9zhsnf8aNESfvNlociBmSSDIyJRluFEshX44pTIZy_9DeAmIgCau9kjThFeASztRv6OdXzJdZxTmXqEeW4ZHesY6-13wx8nQqsJD5WgdAlt9I-FvmhKDL1EE2pKXzHcL0yhapb_5L42tMzLM4zjjaM_wf3Yfbgh7PxKxl-CdbIh46goA6iGb7yJPlxGTaXuSyLa76kCSIhD9NjWABwJASou4g0b8n-DdRTy0oDU67yidiwgosXg6mF5kbGJKjyw"/>
+                        </div>
+                        <div>
+                            <div class="font-title-md text-sm font-bold uppercase tracking-tight">Sarah Jenkins</div>
+                            <div class="text-xs text-secondary uppercase">Google SE</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 relative">
+                    <span class="material-symbols-outlined text-white/10 text-6xl absolute top-4 right-8">format_quote</span>
+                    <p class="font-body-md text-white mb-8 italic">"The AI career assistant's feedback on my portfolio was game-changing. I landed 4 interviews in a week."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/10 overflow-hidden grayscale">
+                            <img class="w-full h-full object-cover" data-alt="Marcus Chen portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKYH1r7j4HKvqzA0pc6ZHLo4d_s8_kljGNYF8wPwk212fXd3U96GIijhhGU0YMsywSjF0duXq4jMf-Na5n--UTUsIaee3ebljKAAtrY0Ze6zsIq_hF4J5FF3HTjpig6sxqPZHB7c2-4FQ2zEgxp6_bT_DSxSOMlsIwZYyEKgWe19Ph96wPkW05BsjuGM0RYViHI6wvhO2GXFo5mYobNWvEFzB-xs99H1U6HvtuW8hWjim9hGiEajoqVovm--ZDYCfG1jmzMGHllg"/>
+                        </div>
+                        <div>
+                            <div class="font-title-md text-sm font-bold uppercase tracking-tight">Marcus Chen</div>
+                            <div class="text-xs text-secondary uppercase">Meta DS</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 relative">
+                    <span class="material-symbols-outlined text-white/10 text-6xl absolute top-4 right-8">format_quote</span>
+                    <p class="font-body-md text-white mb-8 italic">"The quality of technical curriculum is unmatched. It's an immersive engineering experience."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/10 overflow-hidden grayscale">
+                            <img class="w-full h-full object-cover" data-alt="David Rodriguez portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPpK0jw3rtkzCll6ubfdnXc7glZQOuhxdnGHtDQ2n3zJRBbMZ8ffekao_07nnqBNtUBxfBU6w1DlcQZQB0fIv6--a--pgyaTMeOoUUldLRt1bQNGWhyhLZXyDnFs5f8yBKbmQaMkR7QCAw0ffLxxbxs_N-R1FKthlK8H98JE0F-4R4EjO_yZmoPElz4Cno0mCcR9Gt3NDWvHNeWm9qQhyyQWlR_aso4LPfFf_91XHYrzwYHa0WDQvf_E1gSbPqkc9WUCpxYw-raw"/>
+                        </div>
+                        <div>
+                            <div class="font-title-md text-sm font-bold uppercase tracking-tight">David Rodriguez</div>
+                            <div class="text-xs text-secondary uppercase">AWS Architect</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-24 px-gutter max-w-max-width mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="font-headline-lg text-white mb-4 uppercase tracking-tighter">Invest in the Protocol</h2>
+            <p class="font-body-md text-on-surface-variant max-w-2xl mx-auto">Select your access tier.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Free -->
+            <div class="glass-card p-10 flex flex-col">
+                <div class="mb-10">
+                    <div class="font-label-sm text-secondary mb-2 uppercase tracking-widest">FREE_TIER</div>
+                    <div class="text-5xl font-bold text-white mb-2">$0</div>
+                </div>
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center gap-3 text-sm text-on-surface-variant uppercase"><span class="material-symbols-outlined text-secondary text-sm">check</span> Basic Tracks</li>
+                    <li class="flex items-center gap-3 text-sm text-on-surface-variant uppercase"><span class="material-symbols-outlined text-secondary text-sm">check</span> Public Forums</li>
+                </ul>
+                <button class="w-full py-4 border border-white/20 text-white font-button uppercase hover:bg-white hover:text-black transition-all">Start Free</button>
+            </div>
+            <!-- Pro -->
+            <div class="glass-card p-10 border-primary bg-primary/5 flex flex-col relative scale-105 z-10">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-2 font-label-sm text-xs uppercase tracking-widest">RECOMMENDED</div>
+                <div class="mb-10">
+                    <div class="font-label-sm text-primary mb-2 uppercase tracking-widest">PRO_MEMBER</div>
+                    <div class="text-5xl font-bold text-white mb-2">$29<span class="text-xl text-outline font-medium">/mo</span></div>
+                </div>
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center gap-3 text-sm text-white uppercase font-bold"><span class="material-symbols-outlined text-primary text-sm">verified</span> All Pro Tracks</li>
+                    <li class="flex items-center gap-3 text-sm text-white uppercase font-bold"><span class="material-symbols-outlined text-primary text-sm">verified</span> Mentor Access</li>
+                </ul>
+                <button class="w-full py-4 bg-primary text-white font-button uppercase hover:bg-red-600 transition-colors">Go Pro Now</button>
+            </div>
+            <!-- Enterprise -->
+            <div class="glass-card p-10 flex flex-col">
+                <div class="mb-10">
+                    <div class="font-label-sm text-secondary mb-2 uppercase tracking-widest">GROWTH_TIER</div>
+                    <div class="text-5xl font-bold text-white mb-2">$99<span class="text-xl text-outline font-medium">/mo</span></div>
+                </div>
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center gap-3 text-sm text-on-surface-variant uppercase"><span class="material-symbols-outlined text-secondary text-sm">check</span> 1-on-1 Support</li>
+                    <li class="flex items-center gap-3 text-sm text-on-surface-variant uppercase"><span class="material-symbols-outlined text-secondary text-sm">check</span> Job Pipeline</li>
+                </ul>
+                <button class="w-full py-4 border border-white/20 text-white font-button uppercase hover:bg-white hover:text-black transition-all">Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="py-20 px-gutter max-w-max-width mx-auto">
+        <div class="bg-[#131313] border border-white/10 p-12 text-center">
+            <h2 class="font-headline-lg text-white mb-6 uppercase tracking-tighter">Stay Connected</h2>
+            <p class="font-body-md text-on-surface-variant mb-10 max-w-xl mx-auto uppercase tracking-wide text-xs">Weekly engineering deep-dives, career stories, and community highlights.</p>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onsubmit="event.preventDefault();">
+                <input class="flex-grow px-6 py-4 bg-black border border-white/20 text-white focus:border-primary outline-none uppercase font-label-sm" placeholder="Enter email address" type="email"/>
+                <button class="px-8 py-4 bg-primary text-white font-button uppercase hover:bg-red-600 transition-colors" type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-black pt-16 pb-24 border-t border-white/10">
+    <div class="max-w-max-width mx-auto px-gutter grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+        <div class="col-span-1 md:col-span-1">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="material-symbols-outlined text-primary text-2xl">terminal</span>
+                <span class="font-title-md text-white uppercase tracking-tighter">Commun.dev</span>
+            </div>
+            <p class="text-on-surface-variant text-xs uppercase leading-relaxed tracking-wider">The global platform for engineering excellence. Built by developers, for developers.</p>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Platform</h4>
+            <ul class="space-y-4">
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase" href="learning-path.html">Learning Tracks</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase" href="jobs.html">Job Board</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase" href="jobs.html">Mentorship</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Resources</h4>
+            <ul class="space-y-4">
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase" href="mcp.html">MCP Control</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase" href="community.html">Community Forums</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Support</h4>
+            <ul class="space-y-4">
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase" href="#">Privacy</a></li>
+                <li><a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase" href="#">Terms</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-max-width mx-auto px-gutter flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5">
+        <p class="text-on-surface-variant text-[10px] uppercase tracking-widest">© 2024 Commun.dev - Protocol Established</p>
+        <div class="flex gap-6">
+            <a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">public</span></a>
+            <a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">forum</span></a>
+            <a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined">mail</span></a>
+        </div>
+    </div>
+</footer>
+
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-black fixed bottom-0 w-full border-t border-white/10 z-50 flex justify-around items-center py-3 px-4 pb-safe">
+    <a class="flex flex-col items-center text-primary" href="index.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-label-sm text-[10px] mt-1 uppercase">Home</span>
+    </a>
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white" href="learning-path.html">
+        <span class="material-symbols-outlined">local_library</span>
+        <span class="font-label-sm text-[10px] mt-1 uppercase">Learn</span>
+    </a>
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white" href="community.html">
+        <span class="material-symbols-outlined">groups</span>
+        <span class="font-label-sm text-[10px] mt-1 uppercase">Forum</span>
+    </a>
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white" href="jobs.html">
+        <span class="material-symbols-outlined">work</span>
+        <span class="font-label-sm text-[10px] mt-1 uppercase">Jobs</span>
+    </a>
+    <a class="flex flex-col items-center text-on-surface-variant hover:text-white" href="mcp.html">
+        <span class="material-symbols-outlined">terminal</span>
+        <span class="font-label-sm text-[10px] mt-1 uppercase">MCP</span>
+    </a>
+</nav>
+
+<script>
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-10');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.glass-card').forEach(card => {
+        card.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+        observer.observe(card);
+    });
+</script>
+</body>
+</html>
