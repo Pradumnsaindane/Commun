@@ -1,483 +1,282 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Commun.dev | Commun &amp; Profile</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        /* High-Contrast Developer Protocol Styles */
-        body {
-            background-color: #000000;
-            color: #FFFFFF;
-            overflow-x: hidden;
-        }
-        .protocol-card {
-            background: #000000;
-            border: 1px solid #333333;
-        }
-        .protocol-border {
-            border: 1px solid #333333;
-        }
-        .protocol-red-btn {
-            background-color: #EF4444;
-            color: #FFFFFF;
-        }
-        .protocol-red-btn:hover {
-            background-color: #CC0000;
-        }
-        .electric-blue {
-            color: #00E0FF;
-        }
-        .electric-blue-border {
-            border-color: #00E0FF;
-        }
-        .electric-blue-bg {
-            background-color: #00E0FF;
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #EF4444;
-        }
-    </style>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#EF4444", // Vibrant Red
-                        "on-primary": "#FFFFFF",
-                        "secondary": "#00E0FF", // Electric Blue
-                        "on-secondary": "#000000",
-                        "background": "#000000", // Pure Black
-                        "surface": "#000000",
-                        "on-surface": "#FFFFFF",
-                        "surface-container": "#0A0A0A",
-                        "surface-container-high": "#141414",
-                        "surface-variant": "#1A1A1A",
-                        "outline": "#333333",
-                        "outline-variant": "#222222",
-                        "on-surface-variant": "#A1A1A1",
-                        "growth-green": "#00FF41",
-                        "caution-amber": "#FFFF00",
-                        "border-glass": "rgba(255, 255, 255, 0.15)",
-                        "surface-glass": "rgba(0, 0, 0, 0.8)"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0px",
-                        "lg": "0px",
-                        "xl": "0px",
-                        "full": "9999px"
-                    },
-                    spacing: {
-                        "max-width": "1280px",
-                        "base": "4px",
-                        "gutter": "24px",
-                        "margin-desktop": "64px",
-                        "margin-mobile": "20px"
-                    },
-                    fontFamily: {
-                        "button": ["JetBrains Mono", "monospace"],
-                        "headline-lg": ["Geist", "sans-serif"],
-                        "body-md": ["Inter", "sans-serif"],
-                        "title-md": ["Geist", "sans-serif"],
-                        "label-sm": ["JetBrains Mono", "monospace"],
-                        "display-lg": ["Geist", "sans-serif"]
-                    }
-                },
-            },
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community Discussions — Commun</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
-<body class="font-body-md text-body-md min-h-screen pb-24">
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="left-sidebar">
+      <div>
+        <a href="index.html" class="brand-logo">
+          <div class="brand-badge">C</div>
+          <span>Commun<span style="color: var(--accent-orange);">.dev</span></span>
+        </a>
 
-<!-- Top Navigation Bar -->
-<header class="w-full sticky top-0 bg-black border-b border-outline z-50 h-16">
-    <div class="flex justify-between items-center px-gutter max-w-max-width mx-auto h-full">
-        <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined text-primary text-2xl">terminal</span>
-            <h1 class="font-display-lg text-xl font-bold tracking-tighter uppercase">Commun.dev</h1>
-        </div>
-        <div class="hidden md:flex gap-8 items-center h-full">
-            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="index.html">Home</a>
-            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="learning-path.html">Learn</a>
-            <a class="text-primary font-bold transition-colors text-sm uppercase tracking-widest border-b-2 border-primary h-full flex items-center" href="community.html">Community</a>
-            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="jobs.html">Jobs</a>
-            <a class="text-on-surface-variant font-bold hover:text-primary transition-colors text-sm uppercase tracking-widest" href="mcp.html">MCP Control</a>
-        </div>
-        <div class="flex items-center gap-4">
-            <button class="p-2 text-white/60 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">search</span>
-            </button>
-            <div class="w-10 h-10 border border-outline p-0.5 cursor-pointer">
-                <img class="w-full h-full object-cover grayscale contrast-125" data-alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-3ZcjuOcDv1UPeB9c2AByo9qozmufNS6A4HiSfCnCGQW7o54yvdEtHcbyaI_YKsHDJGBHQFILUrrmvMlTIPUE_AJsE4jN8ZmdxZ_bM-cHMNeteU3tLIy-4-M24H6K6keMvnoLZn5FCbAwIBtgUkNjddMqBeEAowguErzDdtNyIfeIV1CnzpIf9HwhpRlU6ToRp1vZRjherP0lD_9ji2qDCNKukWDlXtK0BpHcl-rbfzBUoCvxu0uCXVBlSAXUtX4egDl6d3xf8g"/>
-            </div>
-        </div>
-    </div>
-</header>
+        <nav class="nav-group">
+          <a href="index.html" class="nav-item">
+            <span class="material-symbols-outlined">home</span>
+            <span>Home</span>
+          </a>
+          <a href="explore.html" class="nav-item">
+            <span class="material-symbols-outlined">explore</span>
+            <span>Explore</span>
+          </a>
+          <a href="subscriptions.html" class="nav-item">
+            <span class="material-symbols-outlined">bookmarks</span>
+            <span>Subscriptions</span>
+          </a>
+          <a href="community.html" class="nav-item active">
+            <span class="material-symbols-outlined fill">forum</span>
+            <span>Community</span>
+          </a>
+          <a href="saved.html" class="nav-item">
+            <span class="material-symbols-outlined">bookmark_border</span>
+            <span>Saved</span>
+          </a>
+        </nav>
 
-<main class="max-w-max-width mx-auto px-gutter py-8">
-    <!-- Tabbed Section Switcher -->
-    <div class="flex gap-0 mb-12 border border-outline">
-        <button class="flex-1 px-6 py-4 bg-primary text-white font-bold font-mono text-sm uppercase tracking-widest" id="btn-community" onclick="switchTab('community')">Community</button>
-        <button class="flex-1 px-6 py-4 bg-black text-white/60 hover:text-white font-bold font-mono text-sm uppercase tracking-widest border-l border-outline" id="btn-profile" onclick="switchTab('profile')">My Profile</button>
-    </div>
+        <div class="nav-divider"></div>
 
-    <!-- COMMUNITY SECTION -->
-    <section class="space-y-12" id="tab-community">
-        <!-- Hero Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 border-t border-l border-outline">
-            <!-- Bento Block 1: Networking -->
-            <div class="lg:col-span-2 protocol-card p-8 border-r border-b border-outline">
-                <div class="flex justify-between items-start mb-8">
-                    <div>
-                        <h2 class="font-display-lg text-3xl font-black uppercase tracking-tighter mb-4">Networking Pulse</h2>
-                        <p class="text-white/60 font-mono text-sm max-w-md">Connect with 1,200+ developers. <span class="text-primary font-bold">#react-help:</span> "How to optimize heavy re-renders in React 19?"</p>
-                    </div>
-                    <span class="bg-secondary text-black px-3 py-1 text-xs font-black">LIVE_SIGNAL</span>
-                </div>
-                <div class="flex flex-wrap gap-4 mt-8">
-                    <button class="protocol-red-btn px-8 py-4 font-mono font-bold text-sm flex items-center gap-2 tracking-widest">
-                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
-                        JOIN_LOUNGE
-                    </button>
-                    <button class="border border-outline text-white px-8 py-4 font-mono font-bold text-sm tracking-widest hover:border-white transition-all">
-                        COFFEE_1:1
-                    </button>
-                </div>
-                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-0 border-t border-l border-outline">
-                    <div class="p-6 border-r border-b border-outline text-center">
-                        <div class="text-3xl font-black electric-blue">42</div>
-                        <div class="text-[10px] font-mono text-white/40 uppercase tracking-widest mt-1">Channels</div>
-                    </div>
-                    <div class="p-6 border-r border-b border-outline text-center">
-                        <div class="text-3xl font-black electric-blue">8k</div>
-                        <div class="text-[10px] font-mono text-white/40 uppercase tracking-widest mt-1">Discussions</div>
-                    </div>
-                    <div class="p-6 border-r border-b border-outline text-center">
-                        <div class="text-3xl font-black electric-blue">15</div>
-                        <div class="text-[10px] font-mono text-white/40 uppercase tracking-widest mt-1">Hacks</div>
-                    </div>
-                    <div class="p-6 border-r border-b border-outline text-center">
-                        <div class="text-3xl font-black electric-blue">240</div>
-                        <div class="text-[10px] font-mono text-white/40 uppercase tracking-widest mt-1">Jobs</div>
-                    </div>
-                </div>
-            </div>
-            <!-- Bento Block 2: Coding Challenges -->
-            <div class="protocol-card p-8 flex flex-col justify-between border-r border-b border-outline">
-                <div>
-                    <h3 class="font-mono text-lg font-bold text-secondary mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined">code</span>
-                        DAILY_CHALLENGE
-                    </h3>
-                    <div class="p-6 border border-outline mb-6">
-                        <h4 class="font-bold text-white mb-2 uppercase tracking-tight">Efficient Pathfinding</h4>
-                        <p class="text-xs font-mono text-white/60 leading-relaxed">Optimize A* algorithm for a 1000x1000 grid with dynamic obstacles.</p>
-                    </div>
-                    <div class="flex items-center justify-between font-mono text-[10px] mb-8">
-                        <span class="text-primary font-bold">ST_HARD_COMPLEXITY</span>
-                        <span class="text-white/40">450_XP_REWARD</span>
-                    </div>
-                </div>
-                <button class="w-full py-4 border border-secondary text-secondary font-mono font-bold tracking-widest hover:bg-secondary hover:text-black transition-all">
-                    LAUNCH_IDE
-                </button>
-            </div>
+        <nav class="nav-group">
+          <a href="profile.html" class="nav-item">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span>My Profile</span>
+          </a>
+        </nav>
+
+        <a href="write.html" class="btn-create-primary">
+          <span class="material-symbols-outlined" style="font-size: 18px;">edit_square</span>
+          <span>Create</span>
+        </a>
+      </div>
+
+      <div class="nav-group" style="padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+        <a href="profile.html" class="nav-item">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Settings</span>
+        </a>
+        <a href="community.html" class="nav-item">
+          <span class="material-symbols-outlined">help_outline</span>
+          <span>Help</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- CENTER COMMUNITY AREA -->
+    <main class="main-feed-area" style="max-width: 800px;">
+      
+      <!-- Sticky Community Header -->
+      <div class="feed-header-sticky">
+        <div style="padding: 20px 24px 14px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h1 style="font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;">Community</h1>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Ask questions, share what you're building, and learn from developers.</p>
+          </div>
+          <button class="btn-create-primary" style="margin-top: 0; padding: 8px 16px; width: auto; font-size: 0.85rem;" onclick="window.location.href='write.html'">
+            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+            <span>Start a Discussion</span>
+          </button>
         </div>
 
-        <!-- Forums & Discussions Grid -->
-        <div>
-            <div class="flex justify-between items-end mb-8">
-                <h3 class="font-display-lg text-2xl font-black uppercase tracking-tighter">Trending Forums</h3>
-                <a class="text-primary font-mono text-xs font-bold hover:underline flex items-center gap-1" href="#">
-                    VIEW_ALL
-                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border-t border-l border-outline">
-                <!-- Forum Card 1 -->
-                <div class="protocol-card border-r border-b border-outline group cursor-pointer hover:bg-white/5 transition-all">
-                    <div class="h-24 border-b border-outline flex items-end p-4">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary">psychology</span>
-                            <span class="font-black text-sm uppercase tracking-tight">AI &amp; ML</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-xs font-mono text-white/60 line-clamp-2"><strong>@dev_mind:</strong> "Has anyone tried the new quantization method for Llama 3?..."</p>
-                        <div class="mt-6 flex justify-between items-center text-[10px] font-mono text-white/30 uppercase">
-                            <span>1.2k_M</span>
-                            <span>12_P_TODAY</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Forum Card 2 -->
-                <div class="protocol-card border-r border-b border-outline group cursor-pointer hover:bg-white/5 transition-all">
-                    <div class="h-24 border-b border-outline flex items-end p-4">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-secondary">cloud</span>
-                            <span class="font-black text-sm uppercase tracking-tight">Infra &amp; DevOps</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-xs font-mono text-white/60 line-clamp-2"><strong>@cloud_ops:</strong> "Our K8s cluster just hit 99.99% uptime during the peak sale!..."</p>
-                        <div class="mt-6 flex justify-between items-center text-[10px] font-mono text-white/30 uppercase">
-                            <span>850_M</span>
-                            <span>5_P_TODAY</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Forum Card 3 -->
-                <div class="protocol-card border-r border-b border-outline group cursor-pointer hover:bg-white/5 transition-all">
-                    <div class="h-24 border-b border-outline flex items-end p-4">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-white">architecture</span>
-                            <span class="font-black text-sm uppercase tracking-tight">Frontend Mastery</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-xs font-mono text-white/60 line-clamp-2"><strong>@ui_wizard:</strong> "CSS Container Queries are finally production-ready. Goodbye media query hell!"</p>
-                        <div class="mt-6 flex justify-between items-center text-[10px] font-mono text-white/30 uppercase">
-                            <span>2.4k_M</span>
-                            <span>34_P_TODAY</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Forum Card 4 -->
-                <div class="protocol-card border-r border-b border-outline group cursor-pointer hover:bg-white/5 transition-all">
-                    <div class="h-24 border-b border-outline flex items-end p-4">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-growth-green">rocket_launch</span>
-                            <span class="font-black text-sm uppercase tracking-tight">Startup Founders</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-xs font-mono text-white/60 line-clamp-2"><strong>@solo_build:</strong> "Just hit my first $1k MRR! The pivot to B2B was the best decision..."</p>
-                        <div class="mt-6 flex justify-between items-center text-[10px] font-mono text-white/30 uppercase">
-                            <span>512_M</span>
-                            <span>2_P_TODAY</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="feed-tabs">
+          <div class="feed-tab active">Trending</div>
+          <div class="feed-tab">Latest</div>
+          <div class="feed-tab">Showcase</div>
+          <div class="feed-tab">Architecture &amp; Q&amp;A</div>
         </div>
+      </div>
 
-        <!-- Events & Hackathons -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div class="space-y-6">
-                <h3 class="font-mono text-lg font-bold uppercase tracking-widest text-primary">_Upcoming_Hackathons</h3>
-                <div class="space-y-0 border-t border-l border-outline">
-                    <div class="flex gap-4 items-center p-6 border-r border-b border-outline hover:bg-white/5 transition-all group cursor-pointer">
-                        <div class="w-16 h-16 border border-primary flex flex-col items-center justify-center font-mono">
-                            <span class="text-xl font-black text-primary">14</span>
-                            <span class="text-[10px] uppercase text-white/40">Oct</span>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-white uppercase text-sm">Cloud Native Challenge 2024</h4>
-                            <p class="text-[10px] font-mono text-white/40">$10,000 PRIZE • 48H</p>
-                        </div>
-                        <span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
-                    </div>
-                    <div class="flex gap-4 items-center p-6 border-r border-b border-outline hover:bg-white/5 transition-all group cursor-pointer">
-                        <div class="w-16 h-16 border border-secondary flex flex-col items-center justify-center font-mono">
-                            <span class="text-xl font-black text-secondary">22</span>
-                            <span class="text-[10px] uppercase text-white/40">Nov</span>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-white uppercase text-sm">Global AI Summit Hack</h4>
-                            <p class="text-[10px] font-mono text-white/40">$25,000 PRIZE • REMOTE</p>
-                        </div>
-                        <span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
-                    </div>
-                </div>
+      <!-- Discussions List -->
+      <div style="display: flex; flex-direction: column;">
+        
+        <!-- Discussion 1 -->
+        <article class="discussion-card" onclick="window.location.href='discussion.html'" style="cursor: pointer;">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Marcus Chen" class="user-avatar" style="width: 36px; height: 36px;" />
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">
+                <span style="font-weight: 600; color: var(--text-primary);">Marcus Chen</span>
+                <span>·</span>
+                <span>3h ago</span>
+                <span>·</span>
+                <span class="post-tag">Architecture</span>
+              </div>
+              <h3 style="font-size: 1.12rem; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 6px;">
+                What's the best way to structure a large Spring Boot multi-module project?
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                We are transitioning from a single monolithic repo into hexagonal multi-module Gradle setups. Curious how you organize core domain models vs persistence adapters without circular dependencies?
+              </p>
+              <div style="display: flex; align-items: center; gap: 18px; font-size: 0.82rem; color: var(--text-muted);">
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">chat_bubble</span>
+                  <strong style="color: var(--text-primary);">42</strong> replies
+                </span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>
+                  1.4k views
+                </span>
+                <span style="color: var(--accent-orange); font-weight: 500;">Active discussion</span>
+              </div>
             </div>
-            <div class="space-y-6">
-                <h3 class="font-mono text-lg font-bold uppercase tracking-widest text-secondary">_Community_Events</h3>
-                <div class="p-8 border border-outline flex flex-col justify-between h-full min-h-[200px]">
-                    <div class="flex items-start gap-6">
-                        <div class="w-12 h-12 border border-secondary flex items-center justify-center text-secondary">
-                            <span class="material-symbols-outlined">video_camera_front</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-white uppercase tracking-tight">System Design Workshop</h4>
-                            <p class="text-xs font-mono text-white/60 mt-1 leading-relaxed">Live streaming by Senior Architect at Google. Friday, 6 PM UTC.</p>
-                            <div class="mt-4 flex -space-x-1">
-                                <div class="w-6 h-6 border border-black bg-white/20"></div>
-                                <div class="w-6 h-6 border border-black bg-white/40"></div>
-                                <div class="w-6 h-6 border border-black bg-white/60"></div>
-                                <div class="w-6 h-6 border border-black bg-secondary flex items-center justify-center text-black text-[8px] font-black">+420</div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="mt-8 w-full py-4 border border-outline text-white/60 font-mono font-bold text-xs tracking-widest hover:border-white hover:text-white transition-all uppercase">
-                        View_Calendar
-                    </button>
-                </div>
+          </div>
+        </article>
+
+        <!-- Discussion 2 -->
+        <article class="discussion-card" onclick="window.location.href='discussion.html'" style="cursor: pointer;">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=80" alt="Elena Rostova" class="user-avatar" style="width: 36px; height: 36px;" />
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">
+                <span style="font-weight: 600; color: var(--text-primary);">Elena Rostova</span>
+                <span>·</span>
+                <span>5h ago</span>
+                <span>·</span>
+                <span class="post-tag">Kubernetes</span>
+              </div>
+              <h3 style="font-size: 1.12rem; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 6px;">
+                How are you learning and practicing Kubernetes in 2026?
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                Do you prefer local Kind/K3s clusters, minikube, or running cheap Hetzner nodes? Share your personal lab setup and how you simulate real traffic outages.
+              </p>
+              <div style="display: flex; align-items: center; gap: 18px; font-size: 0.82rem; color: var(--text-muted);">
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">chat_bubble</span>
+                  <strong style="color: var(--text-primary);">68</strong> replies
+                </span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>
+                  2.8k views
+                </span>
+              </div>
             </div>
+          </div>
+        </article>
+
+        <!-- Discussion 3 -->
+        <article class="discussion-card" onclick="window.location.href='discussion.html'" style="cursor: pointer;">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="David Rodriguez" class="user-avatar" style="width: 36px; height: 36px;" />
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">
+                <span style="font-weight: 600; color: var(--text-primary);">David Rodriguez</span>
+                <span>·</span>
+                <span>8h ago</span>
+                <span>·</span>
+                <span class="post-tag">Showcase</span>
+              </div>
+              <h3 style="font-size: 1.12rem; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 6px;">
+                Show us what you're building: Weekend engineering projects thread
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                Drop your GitHub repo, a 2-line summary of what problem it solves, and the hardest bug you encountered this week. No pitch decks, just code.
+              </p>
+              <div style="display: flex; align-items: center; gap: 18px; font-size: 0.82rem; color: var(--text-muted);">
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">chat_bubble</span>
+                  <strong style="color: var(--text-primary);">114</strong> replies
+                </span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>
+                  4.1k views
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Discussion 4 -->
+        <article class="discussion-card" onclick="window.location.href='discussion.html'" style="cursor: pointer;">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80" alt="Alex Rivera" class="user-avatar" style="width: 36px; height: 36px;" />
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">
+                <span style="font-weight: 600; color: var(--text-primary);">Alex Rivera</span>
+                <span>·</span>
+                <span>Yesterday</span>
+                <span>·</span>
+                <span class="post-tag">Frontend</span>
+              </div>
+              <h3 style="font-size: 1.12rem; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 6px;">
+                What is your preferred React 19 architecture for data-dense interfaces?
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+                Server Components with optimistic client actions vs TanStack Query with standard client rendering. Where do you draw the architectural boundary?
+              </p>
+              <div style="display: flex; align-items: center; gap: 18px; font-size: 0.82rem; color: var(--text-muted);">
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">chat_bubble</span>
+                  <strong style="color: var(--text-primary);">53</strong> replies
+                </span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>
+                  1.9k views
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- RIGHT DISCOVERY SIDEBAR -->
+    <aside class="right-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Popular Topics</div>
+        <div class="topic-chip-grid">
+          <a href="#" class="topic-chip">#architecture</a>
+          <a href="#" class="topic-chip">#database-internals</a>
+          <a href="#" class="topic-chip">#spring-boot</a>
+          <a href="#" class="topic-chip">#docker</a>
+          <a href="#" class="topic-chip">#system-design</a>
+          <a href="#" class="topic-chip">#showcase</a>
+          <a href="#" class="topic-chip">#career-advice</a>
         </div>
-    </section>
+      </div>
 
-    <!-- PROFILE SECTION -->
-    <section class="hidden space-y-12" id="tab-profile">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-0 border-t border-l border-outline">
-            <!-- Profile Identity Card -->
-            <div class="md:col-span-1 p-8 border-r border-b border-outline text-center">
-                <div class="w-32 h-32 mx-auto mb-6 border border-primary p-1">
-                    <img class="w-full h-full object-cover grayscale contrast-125" data-alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhiVS8W5ta2f8pytkBWDelf9b3bQfYfA5hBYcHUJ_B_agyyizWTj-JeKsZ5s0v1m_y_OpxYsHgwoRc0DoGoQRM_Ptiw68fRVHTB5Yv7lHhOW1aJdJSEAxw677JEOmSzp-Ggd5zx2jpksuT7nSeOXQSQIeCGzf4Tok4tbtjUFLEg0PJxDsbIZYlyt0EUJVOud9VcZ79damOIMi_y1zuXjDzcfqa7_1vFFIMtzYi6hPanco79WQ6pSQNpK6ilICpA7By0Bzx1_obwg"/>
-                </div>
-                <h2 class="font-display-lg text-2xl font-black uppercase tracking-tighter text-white">Alex Rivera</h2>
-                <p class="text-[10px] font-mono text-primary font-bold uppercase tracking-[0.2em] mt-2 mb-8">Full Stack Developer</p>
-                <div class="space-y-6 text-left">
-                    <div class="flex justify-between items-center font-mono text-xs">
-                        <span class="text-white/40">LEVEL_STATUS</span>
-                        <span class="text-primary font-black">LVL_42</span>
-                    </div>
-                    <div class="w-full h-1 bg-white/10">
-                        <div class="w-3/4 h-full bg-primary"></div>
-                    </div>
-                    <p class="text-[9px] font-mono text-white/40 uppercase leading-tight">CRITICAL_PROGRESS: 240_XP_UNTIL_LVL_43</p>
-                </div>
-            </div>
-            <!-- Progress & Stats -->
-            <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-0">
-                <div class="p-8 border-r border-b border-outline flex flex-col justify-between">
-                    <div class="font-mono">
-                        <span class="material-symbols-outlined text-growth-green mb-4">school</span>
-                        <h3 class="text-[10px] text-white/40 uppercase tracking-widest">STREAK_DURATION</h3>
-                        <p class="text-4xl font-black text-white mt-2">12_DAYS</p>
-                    </div>
-                    <div class="text-[10px] font-mono text-growth-green mt-8">TOP_5%_MONTHLY_PERFORMANCE</div>
-                </div>
-                <div class="p-8 border-r border-b border-outline flex flex-col justify-between">
-                    <div class="font-mono">
-                        <span class="material-symbols-outlined text-primary mb-4">military_tech</span>
-                        <h3 class="text-[10px] text-white/40 uppercase tracking-widest">BADGE_COUNT</h3>
-                        <p class="text-4xl font-black text-white mt-2">18</p>
-                    </div>
-                    <div class="flex gap-1 mt-8">
-                        <div class="w-8 h-8 border border-primary flex items-center justify-center text-primary"><span class="material-symbols-outlined text-sm">star</span></div>
-                        <div class="w-8 h-8 border border-secondary flex items-center justify-center text-secondary"><span class="material-symbols-outlined text-sm">verified</span></div>
-                        <div class="w-8 h-8 border border-white/20 flex items-center justify-center text-white/20"><span class="material-symbols-outlined text-sm">workspace_premium</span></div>
-                    </div>
-                </div>
-                <div class="p-8 border-r border-b border-outline flex flex-col justify-between">
-                    <div class="font-mono">
-                        <span class="material-symbols-outlined text-secondary mb-4">handshake</span>
-                        <h3 class="text-[10px] text-white/40 uppercase tracking-widest">MENTOR_SESSIONS</h3>
-                        <p class="text-4xl font-black text-white mt-2">03</p>
-                    </div>
-                    <div class="text-[10px] font-mono text-secondary mt-8 uppercase">NEXT_SESSION: TMRW_1000H</div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Community Guidelines</div>
+        <ul style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; padding-left: 16px; margin-bottom: 0;">
+          <li>Focus on high signal-to-noise ratio.</li>
+          <li>Share real code snippets and failure lessons.</li>
+          <li>Be constructive and respectful to students and senior peers alike.</li>
+        </ul>
+      </div>
+    </aside>
 
-<!-- Bottom Navigation Bar (Mobile) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-black border-t border-outline flex justify-around items-center py-4 px-4 pb-safe">
-    <a class="flex flex-col items-center text-white/40 p-2" href="index.html">
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-bottom-nav">
+      <a href="index.html" class="mobile-nav-item">
         <span class="material-symbols-outlined">home</span>
-        <span class="font-mono text-[8px] uppercase mt-1">HOME</span>
-    </a>
-    <a class="flex flex-col items-center text-white/40 p-2" href="learning-path.html">
-        <span class="material-symbols-outlined">local_library</span>
-        <span class="font-mono text-[8px] uppercase mt-1">LEARN</span>
-    </a>
-    <a class="flex flex-col items-center text-white/40 p-2" href="community.html">
-        <span class="material-symbols-outlined">groups</span>
-        <span class="font-mono text-[8px] uppercase mt-1">FORUM</span>
-    </a>
-    <a class="flex flex-col items-center text-on-surface-variant hover:text-white p-2" href="jobs.html">
-        <span class="material-symbols-outlined">work</span>
-        <span class="font-mono text-[8px] uppercase mt-1">JOBS</span>
-    </a>
-    <a class="flex flex-col items-center text-white/40 p-2" href="mcp.html">
-        <span class="material-symbols-outlined">terminal</span>
-        <span class="font-mono text-[8px] uppercase mt-1">MCP</span>
-    </a>
-</nav>
+        <span>Home</span>
+      </a>
+      <a href="explore.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">explore</span>
+        <span>Explore</span>
+      </a>
+      <a href="write.html" class="mobile-nav-item" style="color: var(--accent-orange);">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Create</span>
+      </a>
+      <a href="community.html" class="mobile-nav-item active">
+        <span class="material-symbols-outlined fill">forum</span>
+        <span>Community</span>
+      </a>
+      <a href="profile.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">person</span>
+        <span>Profile</span>
+      </a>
+    </nav>
 
-<!-- Footer -->
-<footer class="w-full pt-24 pb-32 bg-black border-t border-outline">
-    <div class="max-w-max-width mx-auto px-gutter grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div class="col-span-1 md:col-span-2">
-            <h4 class="font-display-lg text-xl font-black text-primary uppercase tracking-tighter mb-6">Commun.dev</h4>
-            <p class="text-white/40 font-mono text-xs max-w-sm mb-8 leading-relaxed">EMPOWERING DEVELOPERS TO REACH POTENTIAL VIA PEER NETWORKS, STRUCTURED LEARNING, AND ELITE OPPORTUNITIES.</p>
-            <p class="text-[10px] font-mono text-white/20 uppercase tracking-widest">© 2024 COMMUN.DEV - PROTOCOL_ACTIVE</p>
-        </div>
-        <div class="flex flex-col gap-4 font-mono text-[10px]">
-            <span class="font-black text-white uppercase tracking-widest mb-2">SYSTEM_LINKS</span>
-            <a class="text-white/40 hover:text-primary transition-colors" href="#">PRIVACY_POLICY</a>
-            <a class="text-white/40 hover:text-primary transition-colors" href="#">TERMS_OF_SERVICE</a>
-            <a class="text-white/40 hover:text-primary transition-colors" href="mcp.html">MCP_CONTROL</a>
-        </div>
-        <div class="flex flex-col gap-4 font-mono text-[10px]">
-            <span class="font-black text-white uppercase tracking-widest mb-2">CORE_RESOURCES</span>
-            <a class="text-white/40 hover:text-secondary transition-colors" href="#">SYS_SUPPORT</a>
-            <a class="text-white/40 hover:text-secondary transition-colors" href="learning-path.html">CAREER_PATH</a>
-            <a class="text-white/40 hover:text-secondary transition-colors" href="jobs.html">HIRE_TALENT</a>
-        </div>
-    </div>
-</footer>
+  </div>
 
-<script>
-    function switchTab(tabId) {
-        const communitySection = document.getElementById('tab-community');
-        const profileSection = document.getElementById('tab-profile');
-        const communityBtn = document.getElementById('btn-community');
-        const profileBtn = document.getElementById('btn-profile');
-
-        if (tabId === 'community') {
-            communitySection.classList.remove('hidden');
-            profileSection.classList.add('hidden');
-
-            communityBtn.classList.add('bg-primary', 'text-white');
-            communityBtn.classList.remove('bg-black', 'text-white/60');
-            profileBtn.classList.add('bg-black', 'text-white/60');
-            profileBtn.classList.remove('bg-primary', 'text-white');
-
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        } else {
-            profileSection.classList.remove('hidden');
-            communitySection.classList.add('hidden');
-
-            profileBtn.classList.add('bg-primary', 'text-white');
-            profileBtn.classList.remove('bg-black', 'text-white/60');
-            communityBtn.classList.add('bg-black', 'text-white/60');
-            communityBtn.classList.remove('bg-primary', 'text-white');
-
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        }
-    }
-
-    // Micro-animations for high-contrast theme
-    const protocolItems = document.querySelectorAll('.protocol-card, .hc-card');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-
-    protocolItems.forEach(item => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(10px)';
-        item.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-        observer.observe(item);
-    });
-</script>
+  <script type="module" src="./main.js"></script>
 </body>
 </html>

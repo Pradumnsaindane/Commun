@@ -1,6 +1,7 @@
 {
   "name": "commun-dev",
   "version": "0.1.0",
+  "type": "module",
   "description": "Commun.dev new UI with premium design using Vite",
   "scripts": {
     "dev": "vite",

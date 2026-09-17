@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How I finally understood Docker networking — Commun</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="left-sidebar">
+      <div>
+        <a href="index.html" class="brand-logo">
+          <div class="brand-badge">C</div>
+          <span>Commun<span style="color: var(--accent-orange);">.dev</span></span>
+        </a>
+
+        <nav class="nav-group">
+          <a href="index.html" class="nav-item">
+            <span class="material-symbols-outlined">home</span>
+            <span>Home</span>
+          </a>
+          <a href="explore.html" class="nav-item">
+            <span class="material-symbols-outlined">explore</span>
+            <span>Explore</span>
+          </a>
+          <a href="subscriptions.html" class="nav-item">
+            <span class="material-symbols-outlined">bookmarks</span>
+            <span>Subscriptions</span>
+          </a>
+          <a href="community.html" class="nav-item">
+            <span class="material-symbols-outlined">forum</span>
+            <span>Community</span>
+          </a>
+          <a href="saved.html" class="nav-item">
+            <span class="material-symbols-outlined">bookmark_border</span>
+            <span>Saved</span>
+          </a>
+        </nav>
+
+        <div class="nav-divider"></div>
+
+        <nav class="nav-group">
+          <a href="profile.html" class="nav-item">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span>My Profile</span>
+          </a>
+        </nav>
+
+        <a href="write.html" class="btn-create-primary">
+          <span class="material-symbols-outlined" style="font-size: 18px;">edit_square</span>
+          <span>Create</span>
+        </a>
+      </div>
+
+      <div class="nav-group" style="padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+        <a href="profile.html" class="nav-item">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Settings</span>
+        </a>
+        <a href="community.html" class="nav-item">
+          <span class="material-symbols-outlined">help_outline</span>
+          <span>Help</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- CENTER EDITORIAL ARTICLE READER -->
+    <main class="main-feed-area" style="max-width: 820px;">
+      
+      <!-- Sticky Navigation Bar -->
+      <div style="position: sticky; top: 0; background: rgba(9, 10, 15, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 30;">
+        <a href="index.html" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.88rem;">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Feed</span>
+        </a>
+        <div style="display: flex; gap: 16px;">
+          <button class="action-btn btn-like">
+            <span class="material-symbols-outlined">favorite</span>
+            <span class="like-count">142</span>
+          </button>
+          <button class="action-btn btn-save">
+            <span class="material-symbols-outlined">bookmark</span>
+          </button>
+          <button class="action-btn" onclick="showToast('Link copied to clipboard')">
+            <span class="material-symbols-outlined">share</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="article-container">
+        
+        <!-- Header -->
+        <header class="article-header">
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <span class="post-tag">Docker</span>
+            <span class="post-tag">Networking</span>
+            <span class="post-tag">DevOps</span>
+          </div>
+
+          <h1 class="article-headline">
+            How I finally understood Docker networking without the headaches
+          </h1>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); margin-top: 24px;">
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Marcus Chen" class="user-avatar" style="width: 44px; height: 44px;" />
+              <div>
+                <div style="font-weight: 700; color: #fff; font-size: 0.95rem;">Marcus Chen</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Published in <strong style="color: var(--text-secondary);">DevOps Handbook</strong> · 6 min read · Oct 14</div>
+              </div>
+            </div>
+            <button class="btn-follow-sm">Follow</button>
+          </div>
+        </header>
+
+        <!-- Cover Image -->
+        <img src="https://images.unsplash.com/photo-1605745341112-85968b19335b?w=1200&auto=format&fit=crop&q=80" alt="Docker container architecture" style="width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); margin-bottom: 32px;" />
+
+        <!-- Article Content -->
+        <article class="article-content">
+          <p>
+            For years, Docker networking felt like black magic to me. You type <code>docker run -p 8080:80</code>, and somehow your browser connects to Nginx running in an isolated namespace. But the moment you had two containers that needed to talk to each other without exposing ports to <code>0.0.0.0</code>, everything broke.
+          </p>
+
+          <p>
+            Today, let's discard all the abstract RFC specifications and build a clean, physical mental model of how packets actually move between containers, the Linux host bridge, and the outside world.
+          </p>
+
+          <h2>1. The Virtual Ethernet Pair (veth)</h2>
+
+          <p>
+            When Docker starts a container with network isolation, Linux creates a pair of connected virtual network interfaces called a <strong>veth pair</strong>. Think of this like an invisible ethernet cable with two ends:
+          </p>
+
+          <ul>
+            <li>One end sits inside the container's network namespace as <code>eth0</code>.</li>
+            <li>The other end sits in the host network namespace attached to a bridge named <code>docker0</code>.</li>
+          </ul>
+
+          <pre><code># Inspect the default bridge on your host
+$ ip link show docker0
+3: docker0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP
+    link/ether 02:42:5d:74:e9:1a brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0</code></pre>
+
+          <h2>2. Why User-Defined Bridges are Mandatory</h2>
+
+          <p>
+            The default <code>docker0</code> bridge has one major limitation: <strong>it does not support automatic DNS resolution by container name</strong>. If container <code>web</code> tries to connect to <code>db:5432</code>, it fails unless you manually link them.
+          </p>
+
+          <p>
+            When you create your own custom network with <code>docker network create app-net</code>, Docker spawns an embedded DNS server on <code>127.0.0.11</code> inside each container namespace.
+          </p>
+
+          <pre><code># Create an isolated user-defined bridge
+$ docker network create --driver bridge app-network
+
+# Connect two containers effortlessly
+$ docker run -d --name redis --network app-network redis:alpine
+$ docker run -d --name api --network app-network my-api:latest
+
+# Inside the 'api' container, pinging 'redis' resolves instantly!
+$ ping redis
+64 bytes from 172.19.0.2: icmp_seq=1 ttl=64 time=0.082 ms</code></pre>
+
+          <h2>3. Summary Checklist for Production</h2>
+
+          <p>
+            Whenever you are debugging container connection issues:
+          </p>
+
+          <ol style="padding-left: 24px; margin-bottom: 24px;">
+            <li>Never use the default bridge in production setups. Always create a user-defined network.</li>
+            <li>Check iptables NAT forwarding rules if external traffic is not routing to mapped ports.</li>
+            <li>Use <code>docker network inspect &lt;net-name&gt;</code> to verify IP allocations.</li>
+          </ol>
+        </article>
+
+        <!-- Author Bio Card -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 24px; margin: 48px 0 32px; display: flex; gap: 18px; align-items: flex-start;">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Marcus Chen" class="user-avatar" style="width: 52px; height: 52px;" />
+          <div style="flex: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-weight: 700; color: #fff; font-size: 1.05rem;">Written by Marcus Chen</span>
+              <button class="btn-follow-sm">Follow</button>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+              Senior Infrastructure Engineer. Writing about distributed systems, Linux kernel internals, and containerization.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- RIGHT DISCOVERY SIDEBAR -->
+    <aside class="right-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Table of Contents</div>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+          <a href="#1-the-virtual-ethernet-pair-veth" style="color: var(--accent-orange); font-weight: 500;">1. The Virtual Ethernet Pair (veth)</a>
+          <a href="#2-why-user-defined-bridges-are-mandatory">2. User-Defined Bridges</a>
+          <a href="#3-summary-checklist-for-production">3. Production Checklist</a>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">More from Marcus Chen</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
+          <a href="#" style="color: var(--text-primary); font-weight: 500; line-height: 1.4;">
+            "Linux cgroups v2 memory limits in practice"
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">5 min read</div>
+          </a>
+          <a href="#" style="color: var(--text-primary); font-weight: 500; line-height: 1.4;">
+            "Why your Alpine images crash on glibc binaries"
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">8 min read</div>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-bottom-nav">
+      <a href="index.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">home</span>
+        <span>Home</span>
+      </a>
+      <a href="explore.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">explore</span>
+        <span>Explore</span>
+      </a>
+      <a href="write.html" class="mobile-nav-item" style="color: var(--accent-orange);">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Create</span>
+      </a>
+      <a href="community.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">forum</span>
+        <span>Community</span>
+      </a>
+      <a href="profile.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">person</span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

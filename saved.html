@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saved Bookmarks — Commun</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="left-sidebar">
+      <div>
+        <a href="index.html" class="brand-logo">
+          <div class="brand-badge">C</div>
+          <span>Commun<span style="color: var(--accent-orange);">.dev</span></span>
+        </a>
+
+        <nav class="nav-group">
+          <a href="index.html" class="nav-item">
+            <span class="material-symbols-outlined">home</span>
+            <span>Home</span>
+          </a>
+          <a href="explore.html" class="nav-item">
+            <span class="material-symbols-outlined">explore</span>
+            <span>Explore</span>
+          </a>
+          <a href="subscriptions.html" class="nav-item">
+            <span class="material-symbols-outlined">bookmarks</span>
+            <span>Subscriptions</span>
+          </a>
+          <a href="community.html" class="nav-item">
+            <span class="material-symbols-outlined">forum</span>
+            <span>Community</span>
+          </a>
+          <a href="saved.html" class="nav-item active">
+            <span class="material-symbols-outlined fill">bookmark</span>
+            <span>Saved</span>
+          </a>
+        </nav>
+
+        <div class="nav-divider"></div>
+
+        <nav class="nav-group">
+          <a href="profile.html" class="nav-item">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span>My Profile</span>
+          </a>
+        </nav>
+
+        <a href="write.html" class="btn-create-primary">
+          <span class="material-symbols-outlined" style="font-size: 18px;">edit_square</span>
+          <span>Create</span>
+        </a>
+      </div>
+
+      <div class="nav-group" style="padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+        <a href="profile.html" class="nav-item">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Settings</span>
+        </a>
+        <a href="community.html" class="nav-item">
+          <span class="material-symbols-outlined">help_outline</span>
+          <span>Help</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- CENTER SAVED AREA -->
+    <main class="main-feed-area" style="max-width: 800px;">
+      <div class="feed-header-sticky">
+        <div class="feed-title-bar">Saved Library</div>
+        <div class="feed-tabs">
+          <div class="feed-tab active">All (3)</div>
+          <div class="feed-tab">Articles (2)</div>
+          <div class="feed-tab">Discussions (1)</div>
+        </div>
+      </div>
+
+      <div class="feed-container">
+        
+        <!-- Saved Item 1 -->
+        <article class="post-item" data-href="article.html">
+          <div class="post-meta-row">
+            <span class="post-author-name">Marcus Chen</span>
+            <span>·</span>
+            <span>Saved 2 days ago</span>
+            <span>·</span>
+            <span class="post-tag">Docker</span>
+          </div>
+          <div class="post-body-row">
+            <div class="post-content-col">
+              <h2 class="post-title">How I finally understood Docker networking without the headaches</h2>
+              <p class="post-excerpt">
+                Bridged networks, host mode, overlay networks, and DNS resolution inside containers explained with clear mental models.
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1605745341112-85968b19335b?w=300&auto=format&fit=crop&q=80" alt="Docker" class="post-thumb" />
+          </div>
+          <div class="post-actions-row">
+            <div class="action-btn-group">
+              <button class="action-btn btn-save saved">
+                <span class="material-symbols-outlined fill">bookmark</span>
+                <span>Saved</span>
+              </button>
+            </div>
+            <span>6 min read</span>
+          </div>
+        </article>
+
+        <!-- Saved Item 2 -->
+        <article class="post-item" data-href="article.html">
+          <div class="post-meta-row">
+            <span class="post-author-name">David Rodriguez</span>
+            <span>·</span>
+            <span>Saved last week</span>
+            <span>·</span>
+            <span class="post-tag">PostgreSQL</span>
+          </div>
+          <div class="post-body-row">
+            <div class="post-content-col">
+              <h2 class="post-title">PostgreSQL indexing explained through real query explain plans</h2>
+              <p class="post-excerpt">
+                Stop blindly adding B-Tree indexes. Here is how Postgres scans indexes, when Bitmap Heap Scans kick in...
+              </p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=300&auto=format&fit=crop&q=80" alt="Postgres" class="post-thumb" />
+          </div>
+          <div class="post-actions-row">
+            <div class="action-btn-group">
+              <button class="action-btn btn-save saved">
+                <span class="material-symbols-outlined fill">bookmark</span>
+                <span>Saved</span>
+              </button>
+            </div>
+            <span>9 min read</span>
+          </div>
+        </article>
+
+        <!-- Saved Item 3 (Discussion) -->
+        <article class="post-item" data-href="discussion.html">
+          <div class="post-meta-row">
+            <span class="post-author-name">Elena Rostova</span>
+            <span>·</span>
+            <span>Discussion · Saved 4 days ago</span>
+            <span>·</span>
+            <span class="post-tag">Kubernetes</span>
+          </div>
+          <div class="post-body-row">
+            <div class="post-content-col">
+              <h2 class="post-title">How are you learning and practicing Kubernetes in 2026?</h2>
+              <p class="post-excerpt">
+                Do you prefer local Kind/K3s clusters, minikube, or running cheap Hetzner nodes? Personal lab setups and failure drills.
+              </p>
+            </div>
+          </div>
+          <div class="post-actions-row">
+            <div class="action-btn-group">
+              <button class="action-btn btn-save saved">
+                <span class="material-symbols-outlined fill">bookmark</span>
+                <span>Saved</span>
+              </button>
+            </div>
+            <span>68 replies</span>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- RIGHT DISCOVERY SIDEBAR -->
+    <aside class="right-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Reading Lists</div>
+        <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+          Organize your saved articles by tags or export bookmarks to Markdown.
+        </div>
+      </div>
+    </aside>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-bottom-nav">
+      <a href="index.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">home</span>
+        <span>Home</span>
+      </a>
+      <a href="explore.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">explore</span>
+        <span>Explore</span>
+      </a>
+      <a href="write.html" class="mobile-nav-item" style="color: var(--accent-orange);">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Create</span>
+      </a>
+      <a href="community.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">forum</span>
+        <span>Community</span>
+      </a>
+      <a href="profile.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">person</span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

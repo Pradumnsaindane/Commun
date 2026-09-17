@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscriptions — Commun</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="left-sidebar">
+      <div>
+        <a href="index.html" class="brand-logo">
+          <div class="brand-badge">C</div>
+          <span>Commun<span style="color: var(--accent-orange);">.dev</span></span>
+        </a>
+
+        <nav class="nav-group">
+          <a href="index.html" class="nav-item">
+            <span class="material-symbols-outlined">home</span>
+            <span>Home</span>
+          </a>
+          <a href="explore.html" class="nav-item">
+            <span class="material-symbols-outlined">explore</span>
+            <span>Explore</span>
+          </a>
+          <a href="subscriptions.html" class="nav-item active">
+            <span class="material-symbols-outlined fill">bookmarks</span>
+            <span>Subscriptions</span>
+          </a>
+          <a href="community.html" class="nav-item">
+            <span class="material-symbols-outlined">forum</span>
+            <span>Community</span>
+          </a>
+          <a href="saved.html" class="nav-item">
+            <span class="material-symbols-outlined">bookmark_border</span>
+            <span>Saved</span>
+          </a>
+        </nav>
+
+        <div class="nav-divider"></div>
+
+        <nav class="nav-group">
+          <a href="profile.html" class="nav-item">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span>My Profile</span>
+          </a>
+        </nav>
+
+        <a href="write.html" class="btn-create-primary">
+          <span class="material-symbols-outlined" style="font-size: 18px;">edit_square</span>
+          <span>Create</span>
+        </a>
+      </div>
+
+      <div class="nav-group" style="padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+        <a href="profile.html" class="nav-item">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Settings</span>
+        </a>
+        <a href="community.html" class="nav-item">
+          <span class="material-symbols-outlined">help_outline</span>
+          <span>Help</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- CENTER SUBSCRIPTIONS AREA -->
+    <main class="main-feed-area" style="max-width: 800px;">
+      <div class="feed-header-sticky">
+        <div class="feed-title-bar">Subscriptions</div>
+        <div class="feed-tabs">
+          <div class="feed-tab active">All (6)</div>
+          <div class="feed-tab">Unread (2)</div>
+          <div class="feed-tab" onclick="window.location.href='saved.html'">Saved</div>
+        </div>
+      </div>
+
+      <!-- Subscriptions List -->
+      <div style="display: flex; flex-direction: column;">
+        
+        <!-- Creator 1 -->
+        <div class="post-item" style="cursor: pointer;" onclick="window.location.href='profile.html'">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Aria Vance" class="user-avatar" style="width: 44px; height: 44px;" />
+              <div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="font-weight: 700; color: #fff; font-size: 1rem;">Aria Vance</span>
+                  <span style="color: var(--accent-orange); font-size: 14px;">●</span>
+                  <span style="font-size: 0.75rem; color: var(--accent-orange); font-weight: 600;">NEW POST</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Cloud native architect, writer at Distributed Weekly</div>
+              </div>
+            </div>
+            <button class="btn-follow-sm following">Following</button>
+          </div>
+          <div style="margin-top: 14px; padding: 12px 14px; background: var(--bg-surface); border-radius: var(--radius-md); border-left: 3px solid var(--accent-orange);">
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Latest Article · 2h ago</div>
+            <div style="font-weight: 600; color: #fff; font-size: 0.95rem; margin-top: 2px;">Understanding Memory Allocators in Rust: Mimalloc vs Jemalloc</div>
+          </div>
+        </div>
+
+        <!-- Creator 2 -->
+        <div class="post-item" style="cursor: pointer;" onclick="window.location.href='profile.html'">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Liam Keller" class="user-avatar" style="width: 44px; height: 44px;" />
+              <div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="font-weight: 700; color: #fff; font-size: 1rem;">Liam Keller</span>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">· 1d ago</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Database internals engineer, PostgreSQL contributor</div>
+              </div>
+            </div>
+            <button class="btn-follow-sm following">Following</button>
+          </div>
+          <div style="margin-top: 14px; padding: 12px 14px; background: var(--bg-surface); border-radius: var(--radius-md); border-left: 3px solid var(--border-muted);">
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Latest Article · Yesterday</div>
+            <div style="font-weight: 600; color: #fff; font-size: 0.95rem; margin-top: 2px;">PostgreSQL WAL Streaming and Replication Lag in High-Write Workloads</div>
+          </div>
+        </div>
+
+        <!-- Creator 3 -->
+        <div class="post-item" style="cursor: pointer;" onclick="window.location.href='profile.html'">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80" alt="Sarah Jenkins" class="user-avatar" style="width: 44px; height: 44px;" />
+              <div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="font-weight: 700; color: #fff; font-size: 1rem;">Sarah Jenkins</span>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">· 3d ago</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Senior Backend Engineer, Spring &amp; JVM ecosystems</div>
+              </div>
+            </div>
+            <button class="btn-follow-sm following">Following</button>
+          </div>
+          <div style="margin-top: 14px; padding: 12px 14px; background: var(--bg-surface); border-radius: var(--radius-md); border-left: 3px solid var(--border-muted);">
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Latest Article · 3d ago</div>
+            <div style="font-weight: 600; color: #fff; font-size: 0.95rem; margin-top: 2px;">Building a production-ready Spring Boot 3 API: The patterns I swear by</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- RIGHT CONTEXT SIDEBAR -->
+    <aside class="right-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Manage Subscriptions</div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+          You receive weekly digests from creators you follow directly inside your feed.
+        </p>
+        <button class="btn-create-primary" style="background: var(--bg-surface); border: 1px solid var(--border-muted); margin-top: 0;" onclick="window.location.href='explore.html'">
+          Discover More Writers
+        </button>
+      </div>
+    </aside>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-bottom-nav">
+      <a href="index.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">home</span>
+        <span>Home</span>
+      </a>
+      <a href="explore.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">explore</span>
+        <span>Explore</span>
+      </a>
+      <a href="write.html" class="mobile-nav-item" style="color: var(--accent-orange);">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Create</span>
+      </a>
+      <a href="community.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">forum</span>
+        <span>Community</span>
+      </a>
+      <a href="profile.html" class="mobile-nav-item">
+        <span class="material-symbols-outlined">person</span>
+        <span>Profile</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

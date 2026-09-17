@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Write an Article — Commun</title>
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    .editor-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+    .editor-title-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .editor-title-input::placeholder {
+      color: var(--text-dim);
+    }
+    .editor-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .toolbar-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s ease;
+    }
+    .toolbar-btn:hover {
+      background-color: var(--bg-surface);
+      color: #ffffff;
+    }
+    .editor-textarea {
+      width: 100%;
+      min-height: 420px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1.12rem;
+      line-height: 1.8;
+      color: #e5e7eb;
+      font-family: var(--font-sans);
+      resize: vertical;
+    }
+    .editor-textarea::placeholder {
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Minimal Publishing Topbar -->
+  <header style="height: 64px; border-bottom: 1px solid var(--border-subtle); background: var(--bg-primary); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 50;">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="index.html" class="brand-logo" style="padding: 0;">
+        <div class="brand-badge">C</div>
+        <span>Commun<span style="color: var(--accent-orange);">
+      <span style="font-size: 0.85rem; color: var(--text-muted); border-left: 1px solid var(--border-subtle); padding-left: 16px;">
+        Draft · Saved just now
+      </span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button class="action-btn" onclick="showToast('Draft saved')">
+        <span class="material-symbols-outlined">save</span>
+        <span>Save Draft</span>
+      </button>
+      <button class="btn-create-primary" style="margin-top: 0; padding: 8px 22px; width: auto; font-size: 0.9rem;" onclick="showToast('Article published successfully!'); setTimeout(() => window.location.href='index.html', 1200);">
+        Publish
+      </button>
+    </div>
+  </header>
+
+  <!-- Distraction-Free Editor Body -->
+  <main class="editor-wrapper">
+    <input type="text" class="editor-title-input" placeholder="Title for your technical deep-dive..." autofocus />
+
+    <div class="editor-toolbar">
+      <button class="toolbar-btn" title="Heading"><span class="material-symbols-outlined">title</span></button>
+      <button class="toolbar-btn" title="Bold"><span class="material-symbols-outlined">format_bold</span></button>
+      <button class="toolbar-btn" title="Italic"><span class="material-symbols-outlined">format_italic</span></button>
+      <div style="width: 1px; height: 18px; background: var(--border-subtle);"></div>
+      <button class="toolbar-btn" title="Code Block"><span class="material-symbols-outlined">code_blocks</span></button>
+      <button class="toolbar-btn" title="Inline Code"><span class="material-symbols-outlined">code</span></button>
+      <button class="toolbar-btn" title="Insert Link"><span class="material-symbols-outlined">link</span></button>
+      <button class="toolbar-btn" title="Bullet List"><span class="material-symbols-outlined">format_list_bulleted</span></button>
+      <button class="toolbar-btn" title="Numbered List"><span class="material-symbols-outlined">format_list_numbered</span></button>
+      <button class="toolbar-btn" title="Quote"><span class="material-symbols-outlined">format_quote</span></button>
+      <div style="width: 1px; height: 18px; background: var(--border-subtle);"></div>
+      <button class="toolbar-btn" title="Add Image" onclick="showToast('Select image to upload')"><span class="material-symbols-outlined">image</span></button>
+    </div>
+
+    <textarea class="editor-textarea" placeholder="Tell your engineering story or explain a system architecture pattern... Markdown and code blocks supported."></textarea>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
