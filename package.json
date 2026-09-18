@@ -1,15 +1,12 @@
 {
-  "name": "commun-dev",
+  "name": "commun-com",
   "version": "0.1.0",
-  "type": "module",
-  "description": "Commun.dev new UI with premium design using Vite",
+  "private": true,
+  "description": "Commun.dev workspace",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "vite": "^5.0.0"
+    "dev": "npm --prefix commun.dev run dev --",
+    "build": "npm --prefix commun.dev run build --",
+    "preview": "npm --prefix commun.dev run preview --",
+    "install:app": "npm --prefix commun.dev install"
   }
 }

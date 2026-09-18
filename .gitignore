@@ -1,4 +1,4 @@
 node_modules/
 dist/
 .DS_Store
-.agents/
+.agents/.agents/mcp_config.json
