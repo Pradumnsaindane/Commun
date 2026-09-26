@@ -1,396 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Commun — The Developer Publishing &amp; Community Platform</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commun — The Developer Platform to Build, Connect & Grow</title>
+  <meta name="description" content="A production SaaS platform for developers, technical communities, startups, colleges, and organizations. Build. Connect. Grow. Together.">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./logo.svg" type="image/svg+xml">
 </head>
 <body>
-  <div class="app-container">
-    
-    <!-- LEFT SIDEBAR NAVIGATION -->
-    <aside class="left-sidebar">
+  <!-- Ambient Mesh Backgrounds -->
+  <div class="bg-mesh bg-dot-pattern"></div>
+
+  <!-- Top Header Navigation -->
+  <header class="app-topbar" style="position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-subtle); background: rgba(8, 9, 13, 0.85);">
+    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: var(--max-content-width); margin: 0 auto;">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined" style="font-size: 20px;">hub</span>
+        </div>
+        <span>Commun<span style="color: var(--accent-primary);">.</span></span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav style="display: flex; align-items: center; gap: 24px;" class="desktop-nav">
+        <a href="discover.html" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);" class="nav-link-hover">Discover</a>
+        <a href="projects.html" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);">Projects</a>
+        <a href="discussions.html" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);">Discussions</a>
+        <a href="opportunities.html" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);">Opportunities</a>
+        <a href="communities.html" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);">Communities</a>
+        <a href="workspace.html" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 4px;">
+          Workspaces <span class="badge badge-primary" style="font-size: 0.65rem; padding: 1px 6px;">SaaS</span>
+        </a>
+        <a href="pricing.html" style="font-weight: 500; font-size: 0.9rem; color: var(--text-secondary);">Pricing</a>
+      </nav>
+
+      <!-- Action & Auth Buttons -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="btn btn-ghost btn-sm" data-trigger="cmd-palette" style="border: 1px solid var(--border-muted); border-radius: var(--radius-pill); padding: 5px 12px; gap: 6px;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">search</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Search</span>
+          <kbd style="font-family: var(--font-mono); font-size: 0.65rem; background: var(--bg-card-subtle); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--border-muted); color: var(--text-muted);">⌘K</kbd>
+        </button>
+        <a href="login.html" class="btn btn-ghost btn-sm">Log in</a>
+        <a href="onboarding.html" class="btn btn-primary btn-sm btn-glow">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section (21st.dev B2B Reinterpretation) -->
+  <main>
+    <section class="landing-hero">
+      <div class="hero-pill">
+        <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent-cyan);">rocket_launch</span>
+        <span>Commun 2.0 — The Next-Gen Developer Collaboration SaaS</span>
+        <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent-primary);">chevron_right</span>
+      </div>
+
+      <h1 class="hero-title">
+        Build. Connect. Grow.<br>
+        <span class="hero-title-gradient">Together.</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        The developer platform for people who want to build what matters. Connect with engineers, discover open-source projects, collaborate in real-time, and scale technical workspaces.
+      </p>
+
+      <div class="hero-actions">
+        <a href="onboarding.html" class="btn btn-primary btn-lg btn-glow" style="padding: 14px 28px; font-size: 1.05rem;">
+          <span class="material-symbols-outlined">person_add</span>
+          Get Started Free
+        </a>
+        <a href="discover.html" class="btn btn-secondary btn-lg" style="padding: 14px 28px; font-size: 1.05rem;">
+          <span class="material-symbols-outlined">explore</span>
+          Explore Commun
+        </a>
+        <button class="btn btn-outline btn-lg" onclick="toggleAIAssistant(true)">
+          <span class="material-symbols-outlined" style="color: var(--accent-purple);">auto_awesome</span>
+          Commun AI Copilot
+        </button>
+      </div>
+
+      <!-- 3D / Dynamic Interactive Graph Canvas -->
+      <div class="interactive-canvas-container">
+        <canvas id="hero-canvas"></canvas>
+        <div class="canvas-overlay-badges">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <span class="badge badge-emerald" style="backdrop-filter: blur(12px); background: rgba(16, 185, 129, 0.15);">
+              <span class="status-dot status-online" style="position: static; display: inline-block; width: 6px; height: 6px; border: none; margin-right: 4px;"></span>
+              Live Mesh: 2,490 active developers & repos connected
+            </span>
+            <span class="badge badge-primary" style="backdrop-filter: blur(12px); background: rgba(99, 102, 241, 0.15);">
+              <span class="material-symbols-outlined" style="font-size: 14px;">insights</span>
+              Real-Time Collaboration Graph
+            </span>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <div style="background: rgba(17, 20, 29, 0.85); backdrop-filter: blur(12px); border: 1px solid var(--border-subtle); padding: 8px 14px; border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); pointer-events: auto;">
+              <span style="color: #fff; font-weight: 600;">Hover & drag</span> to interact with live nodes
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platform Loop Principle Section -->
+    <section style="padding: 60px 20px 80px; max-width: var(--max-content-width); margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <span class="badge badge-primary" style="margin-bottom: 12px;">The Core Commun Engine</span>
+        <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; color: var(--text-pure); letter-spacing: -0.03em;">
+          Designed for the Complete Developer Journey
+        </h2>
+        <p style="color: var(--text-secondary); max-width: 620px; margin: 10px auto 0;">
+          Not another generic social network. Commun is built around a tight, high-signal developer growth loop.
+        </p>
+      </div>
+
+      <!-- Loop Process Ribbon -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 18px; margin-bottom: 40px; box-shadow: var(--shadow-md);">
+        <div style="text-align: center; padding: 10px;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono);">01. DISCOVER</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-pure); margin-top: 4px;">Find Talent & Tech</div>
+        </div>
+        <div style="text-align: center; padding: 10px; border-left: 1px solid var(--border-dim);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-primary); font-family: var(--font-mono);">02. CONNECT</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-pure); margin-top: 4px;">Network with Peers</div>
+        </div>
+        <div style="text-align: center; padding: 10px; border-left: 1px solid var(--border-dim);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-purple); font-family: var(--font-mono);">03. DISCUSS</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-pure); margin-top: 4px;">Solve Deep Bugs</div>
+        </div>
+        <div style="text-align: center; padding: 10px; border-left: 1px solid var(--border-dim);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-blue); font-family: var(--font-mono);">04. COLLABORATE</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-pure); margin-top: 4px;">Form Teams & Guilds</div>
+        </div>
+        <div style="text-align: center; padding: 10px; border-left: 1px solid var(--border-dim);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-emerald); font-family: var(--font-mono);">05. BUILD</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-pure); margin-top: 4px;">Ship Real Software</div>
+        </div>
+        <div style="text-align: center; padding: 10px; border-left: 1px solid var(--border-dim);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-amber); font-family: var(--font-mono);">06. SHARE</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-pure); margin-top: 4px;">Publish RFCs & Code</div>
+        </div>
+        <div style="text-align: center; padding: 10px; border-left: 1px solid var(--border-dim);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-rose); font-family: var(--font-mono);">07. GROW</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-pure); margin-top: 4px;">Land Jobs & Grants</div>
+        </div>
+      </div>
+
+      <!-- Feature Capabilities Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+        <!-- Card 1: Profiles -->
+        <div class="card card-interactive card-gradient-top">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent-primary-glow); border: 1px solid rgba(99,102,241,0.3); display: flex; align-items: center; justify-content: center; color: #a5b4fc; margin-bottom: 16px;">
+            <span class="material-symbols-outlined">badge</span>
+          </div>
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">Rich Developer Portfolios</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Showcase authentic GitHub heatmaps, verified tech stack proficiency, architecture contributions, and live repositories in one unified profile.
+          </p>
+          <a href="profile.html" class="btn btn-ghost btn-sm" style="padding-left: 0; color: var(--accent-primary); font-weight: 600;">
+            View Sample Profile →
+          </a>
+        </div>
+
+        <!-- Card 2: Projects & Collab -->
+        <div class="card card-interactive card-gradient-top">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent-blue-subtle); border: 1px solid rgba(59,130,246,0.3); display: flex; align-items: center; justify-content: center; color: #93c5fd; margin-bottom: 16px;">
+            <span class="material-symbols-outlined">handshake</span>
+          </div>
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">Project Hub & Collaboration</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Publish "Looking for React/Rust Lead" requests, manage sprint Kanban boards, and match with verified contributors across time zones.
+          </p>
+          <a href="projects.html" class="btn btn-ghost btn-sm" style="padding-left: 0; color: var(--accent-blue); font-weight: 600;">
+            Explore Projects Hub →
+          </a>
+        </div>
+
+        <!-- Card 3: Discussions & Q&A -->
+        <div class="card card-interactive card-gradient-top">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent-emerald-subtle); border: 1px solid rgba(16,185,129,0.3); display: flex; align-items: center; justify-content: center; color: #6ee7b7; margin-bottom: 16px;">
+            <span class="material-symbols-outlined">code_blocks</span>
+          </div>
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">High-Signal Technical Q&A</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Categorized technical discussions with syntax-highlighted code execution blocks, peer reviews, and verified accepted solutions.
+          </p>
+          <a href="discussions.html" class="btn btn-ghost btn-sm" style="padding-left: 0; color: var(--accent-emerald); font-weight: 600;">
+            Browse Discussions →
+          </a>
+        </div>
+
+        <!-- Card 4: Jobs & Opportunities -->
+        <div class="card card-interactive card-gradient-top">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent-amber-subtle); border: 1px solid rgba(245,158,11,0.3); display: flex; align-items: center; justify-content: center; color: #fcd34d; margin-bottom: 16px;">
+            <span class="material-symbols-outlined">work</span>
+          </div>
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">Opportunities & Hackathons</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Discover remote developer roles, paid open-source grants, internships, and global hackathons with 1-click portfolio applications.
+          </p>
+          <a href="opportunities.html" class="btn btn-ghost btn-sm" style="padding-left: 0; color: var(--accent-amber); font-weight: 600;">
+            Find Opportunities →
+          </a>
+        </div>
+
+        <!-- Card 5: Multi-Tenant Workspaces -->
+        <div class="card card-interactive card-gradient-top">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent-purple-subtle); border: 1px solid rgba(168,85,247,0.3); display: flex; align-items: center; justify-content: center; color: #d8b4fe; margin-bottom: 16px;">
+            <span class="material-symbols-outlined">domain</span>
+          </div>
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">Multi-Tenant SaaS Workspaces</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Built for organizations, startups, college developer clubs, and bootcamps. Role-based access control, teams, analytics, and billing.
+          </p>
+          <a href="workspace.html" class="btn btn-ghost btn-sm" style="padding-left: 0; color: var(--accent-purple); font-weight: 600;">
+            Explore Workspace SaaS →
+          </a>
+        </div>
+
+        <!-- Card 6: AI Copilot -->
+        <div class="card card-interactive card-gradient-top">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6,182,212,0.3); display: flex; align-items: center; justify-content: center; color: #67e8f9; margin-bottom: 16px;">
+            <span class="material-symbols-outlined">psychology</span>
+          </div>
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">Future-Ready Commun AI</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Intelligent semantic matching across projects, skills, and developer graphs without intrusive gimmickry or slop.
+          </p>
+          <button onclick="toggleAIAssistant(true)" class="btn btn-ghost btn-sm" style="padding-left: 0; color: var(--accent-cyan); font-weight: 600;">
+            Launch AI Drawer →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Real Metrics Banner -->
+    <section style="background: var(--bg-card); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); padding: 50px 20px;">
+      <div style="max-width: var(--max-content-width); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; text-align: center;">
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 2.8rem; font-weight: 800; color: #fff;">50,000+</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Verified Engineers & Creators</div>
+        </div>
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 2.8rem; font-weight: 800; color: var(--accent-cyan);">1,200+</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Active Open Source Projects</div>
+        </div>
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 2.8rem; font-weight: 800; color: var(--accent-primary);">450+</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">College Clubs & SaaS Orgs</div>
+        </div>
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 2.8rem; font-weight: 800; color: var(--accent-emerald);">99.98%</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Enterprise SaaS Uptime</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials / Creator Stories -->
+    <section style="padding: 80px 20px; max-width: var(--max-content-width); margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <span class="badge badge-primary">Builder Stories</span>
+        <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; color: var(--text-pure); letter-spacing: -0.03em; margin-top: 10px;">
+          Built by Engineers, Loved by Teams
+        </h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+        <div class="card">
+          <p style="font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 18px;">
+            "Commun replaced three separate tools for our distributed systems team. Finding qualified Rust and Go contributors went from weeks to less than 48 hours."
+          </p>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="avatar avatar-md"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Elena"></div>
+            <div>
+              <div style="font-weight: 700; color: #fff;">Elena Rostova</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Principal Architect @ HyperScale Labs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p style="font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 18px;">
+            "Our college developer club scaled to 600+ members on Commun. The multi-tenant workspace with hackathon tracking and team tasks is unbeatable."
+          </p>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="avatar avatar-md"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Marcus"></div>
+            <div>
+              <div style="font-weight: 700; color: #fff;">Marcus Vance</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Lead Organizer @ Stanford DevGuild</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p style="font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 18px;">
+            "The technical Q&A with syntax-highlighted code and verified solutions is 10x higher signal than old forums. Commun is where real builders live."
+          </p>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="avatar avatar-md"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Kavita"></div>
+            <div>
+              <div style="font-weight: 700; color: #fff;">Kavita Patel</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Senior Cloud Infrastructure Lead</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Banner -->
+    <section style="padding: 60px 20px 100px; max-width: 960px; margin: 0 auto; text-align: center;">
+      <div class="card card-glass" style="padding: 60px 30px; border: 1px solid var(--border-highlight); box-shadow: var(--shadow-glow);">
+        <h2 style="font-family: var(--font-heading); font-size: 2.6rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; margin-bottom: 14px;">
+          Ready to build with the best?
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 540px; margin: 0 auto 30px;">
+          Create your developer profile or set up your organization workspace in less than 2 minutes.
+        </p>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <a href="onboarding.html" class="btn btn-primary btn-lg btn-glow">Join Commun Today</a>
+          <a href="workspace.html" class="btn btn-secondary btn-lg">Explore Workspaces</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern SaaS Footer -->
+  <footer style="background: var(--bg-sidebar); border-top: 1px solid var(--border-subtle); padding: 60px 20px 30px;">
+    <div style="max-width: var(--max-content-width); margin: 0 auto; display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
       <div>
-        <a href="index.html" class="brand-logo">
-          <div class="brand-badge">C</div>
-          <span>Commun<span style="color: var(--accent-orange);">.dev</span></span>
-        </a>
-
-        <nav class="nav-group">
-          <a href="index.html" class="nav-item active">
-            <span class="material-symbols-outlined fill">home</span>
-            <span>Home</span>
-          </a>
-          <a href="explore.html" class="nav-item">
-            <span class="material-symbols-outlined">explore</span>
-            <span>Explore</span>
-          </a>
-          <a href="subscriptions.html" class="nav-item">
-            <span class="material-symbols-outlined">bookmarks</span>
-            <span>Subscriptions</span>
-          </a>
-          <a href="community.html" class="nav-item">
-            <span class="material-symbols-outlined">forum</span>
-            <span>Community</span>
-          </a>
-          <a href="saved.html" class="nav-item">
-            <span class="material-symbols-outlined">bookmark_border</span>
-            <span>Saved</span>
-          </a>
-        </nav>
-
-        <div class="nav-divider"></div>
-
-        <nav class="nav-group">
-          <a href="profile.html" class="nav-item">
-            <span class="material-symbols-outlined">account_circle</span>
-            <span>My Profile</span>
-          </a>
-        </nav>
-
-        <a href="write.html" class="btn-create-primary">
-          <span class="material-symbols-outlined" style="font-size: 18px;">edit_square</span>
-          <span>Create</span>
-        </a>
-      </div>
-
-      <div class="nav-group" style="padding-top: 16px; border-top: 1px solid var(--border-subtle);">
-        <a href="profile.html" class="nav-item">
-          <span class="material-symbols-outlined">settings</span>
-          <span>Settings</span>
-        </a>
-        <a href="community.html" class="nav-item">
-          <span class="material-symbols-outlined">help_outline</span>
-          <span>Help</span>
-        </a>
-      </div>
-    </aside>
-
-    <!-- CENTER FEED AREA -->
-    <main class="main-feed-area">
-      <!-- Sticky Header -->
-      <div class="feed-header-sticky">
-        <div class="feed-title-bar">Home</div>
-        <div class="feed-tabs">
-          <div class="feed-tab active">For You</div>
-          <div class="feed-tab">Following</div>
-          <div class="feed-tab">Latest</div>
+        <div class="brand-logo" style="margin-bottom: 14px;">
+          <div class="brand-icon"><span class="material-symbols-outlined" style="font-size: 20px;">hub</span></div>
+          <span>Commun<span style="color: var(--accent-primary);">.</span></span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; max-width: 320px; line-height: 1.6; margin-bottom: 20px;">
+          The modern SaaS collaboration and growth platform for developers, open-source maintainers, and technical organizations.
+        </p>
+        <div style="display: flex; gap: 10px;">
+          <span class="badge badge-emerald" style="font-size: 0.72rem;">● Systems Operational</span>
+          <span class="badge badge-primary" style="font-size: 0.72rem;">v2.4 Production</span>
         </div>
       </div>
 
-      <!-- Quick Composer Box -->
-      <div class="composer-box">
-        <div class="composer-input-row" onclick="window.location.href='write.html'">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="user-avatar" />
-          <div class="composer-fake-input">What are you building or learning today?</div>
+      <div>
+        <h4 style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-pure); margin-bottom: 14px; letter-spacing: 0.05em;">Product</h4>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--text-secondary);">
+          <li><a href="feed.html">Developer Feed</a></li>
+          <li><a href="projects.html">Project Hub</a></li>
+          <li><a href="discussions.html">Technical Discussions</a></li>
+          <li><a href="opportunities.html">Jobs & Grants</a></li>
+          <li><a href="workspace.html">Organization SaaS</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-pure); margin-bottom: 14px; letter-spacing: 0.05em;">Discovery</h4>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--text-secondary);">
+          <li><a href="people.html">People & Engineers</a></li>
+          <li><a href="communities.html">Tech Communities</a></li>
+          <li><a href="events.html">Hackathons & Events</a></li>
+          <li><a href="resources.html">Resource Hub</a></li>
+          <li><a href="discover.html">Global Search</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-pure); margin-bottom: 14px; letter-spacing: 0.05em;">Company</h4>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--text-secondary);">
+          <li><a href="about.html">About Commun</a></li>
+          <li><a href="pricing.html">Pricing & Plans</a></li>
+          <li><a href="settings.html">Security & Privacy</a></li>
+          <li><a href="https://github.com" target="_blank">Open Source</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-pure); margin-bottom: 14px; letter-spacing: 0.05em;">Appearance</h4>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn btn-secondary btn-sm" data-set-theme="obsidian" style="justify-content: flex-start; font-size: 0.78rem;">
+            <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #08090d; border: 1px solid #6366f1;"></span>
+            Dark Obsidian
+          </button>
+          <button class="btn btn-secondary btn-sm" data-set-theme="midnight" style="justify-content: flex-start; font-size: 0.78rem;">
+            <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #060914; border: 1px solid #3b82f6;"></span>
+            Midnight Blue
+          </button>
+          <button class="btn btn-secondary btn-sm" data-set-theme="matrix" style="justify-content: flex-start; font-size: 0.78rem;">
+            <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #050b08; border: 1px solid #10b981;"></span>
+            Cyber Matrix
+          </button>
         </div>
       </div>
+    </div>
 
-      <!-- Feed Post Items -->
-      <div class="feed-container">
-        
-        <!-- Post 1 -->
-        <article class="post-item" data-href="article.html">
-          <div class="post-meta-row">
-            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Marcus Chen" class="user-avatar" style="width: 24px; height: 24px;" />
-            <span class="post-author-name">Marcus Chen</span>
-            <span>·</span>
-            <span>2h ago</span>
-            <span>·</span>
-            <span class="post-tag">Docker</span>
-          </div>
-          <div class="post-body-row">
-            <div class="post-content-col">
-              <h2 class="post-title">How I finally understood Docker networking without the headaches</h2>
-              <p class="post-excerpt">
-                Bridged networks, host mode, overlay networks, and DNS resolution inside containers explained with clear mental models instead of abstract diagrams.
-              </p>
-            </div>
-            <img src="https://images.unsplash.com/photo-1605745341112-85968b19335b?w=300&auto=format&fit=crop&q=80" alt="Docker Networking" class="post-thumb" />
-          </div>
-          <div class="post-actions-row">
-            <div class="action-btn-group">
-              <button class="action-btn btn-like">
-                <span class="material-symbols-outlined">favorite</span>
-                <span class="like-count">142</span>
-              </button>
-              <button class="action-btn">
-                <span class="material-symbols-outlined">chat_bubble</span>
-                <span>28</span>
-              </button>
-              <button class="action-btn btn-save">
-                <span class="material-symbols-outlined">bookmark</span>
-              </button>
-            </div>
-            <span>6 min read</span>
-          </div>
-        </article>
-
-        <!-- Post 2 -->
-        <article class="post-item" data-href="article.html">
-          <div class="post-meta-row">
-            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80" alt="Sarah Jenkins" class="user-avatar" style="width: 24px; height: 24px;" />
-            <span class="post-author-name">Sarah Jenkins</span>
-            <span>·</span>
-            <span>4h ago</span>
-            <span>·</span>
-            <span class="post-tag">Backend</span>
-          </div>
-          <div class="post-body-row">
-            <div class="post-content-col">
-              <h2 class="post-title">Building a production-ready Spring Boot 3 API: The patterns I swear by</h2>
-              <p class="post-excerpt">
-                A pragmatic walkthrough of clean domain architecture, structured logging, RFC-7807 error handling, and graceful database migrations in enterprise Java.
-              </p>
-            </div>
-            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&auto=format&fit=crop&q=80" alt="Spring Boot" class="post-thumb" />
-          </div>
-          <div class="post-actions-row">
-            <div class="action-btn-group">
-              <button class="action-btn btn-like">
-                <span class="material-symbols-outlined">favorite</span>
-                <span class="like-count">389</span>
-              </button>
-              <button class="action-btn">
-                <span class="material-symbols-outlined">chat_bubble</span>
-                <span>45</span>
-              </button>
-              <button class="action-btn btn-save">
-                <span class="material-symbols-outlined">bookmark</span>
-              </button>
-            </div>
-            <span>11 min read</span>
-          </div>
-        </article>
-
-        <!-- Post 3 -->
-        <article class="post-item" data-href="article.html">
-          <div class="post-meta-row">
-            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=80" alt="Elena Rostova" class="user-avatar" style="width: 24px; height: 24px;" />
-            <span class="post-author-name">Elena Rostova</span>
-            <span>·</span>
-            <span>6h ago</span>
-            <span>·</span>
-            <span class="post-tag">System Design</span>
-          </div>
-          <div class="post-body-row">
-            <div class="post-content-col">
-              <h2 class="post-title">Redis caching patterns I actually use in high-throughput services</h2>
-              <p class="post-excerpt">
-                Cache-aside, write-through, handling cache stampedes with probabilistic early expiration, and why Lua scripts saved our production cluster last week.
-              </p>
-            </div>
-            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=300&auto=format&fit=crop&q=80" alt="Redis System" class="post-thumb" />
-          </div>
-          <div class="post-actions-row">
-            <div class="action-btn-group">
-              <button class="action-btn btn-like">
-                <span class="material-symbols-outlined">favorite</span>
-                <span class="like-count">512</span>
-              </button>
-              <button class="action-btn">
-                <span class="material-symbols-outlined">chat_bubble</span>
-                <span>63</span>
-              </button>
-              <button class="action-btn btn-save">
-                <span class="material-symbols-outlined">bookmark</span>
-              </button>
-            </div>
-            <span>8 min read</span>
-          </div>
-        </article>
-
-        <!-- Post 4 -->
-        <article class="post-item" data-href="article.html">
-          <div class="post-meta-row">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="David Rodriguez" class="user-avatar" style="width: 24px; height: 24px;" />
-            <span class="post-author-name">David Rodriguez</span>
-            <span>·</span>
-            <span>12h ago</span>
-            <span>·</span>
-            <span class="post-tag">PostgreSQL</span>
-          </div>
-          <div class="post-body-row">
-            <div class="post-content-col">
-              <h2 class="post-title">PostgreSQL indexing explained through real query explain plans</h2>
-              <p class="post-excerpt">
-                Stop blindly adding B-Tree indexes. Here is how Postgres scans indexes, when Bitmap Heap Scans kick in, and when BRIN or GIN indexes cut query latency by 90%.
-              </p>
-            </div>
-            <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=300&auto=format&fit=crop&q=80" alt="Postgres Index" class="post-thumb" />
-          </div>
-          <div class="post-actions-row">
-            <div class="action-btn-group">
-              <button class="action-btn btn-like">
-                <span class="material-symbols-outlined">favorite</span>
-                <span class="like-count">274</span>
-              </button>
-              <button class="action-btn">
-                <span class="material-symbols-outlined">chat_bubble</span>
-                <span>19</span>
-              </button>
-              <button class="action-btn btn-save">
-                <span class="material-symbols-outlined">bookmark</span>
-              </button>
-            </div>
-            <span>9 min read</span>
-          </div>
-        </article>
-
-        <!-- Post 5 -->
-        <article class="post-item" data-href="article.html">
-          <div class="post-meta-row">
-            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80" alt="Alex Rivera" class="user-avatar" style="width: 24px; height: 24px;" />
-            <span class="post-author-name">Alex Rivera</span>
-            <span>·</span>
-            <span>Yesterday</span>
-            <span>·</span>
-            <span class="post-tag">Kubernetes</span>
-          </div>
-          <div class="post-body-row">
-            <div class="post-content-col">
-              <h2 class="post-title">Learning Kubernetes by deliberately breaking production clusters</h2>
-              <p class="post-excerpt">
-                What happens when a node runs out of disk? How do readiness probes actually prevent traffic drops? Real-world failure scenarios and recovery drills.
-              </p>
-            </div>
-            <img src="https://images.unsplash.com/photo-1618401471353-b98aedd04e11?w=300&auto=format&fit=crop&q=80" alt="Kubernetes" class="post-thumb" />
-          </div>
-          <div class="post-actions-row">
-            <div class="action-btn-group">
-              <button class="action-btn btn-like">
-                <span class="material-symbols-outlined">favorite</span>
-                <span class="like-count">621</span>
-              </button>
-              <button class="action-btn">
-                <span class="material-symbols-outlined">chat_bubble</span>
-                <span>88</span>
-              </button>
-              <button class="action-btn btn-save">
-                <span class="material-symbols-outlined">bookmark</span>
-              </button>
-            </div>
-            <span>14 min read</span>
-          </div>
-        </article>
-
+    <div style="max-width: var(--max-content-width); margin: 0 auto; border-top: 1px solid var(--border-dim); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); flex-wrap: wrap; gap: 10px;">
+      <div>© 2026 Commun Technologies, Inc. Build. Connect. Grow. Together.</div>
+      <div style="display: flex; gap: 16px;">
+        <a href="settings.html" style="color: var(--text-muted);">Terms</a>
+        <a href="settings.html" style="color: var(--text-muted);">Privacy</a>
+        <a href="settings.html" style="color: var(--text-muted);">Status</a>
       </div>
-    </main>
+    </div>
+  </footer>
 
-    <!-- RIGHT DISCOVERY SIDEBAR -->
-    <aside class="right-sidebar">
-      <!-- Search Input -->
-      <div class="sidebar-search-box">
-        <span class="material-symbols-outlined sidebar-search-icon">search</span>
-        <input type="text" class="sidebar-search-input" placeholder="Search Commun.dev..." onclick="window.location.href='explore.html'" />
+  <!-- Floating Commun AI Assistant Button -->
+  <button id="ai-fab-btn" class="ai-fab" title="Open Commun AI Copilot">
+    <span class="material-symbols-outlined" style="font-size: 18px;">auto_awesome</span>
+    <span>Commun AI</span>
+  </button>
+
+  <!-- Commun AI Assistant Drawer -->
+  <aside id="ai-assistant-drawer" class="ai-drawer">
+    <div class="modal-header" style="background: var(--bg-card-subtle);">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-outlined" style="color: var(--accent-purple); font-size: 22px;">auto_awesome</span>
+        <h3 style="font-size: 1rem; font-weight: 700; color: #fff;">Commun AI Copilot</h3>
       </div>
+      <button id="ai-drawer-close" class="btn btn-ghost btn-sm" style="padding: 4px;"><span class="material-symbols-outlined">close</span></button>
+    </div>
 
-      <!-- Recommended Topics -->
-      <div class="sidebar-card">
-        <div class="sidebar-card-title">Explore Topics</div>
-        <div class="topic-chip-grid">
-          <a href="explore.html" class="topic-chip">Backend</a>
-          <a href="explore.html" class="topic-chip">System Design</a>
-          <a href="explore.html" class="topic-chip">Docker &amp; K8s</a>
-          <a href="explore.html" class="topic-chip">PostgreSQL</a>
-          <a href="explore.html" class="topic-chip">Spring Boot</a>
-          <a href="explore.html" class="topic-chip">Rust</a>
-          <a href="explore.html" class="topic-chip">TypeScript</a>
-          <a href="explore.html" class="topic-chip">DevOps</a>
-        </div>
+    <!-- AI Presets -->
+    <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 6px; background: var(--bg-input);">
+      <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">Quick Queries</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span class="badge badge-primary ai-preset-pill" style="cursor: pointer;" data-prompt="Find developers with Spring Boot + AWS experience">Spring Boot + AWS Devs</span>
+        <span class="badge badge-blue ai-preset-pill" style="cursor: pointer;" data-prompt="Find open-source projects I can contribute to in Rust or React">Rust/React Projects</span>
+        <span class="badge badge-emerald ai-preset-pill" style="cursor: pointer;" data-prompt="Find opportunities matching my skills">Match Opportunities</span>
       </div>
+    </div>
 
-      <!-- Who to Follow -->
-      <div class="sidebar-card">
-        <div class="sidebar-card-title">Writers to Follow</div>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          
-          <div class="creator-item-row">
-            <div class="creator-item-info">
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Aria Vance" class="user-avatar" style="width: 34px; height: 34px;" />
-              <div style="min-width: 0;">
-                <div style="font-weight: 600; font-size: 0.88rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Aria Vance</div>
-                <div style="font-size: 0.75rem; color: var(--text-muted);">Cloud &amp; Rust</div>
-              </div>
-            </div>
-            <button class="btn-follow-sm">Follow</button>
-          </div>
-
-          <div class="creator-item-row">
-            <div class="creator-item-info">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Liam Keller" class="user-avatar" style="width: 34px; height: 34px;" />
-              <div style="min-width: 0;">
-                <div style="font-weight: 600; font-size: 0.88rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Liam Keller</div>
-                <div style="font-size: 0.75rem; color: var(--text-muted);">Database internals</div>
-              </div>
-            </div>
-            <button class="btn-follow-sm">Follow</button>
-          </div>
-
-          <div class="creator-item-row">
-            <div class="creator-item-info">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Sofia Patel" class="user-avatar" style="width: 34px; height: 34px;" />
-              <div style="min-width: 0;">
-                <div style="font-weight: 600; font-size: 0.88rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Sofia Patel</div>
-                <div style="font-size: 0.75rem; color: var(--text-muted);">Distributed systems</div>
-              </div>
-            </div>
-            <button class="btn-follow-sm">Follow</button>
-          </div>
-
-        </div>
+    <!-- Messages Container -->
+    <div id="ai-messages-list" style="flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column;">
+      <div style="align-self: flex-start; background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 12px; border-radius: 12px 12px 12px 2px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px;">
+        <strong style="color: #fff; display: block; margin-bottom: 4px;">Hello engineer 👋</strong>
+        I am your Commun Copilot. Ask me to find matching collaborators, analyze projects, recommend open RFCS, or locate hiring opportunities across our graph.
       </div>
+    </div>
 
-      <!-- Trending Discussions Preview -->
-      <div class="sidebar-card">
-        <div class="sidebar-card-title">Community Pulse</div>
-        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
-          <a href="community.html" style="color: var(--text-primary); font-weight: 500; line-height: 1.4;">
-            "What's your preferred approach to multi-tenant DB isolation?"
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">34 replies · 1h ago</div>
-          </a>
-          <a href="community.html" style="color: var(--text-primary); font-weight: 500; line-height: 1.4;">
-            "How are you handling microservice observability in 2026?"
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">52 replies · 3h ago</div>
-          </a>
-        </div>
+    <!-- AI Input -->
+    <div style="padding: 12px 16px; border-top: 1px solid var(--border-subtle); background: var(--bg-card);">
+      <div style="display: flex; gap: 8px;">
+        <input type="text" id="ai-chat-input" class="input-control" placeholder="Ask Commun AI anything..." style="font-size: 0.85rem; padding: 8px 12px;">
+        <button id="ai-send-btn" class="btn btn-primary btn-sm" style="padding: 8px 14px;"><span class="material-symbols-outlined" style="font-size: 18px;">send</span></button>
       </div>
+    </div>
+  </aside>
 
-      <!-- Footer Micro Links -->
-      <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 8px 12px; padding: 0 4px;">
-        <a href="#">About</a>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">RSS</a>
-        <span>© 2026 Commun.dev</span>
+  <!-- Global Command Palette Modal (Cmd + K) -->
+  <div id="cmd-palette-modal" class="modal-backdrop">
+    <div class="cmd-palette" style="width: 100%;">
+      <div class="cmd-input-wrap">
+        <span class="material-symbols-outlined" style="color: var(--accent-primary);">search</span>
+        <input type="text" id="cmd-search-input" placeholder="Search developers, projects, jobs, discussions, commands...">
+        <kbd style="font-family: var(--font-mono); font-size: 0.72rem; background: var(--bg-card-subtle); border: 1px solid var(--border-muted); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">ESC</kbd>
       </div>
-    </aside>
-
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <nav class="mobile-bottom-nav">
-      <a href="index.html" class="mobile-nav-item active">
-        <span class="material-symbols-outlined fill">home</span>
-        <span>Home</span>
-      </a>
-      <a href="explore.html" class="mobile-nav-item">
-        <span class="material-symbols-outlined">explore</span>
-        <span>Explore</span>
-      </a>
-      <a href="write.html" class="mobile-nav-item" style="color: var(--accent-orange);">
-        <span class="material-symbols-outlined">add_circle</span>
-        <span>Create</span>
-      </a>
-      <a href="community.html" class="mobile-nav-item">
-        <span class="material-symbols-outlined">forum</span>
-        <span>Community</span>
-      </a>
-      <a href="profile.html" class="mobile-nav-item">
-        <span class="material-symbols-outlined">person</span>
-        <span>Profile</span>
-      </a>
-    </nav>
-
+      <div id="cmd-results-list" class="cmd-results"></div>
+    </div>
   </div>
 
   <script type="module" src="./main.js"></script>

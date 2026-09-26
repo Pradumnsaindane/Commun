@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Discussions & Q&A — Commun</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <a href="index.html" class="brand-logo">
+            <div class="brand-icon"><span class="material-symbols-outlined" style="font-size: 20px;">hub</span></div>
+            <span class="sidebar-text">Commun<span style="color: var(--accent-primary);">.</span></span>
+          </a>
+        </div>
+
+        <a href="workspace.html" class="workspace-switcher">
+          <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+            <div style="width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, #a855f7, #6366f1); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff;">A</div>
+            <div class="sidebar-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Acme Cloud Platform</div>
+              <div style="font-size: 0.7rem; color: var(--accent-emerald);">Pro Organization</div>
+            </div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 16px; color: var(--text-dim);">unfold_more</span>
+        </a>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Network & Feed</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="feed.html"><span class="material-symbols-outlined">dynamic_feed</span> <span class="sidebar-text">Feed</span></a></li>
+            <li class="nav-item"><a href="discover.html"><span class="material-symbols-outlined">explore</span> <span class="sidebar-text">Discover</span></a></li>
+            <li class="nav-item"><a href="people.html"><span class="material-symbols-outlined">group</span> <span class="sidebar-text">People</span> <span class="nav-badge">12</span></a></li>
+            <li class="nav-item"><a href="projects.html"><span class="material-symbols-outlined">folder_code</span> <span class="sidebar-text">Projects</span></a></li>
+            <li class="nav-item"><a href="opportunities.html"><span class="material-symbols-outlined">work</span> <span class="sidebar-text">Opportunities</span> <span class="nav-badge unread">8 New</span></a></li>
+            <li class="nav-item active"><a href="discussions.html"><span class="material-symbols-outlined">forum</span> <span class="sidebar-text">Discussions</span></a></li>
+            <li class="nav-item"><a href="communities.html"><span class="material-symbols-outlined">diversity_3</span> <span class="sidebar-text">Communities</span></a></li>
+            <li class="nav-item"><a href="events.html"><span class="material-symbols-outlined">event</span> <span class="sidebar-text">Events</span></a></li>
+            <li class="nav-item"><a href="resources.html"><span class="material-symbols-outlined">library_books</span> <span class="sidebar-text">Resource Hub</span></a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Workspace SaaS</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="workspace.html"><span class="material-symbols-outlined">domain</span> <span class="sidebar-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="messages.html"><span class="material-symbols-outlined">chat</span> <span class="sidebar-text">Messages</span> <span class="nav-badge unread">3</span></a></li>
+            <li class="nav-item"><a href="notifications.html"><span class="material-symbols-outlined">notifications</span> <span class="sidebar-text">Notifications</span></a></li>
+            <li class="nav-item"><a href="saved.html"><span class="material-symbols-outlined">bookmark</span> <span class="sidebar-text">Saved Items</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-summary">
+          <div class="avatar avatar-sm">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Alex Chen">
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="sidebar-text" style="flex: 1; overflow: hidden;">
+            <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Alex Chen</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);">@alexchen • Senior Eng</div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 18px; color: var(--text-dim);">settings</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <div class="search-bar" style="width: 100%; max-width: 480px;">
+            <span class="material-symbols-outlined" style="color: var(--text-muted); font-size: 18px;">search</span>
+            <input type="text" placeholder="Search questions, bug solutions, RFCs... (Press ⌘K)" data-trigger="cmd-palette" readonly style="cursor: pointer;">
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary btn-sm btn-glow" data-open-modal="modal-ask-question">
+            <span class="material-symbols-outlined">add_comment</span>
+            <span>Ask Question</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- Tech Stack Category Chips -->
+        <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 20px;">
+          <span class="badge badge-primary" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">All Stacks</span>
+          <span class="badge" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">Java & Spring Boot</span>
+          <span class="badge" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">Rust & Systems</span>
+          <span class="badge" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">React & Next.js</span>
+          <span class="badge" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">Python & AI/ML</span>
+          <span class="badge" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">Kubernetes & AWS</span>
+          <span class="badge" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">System Design & DSA</span>
+          <span class="badge" style="cursor: pointer; padding: 6px 14px; font-size: 0.82rem;">DevOps & Docker</span>
+        </div>
+
+        <div class="layout-3-col">
+          <!-- Discussions Questions Stream -->
+          <div>
+            <!-- Question 1 -->
+            <article class="card card-interactive" style="margin-bottom: 18px;" onclick="window.location.href='discussion.html'">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div class="avatar avatar-sm"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Marcus"></div>
+                  <div>
+                    <span style="font-weight: 600; color: #fff; font-size: 0.85rem;">Marcus Vance</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">asked in <strong style="color: var(--accent-primary);">Kubernetes & Go</strong> • 3h ago</span>
+                  </div>
+                </div>
+                <span class="badge badge-emerald" style="font-size: 0.72rem;">
+                  <span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span> Accepted Answer
+                </span>
+              </div>
+
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">
+                How to prevent deadlock in custom Kubernetes controller when watching MutatingWebhookConfigurations?
+              </h3>
+              <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 14px;">
+                When our Go operator updates a webhook configuration object while an admission request is inflight, the API server hangs waiting for leader lease renewal. What is the canonical pattern to bypass self-admission?
+              </p>
+
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;">
+                <span class="badge">#kubernetes</span>
+                <span class="badge">#golang</span>
+                <span class="badge">#webhooks</span>
+                <span class="badge">#admission-controllers</span>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 10px; font-size: 0.82rem; color: var(--text-muted);">
+                <div style="display: flex; gap: 16px;">
+                  <span style="color: var(--accent-emerald); font-weight: 700;">▲ 42 Upvotes</span>
+                  <span>💬 9 Answers</span>
+                  <span>👁 1,240 Views</span>
+                </div>
+                <span style="color: var(--accent-primary); font-weight: 600;">Read Accepted Solution →</span>
+              </div>
+            </article>
+
+            <!-- Question 2 -->
+            <article class="card card-interactive" style="margin-bottom: 18px;" onclick="window.location.href='discussion.html'">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div class="avatar avatar-sm"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Kavita"></div>
+                  <div>
+                    <span style="font-weight: 600; color: #fff; font-size: 0.85rem;">Kavita Patel</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">asked in <strong style="color: var(--accent-cyan);">Java & Spring Boot</strong> • 6h ago</span>
+                  </div>
+                </div>
+                <span class="badge badge-amber" style="font-size: 0.72rem;">5 Answers Active</span>
+              </div>
+
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-pure); margin-bottom: 8px;">
+                Virtual Threads (Project Loom) in Spring Boot 3.3: ThreadLocal pool exhaustion on JDBC connection spikes
+              </h3>
+              <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 14px;">
+                We switched to carrier threads using Tomcat virtual thread executor, but HikariCP pools are throwing ConnectionTimeout whenever 10k concurrent virtual threads pin carrier threads on synchronized blocks.
+              </p>
+
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;">
+                <span class="badge">#java21</span>
+                <span class="badge">#spring-boot</span>
+                <span class="badge">#hikaricp</span>
+                <span class="badge">#virtual-threads</span>
+              </div>
+
+              <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 10px; font-size: 0.82rem; color: var(--text-muted);">
+                <div style="display: flex; gap: 16px;">
+                  <span style="color: var(--accent-cyan); font-weight: 700;">▲ 68 Upvotes</span>
+                  <span>💬 14 Answers</span>
+                  <span>👁 2,100 Views</span>
+                </div>
+                <span style="color: var(--accent-cyan); font-weight: 600;">Join Discussion →</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- Discussions Right Sidebar -->
+          <aside class="layout-sidebar-right">
+            <div class="card">
+              <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; text-transform: uppercase; margin-bottom: 12px;">
+                Top Solvers This Month
+              </h4>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="avatar avatar-xs"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"></div>
+                    <span style="font-weight: 600; font-size: 0.82rem; color: #fff;">Alex Chen</span>
+                  </div>
+                  <span class="badge badge-emerald" style="font-size: 0.7rem;">34 Solved</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="avatar avatar-xs"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"></div>
+                    <span style="font-weight: 600; font-size: 0.82rem; color: #fff;">Devin Liu</span>
+                  </div>
+                  <span class="badge badge-emerald" style="font-size: 0.7rem;">28 Solved</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-nav-bar">
+    <a href="feed.html" class="mobile-nav-item"><span class="material-symbols-outlined">dynamic_feed</span><span>Feed</span></a>
+    <a href="discover.html" class="mobile-nav-item"><span class="material-symbols-outlined">explore</span><span>Discover</span></a>
+    <a href="projects.html" class="mobile-nav-item"><span class="material-symbols-outlined">folder_code</span><span>Projects</span></a>
+    <a href="discussions.html" class="mobile-nav-item active"><span class="material-symbols-outlined">forum</span><span>Discuss</span></a>
+    <a href="profile.html" class="mobile-nav-item"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+  </nav>
+
+  <!-- Ask Question Modal -->
+  <div id="modal-ask-question" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: #fff;">Ask a Technical Question</h3>
+        <button class="btn btn-ghost btn-sm" data-close-modal><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label class="input-label">Question Headline</label>
+          <input type="text" class="input-control" placeholder="Be specific, e.g. How to handle connection pool leak in Tokio async runtime...">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Tech Stack Category</label>
+          <select class="select-control">
+            <option>Rust & Systems</option>
+            <option>Java & Spring Boot</option>
+            <option>Kubernetes & Cloud Native</option>
+            <option>React & TypeScript</option>
+            <option>Python & AI/ML</option>
+            <option>System Design</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Detailed Problem & Code Snippet</label>
+          <textarea class="textarea-control" rows="4" placeholder="Explain what you expected, what happened, and paste reproducible code..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" data-close-modal>Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="closeModal('modal-ask-question'); showToast('🎉 Question published to technical discussion hub!');">
+          Publish Question
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Command Palette Modal (Cmd + K) -->
+  <div id="cmd-palette-modal" class="modal-backdrop">
+    <div class="cmd-palette" style="width: 100%;">
+      <div class="cmd-input-wrap">
+        <span class="material-symbols-outlined" style="color: var(--accent-primary);">search</span>
+        <input type="text" id="cmd-search-input" placeholder="Search developers, projects, jobs, discussions, commands...">
+        <kbd style="font-family: var(--font-mono); font-size: 0.72rem; background: var(--bg-card-subtle); border: 1px solid var(--border-muted); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">ESC</kbd>
+      </div>
+      <div id="cmd-results-list" class="cmd-results"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

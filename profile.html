@@ -1,383 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pradumn Saindane (@pradumnsaindane) — Commun</title>
-  <link rel="stylesheet" href="./style.css" />
-  <style>
-    .profile-tab-content { display: none; }
-    .profile-tab-content.active { display: block; }
-    
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 16px;
-    }
-    .modal-backdrop.open { display: flex; }
-    .modal-box {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-muted);
-      border-radius: var(--radius-lg);
-      width: 100%;
-      max-width: 480px;
-      padding: 24px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-    }
-    .modal-input {
-      width: 100%;
-      background: var(--bg-primary);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-      color: #fff;
-      font-size: 0.92rem;
-      margin-top: 6px;
-      outline: none;
-    }
-    .modal-input:focus { border-color: var(--accent-orange); }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Chen (@alexchen) — Commun Developer Profile</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./logo.svg" type="image/svg+xml">
 </head>
 <body>
-  <div class="app-container">
-    
-    <!-- LEFT SIDEBAR -->
-    <aside class="left-sidebar">
+  <div class="bg-mesh"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
       <div>
-        <a href="index.html" class="brand-logo">
-          <div class="brand-badge">C</div>
-          <span>Commun<span style="color: var(--accent-orange);">.dev</span></span>
+        <div class="sidebar-header">
+          <a href="index.html" class="brand-logo">
+            <div class="brand-icon"><span class="material-symbols-outlined" style="font-size: 20px;">hub</span></div>
+            <span class="sidebar-text">Commun<span style="color: var(--accent-primary);">.</span></span>
+          </a>
+        </div>
+
+        <a href="workspace.html" class="workspace-switcher">
+          <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+            <div style="width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, #a855f7, #6366f1); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff;">A</div>
+            <div class="sidebar-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Acme Cloud Platform</div>
+              <div style="font-size: 0.7rem; color: var(--accent-emerald);">Pro Organization</div>
+            </div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 16px; color: var(--text-dim);">unfold_more</span>
         </a>
 
-        <nav class="nav-group">
-          <a href="index.html" class="nav-item">
-            <span class="material-symbols-outlined">home</span>
-            <span>Home</span>
-          </a>
-          <a href="explore.html" class="nav-item">
-            <span class="material-symbols-outlined">explore</span>
-            <span>Explore</span>
-          </a>
-          <a href="subscriptions.html" class="nav-item">
-            <span class="material-symbols-outlined">bookmarks</span>
-            <span>Subscriptions</span>
-          </a>
-          <a href="community.html" class="nav-item">
-            <span class="material-symbols-outlined">forum</span>
-            <span>Community</span>
-          </a>
-          <a href="saved.html" class="nav-item">
-            <span class="material-symbols-outlined">bookmark_border</span>
-            <span>Saved</span>
-          </a>
-        </nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Network & Feed</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="feed.html"><span class="material-symbols-outlined">dynamic_feed</span> <span class="sidebar-text">Feed</span></a></li>
+            <li class="nav-item"><a href="discover.html"><span class="material-symbols-outlined">explore</span> <span class="sidebar-text">Discover</span></a></li>
+            <li class="nav-item"><a href="people.html"><span class="material-symbols-outlined">group</span> <span class="sidebar-text">People</span> <span class="nav-badge">12</span></a></li>
+            <li class="nav-item"><a href="projects.html"><span class="material-symbols-outlined">folder_code</span> <span class="sidebar-text">Projects</span></a></li>
+            <li class="nav-item"><a href="opportunities.html"><span class="material-symbols-outlined">work</span> <span class="sidebar-text">Opportunities</span> <span class="nav-badge unread">8 New</span></a></li>
+            <li class="nav-item"><a href="discussions.html"><span class="material-symbols-outlined">forum</span> <span class="sidebar-text">Discussions</span></a></li>
+            <li class="nav-item"><a href="communities.html"><span class="material-symbols-outlined">diversity_3</span> <span class="sidebar-text">Communities</span></a></li>
+            <li class="nav-item"><a href="events.html"><span class="material-symbols-outlined">event</span> <span class="sidebar-text">Events</span></a></li>
+            <li class="nav-item"><a href="resources.html"><span class="material-symbols-outlined">library_books</span> <span class="sidebar-text">Resource Hub</span></a></li>
+          </ul>
+        </div>
 
-        <div class="nav-divider"></div>
-
-        <nav class="nav-group">
-          <a href="profile.html" class="nav-item active">
-            <span class="material-symbols-outlined fill">account_circle</span>
-            <span>My Profile</span>
-          </a>
-        </nav>
-
-        <a href="write.html" class="btn-create-primary">
-          <span class="material-symbols-outlined" style="font-size: 18px;">edit_square</span>
-          <span>Create</span>
-        </a>
+        <div class="nav-section">
+          <div class="nav-section-title">Workspace SaaS</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="workspace.html"><span class="material-symbols-outlined">domain</span> <span class="sidebar-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="messages.html"><span class="material-symbols-outlined">chat</span> <span class="sidebar-text">Messages</span> <span class="nav-badge unread">3</span></a></li>
+            <li class="nav-item"><a href="notifications.html"><span class="material-symbols-outlined">notifications</span> <span class="sidebar-text">Notifications</span></a></li>
+            <li class="nav-item"><a href="saved.html"><span class="material-symbols-outlined">bookmark</span> <span class="sidebar-text">Saved Items</span></a></li>
+          </ul>
+        </div>
       </div>
 
-      <div class="nav-group" style="padding-top: 16px; border-top: 1px solid var(--border-subtle);">
-        <a href="profile.html" class="nav-item">
-          <span class="material-symbols-outlined">settings</span>
-          <span>Settings</span>
-        </a>
-        <a href="community.html" class="nav-item">
-          <span class="material-symbols-outlined">help_outline</span>
-          <span>Help</span>
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-summary" style="border-color: var(--accent-primary);">
+          <div class="avatar avatar-sm">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Alex Chen">
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="sidebar-text" style="flex: 1; overflow: hidden;">
+            <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Alex Chen</div>
+            <div style="font-size: 0.7rem; color: var(--accent-emerald);">Viewing Own Profile</div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 18px; color: var(--text-dim);">badge</span>
         </a>
       </div>
     </aside>
 
-    <!-- CENTER PROFILE AREA -->
-    <main class="main-feed-area" style="max-width: 800px;">
-      
-      <!-- Profile Header Hero -->
-      <div style="padding: 32px 24px 20px; border-bottom: 1px solid var(--border-subtle);">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px;">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Pradumn Saindane" class="user-avatar" style="width: 76px; height: 76px; border: 2px solid var(--border-muted);" />
-          <div style="display: flex; gap: 10px;">
-            <button class="btn-create-primary" style="margin-top: 0; padding: 7px 18px; width: auto; font-size: 0.85rem;" onclick="showToast('Profile link copied')">
-              Share Profile
-            </button>
-            <button class="btn-follow-sm" style="padding: 7px 18px; font-size: 0.85rem;" onclick="openEditModal()">Edit Profile</button>
-          </div>
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <a href="feed.html" class="btn btn-ghost btn-sm" style="gap: 4px; color: var(--text-secondary);">
+            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span> Back to Feed
+          </a>
         </div>
-
-        <h1 id="profile-name-display" style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 4px; letter-spacing: -0.02em;">
-          Pradumn Saindane
-        </h1>
-        <div style="font-size: 0.88rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom: 14px;">
-          @pradumnsaindane
+        <div class="topbar-right">
+          <button class="btn btn-outline btn-sm" onclick="navigator.clipboard?.writeText(window.location.href); showToast('Profile link copied to clipboard!');">
+            <span class="material-symbols-outlined">share</span>
+            <span>Share Profile</span>
+          </button>
+          <a href="settings.html" class="btn btn-secondary btn-sm">
+            <span class="material-symbols-outlined">edit</span>
+            <span>Edit Profile</span>
+          </a>
         </div>
+      </header>
 
-        <p id="profile-bio-display" style="font-size: 0.95rem; color: #d1d5db; line-height: 1.6; max-width: 600px; margin-bottom: 16px;">
-          Full-Stack Developer &amp; Systems Engineer. Building products, learning in public, and writing deep-dives about software architecture, database internals, and distributed systems.
-        </p>
+      <div class="content-body" style="max-width: 1100px;">
+        <!-- Developer Profile Header Card -->
+        <div class="card card-glass" style="padding: 32px; margin-bottom: 24px; border: 1px solid var(--border-highlight); box-shadow: var(--shadow-lg);">
+          <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;">
+            <!-- Avatar with ring -->
+            <div class="avatar avatar-xl" style="width: 110px; height: 110px; border-radius: 20px; box-shadow: 0 0 30px rgba(99, 102, 241, 0.3); border: 2px solid var(--accent-primary);">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Alex Chen">
+              <span class="status-dot status-online" style="width: 16px; height: 16px; bottom: 2px; right: 2px;"></span>
+            </div>
 
-        <div style="display: flex; gap: 18px; font-size: 0.85rem; color: var(--text-muted);">
-          <span><strong style="color: #fff;">1,420</strong> Followers</span>
-          <span><strong style="color: #fff;">128</strong> Following</span>
-          <span id="profile-loc-display">📍 Mumbai / Remote</span>
-        </div>
-      </div>
+            <!-- Profile Info & Meta -->
+            <div style="flex: 1; min-width: 280px;">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px;">
+                <h1 style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; color: #fff;">Alex Chen</h1>
+                <span class="badge badge-primary" style="font-size: 0.78rem;">
+                  <span class="material-symbols-outlined" style="font-size: 14px;">verified</span> Verified Architect
+                </span>
+                <span class="badge badge-emerald" style="font-size: 0.75rem;">Open for Collab</span>
+              </div>
 
-      <!-- Profile Tabs -->
-      <div class="feed-tabs" style="padding: 0 24px; border-bottom: 1px solid var(--border-subtle);">
-        <div class="feed-tab active" onclick="switchProfileTab('articles', this)">Articles (4)</div>
-        <div class="feed-tab" onclick="switchProfileTab('discussions', this)">Discussions &amp; Replies (12)</div>
-        <div class="feed-tab" onclick="switchProfileTab('about', this)">About</div>
-      </div>
+              <div style="font-size: 0.95rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 8px;">
+                @alexchen • Senior Distributed Systems & Cloud Engineer
+              </div>
 
-      <!-- Tab 1: Published Articles -->
-      <div id="tab-articles" class="profile-tab-content active feed-container">
-        
-        <article class="post-item" data-href="article.html">
-          <div class="post-meta-row">
-            <span>Published by Pradumn</span>
-            <span>·</span>
-            <span>3 days ago</span>
-            <span>·</span>
-            <span class="post-tag">PostgreSQL</span>
-          </div>
-          <div class="post-body-row">
-            <div class="post-content-col">
-              <h3 class="post-title">Understanding PostgreSQL MVCC: How dead tuples impact your storage and VACUUM tuning</h3>
-              <p class="post-excerpt">
-                Why UPDATE queries in Postgres are essentially an INSERT followed by a DELETE, and how autovacuum parameters prevent table bloat under sustained load.
+              <p style="color: var(--text-primary); font-size: 0.92rem; line-height: 1.6; max-width: 680px; margin-bottom: 14px;">
+                Ex-Stripe Infrastructure. Building high-throughput Raft consensus algorithms, kernel eBPF observability tooling, and distributed transaction runtimes in Rust and Go.
               </p>
-            </div>
-            <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=300&auto=format&fit=crop&q=80" alt="PostgreSQL" class="post-thumb" />
-          </div>
-          <div class="post-actions-row">
-            <div class="action-btn-group">
-              <button class="action-btn btn-like">
-                <span class="material-symbols-outlined">favorite</span>
-                <span class="like-count">245</span>
-              </button>
-              <button class="action-btn">
-                <span class="material-symbols-outlined">chat_bubble</span>
-                <span>31</span>
-              </button>
-            </div>
-            <span>8 min read</span>
-          </div>
-        </article>
 
-        <article class="post-item" data-href="article.html">
-          <div class="post-meta-row">
-            <span>Published by Pradumn</span>
-            <span>·</span>
-            <span>2 weeks ago</span>
-            <span>·</span>
-            <span class="post-tag">Architecture</span>
-          </div>
-          <div class="post-body-row">
-            <div class="post-content-col">
-              <h3 class="post-title">From zero to production: The architectural checklist for new SaaS backends</h3>
-              <p class="post-excerpt">
-                Authentication boundaries, structured JSON logging, rate limiting, and database connection pooling before launching to actual users.
-              </p>
+              <!-- Location, Links & Stats -->
+              <div style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span> San Francisco, CA (PST)
+                </span>
+                <a href="https://github.com" target="_blank" style="display: flex; align-items: center; gap: 4px; color: var(--text-primary);">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">terminal</span> github.com/alexchen
+                </a>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">domain</span> Acme Cloud Platform
+                </span>
+              </div>
+
+              <!-- Connection Counts -->
+              <div style="display: flex; gap: 20px; font-size: 0.88rem;">
+                <div><strong style="color: #fff;">1,420</strong> <span style="color: var(--text-muted);">Followers</span></div>
+                <div><strong style="color: #fff;">348</strong> <span style="color: var(--text-muted);">Following</span></div>
+                <div><strong style="color: var(--accent-primary);">248</strong> <span style="color: var(--text-muted);">Connections</span></div>
+              </div>
             </div>
-            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=300&auto=format&fit=crop&q=80" alt="Architecture" class="post-thumb" />
-          </div>
-          <div class="post-actions-row">
-            <div class="action-btn-group">
-              <button class="action-btn btn-like">
-                <span class="material-symbols-outlined">favorite</span>
-                <span class="like-count">412</span>
+
+            <!-- Primary CTAs -->
+            <div style="display: flex; flex-direction: column; gap: 10px; min-width: 160px;">
+              <button class="btn btn-primary btn-md btn-glow btn-follow-main" style="width: 100%;">
+                <span class="material-symbols-outlined">person_add</span> Connect
               </button>
-              <button class="action-btn">
-                <span class="material-symbols-outlined">chat_bubble</span>
-                <span>54</span>
+              <a href="messages.html" class="btn btn-secondary btn-md" style="width: 100%;">
+                <span class="material-symbols-outlined">chat</span> Message
+              </a>
+              <button class="btn btn-outline btn-sm" onclick="openModal('modal-collab-invite')">
+                <span class="material-symbols-outlined">handshake</span> Invite to Project
               </button>
             </div>
-            <span>10 min read</span>
-          </div>
-        </article>
-
-      </div>
-
-      <!-- Tab 2: Discussions & Replies -->
-      <div id="tab-discussions" class="profile-tab-content" style="padding: 8px 0;">
-        <div class="discussion-card" onclick="window.location.href='discussion.html'" style="cursor: pointer;">
-          <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Replied to discussion · 1 day ago</div>
-          <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 6px;">"What's the best way to structure a large Spring Boot multi-module project?"</h4>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-            "We decoupled our domain into pure POJOs without framework annotations and used contract interfaces for persistence. Sped up test suite execution by 4x."
-          </p>
-        </div>
-
-        <div class="discussion-card" onclick="window.location.href='discussion.html'" style="cursor: pointer;">
-          <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">Started thread · 5 days ago</div>
-          <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 6px;">"Docker networking debugging workflows for distributed staging setups"</h4>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-            "How do you inspect container-to-container latency without installing heavy telemetry sidecars?"
-          </p>
-        </div>
-      </div>
-
-      <!-- Tab 3: About -->
-      <div id="tab-about" class="profile-tab-content" style="padding: 24px;">
-        <h3 style="font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 12px;">Engineering Background</h3>
-        <p style="font-size: 0.95rem; color: #d1d5db; line-height: 1.7; margin-bottom: 24px;">
-          Software engineer focused on high-throughput backend services, modern TypeScript frontends, and reliable cloud deployments. Active open-source contributor and technical writer.
-        </p>
-
-        <h4 style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 10px;">Primary Tech Stack</h4>
-        <div class="topic-chip-grid" style="margin-bottom: 24px;">
-          <span class="topic-chip">Go</span>
-          <span class="topic-chip">TypeScript / Node.js</span>
-          <span class="topic-chip">Spring Boot &amp; Java</span>
-          <span class="topic-chip">PostgreSQL</span>
-          <span class="topic-chip">Redis</span>
-          <span class="topic-chip">Docker &amp; K8s</span>
-        </div>
-
-        <h4 style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 10px;">Social Links</h4>
-        <div style="display: flex; gap: 14px; font-size: 0.9rem;">
-          <a href="https://github.com" target="_blank" style="color: var(--accent-orange); font-weight: 500;">GitHub ↗</a>
-          <a href="https://twitter.com" target="_blank" style="color: var(--accent-orange); font-weight: 500;">Twitter/X ↗</a>
-          <a href="https://linkedin.com" target="_blank" style="color: var(--accent-orange); font-weight: 500;">LinkedIn ↗</a>
-        </div>
-      </div>
-
-    </main>
-
-    <!-- RIGHT DISCOVERY SIDEBAR -->
-    <aside class="right-sidebar">
-      <div class="sidebar-card">
-        <div class="sidebar-card-title">Pinned Stack &amp; Focus</div>
-        <div class="topic-chip-grid">
-          <span class="topic-chip">TypeScript</span>
-          <span class="topic-chip">Go</span>
-          <span class="topic-chip">Spring Boot</span>
-          <span class="topic-chip">PostgreSQL</span>
-          <span class="topic-chip">Docker</span>
-          <span class="topic-chip">Redis</span>
-        </div>
-      </div>
-
-      <div class="sidebar-card">
-        <div class="sidebar-card-title">Activity Metrics</div>
-        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
-          <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
-            <span>Published Articles</span>
-            <strong style="color: #fff;">4</strong>
-          </div>
-          <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
-            <span>Discussion Answers</span>
-            <strong style="color: #fff;">12</strong>
-          </div>
-          <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
-            <span>Total Reads</span>
-            <strong style="color: var(--accent-orange);">18.4k</strong>
           </div>
         </div>
-      </div>
-    </aside>
 
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <nav class="mobile-bottom-nav">
-      <a href="index.html" class="mobile-nav-item">
-        <span class="material-symbols-outlined">home</span>
-        <span>Home</span>
-      </a>
-      <a href="explore.html" class="mobile-nav-item">
-        <span class="material-symbols-outlined">explore</span>
-        <span>Explore</span>
-      </a>
-      <a href="write.html" class="mobile-nav-item" style="color: var(--accent-orange);">
-        <span class="material-symbols-outlined">add_circle</span>
-        <span>Create</span>
-      </a>
-      <a href="community.html" class="mobile-nav-item">
-        <span class="material-symbols-outlined">forum</span>
-        <span>Community</span>
-      </a>
-      <a href="profile.html" class="mobile-nav-item active">
-        <span class="material-symbols-outlined fill">person</span>
-        <span>Profile</span>
-      </a>
-    </nav>
+        <!-- GitHub Contribution Heatmap Grid -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <strong style="color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+              <span class="material-symbols-outlined" style="color: var(--accent-emerald);">calendar_month</span>
+              1,842 Contributions in the last year
+            </strong>
+            <div style="display: flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--text-muted);">
+              <span>Less</span>
+              <span style="width: 10px; height: 10px; background: var(--bg-card-subtle); border-radius: 2px;"></span>
+              <span style="width: 10px; height: 10px; background: #064e3b; border-radius: 2px;"></span>
+              <span style="width: 10px; height: 10px; background: #059669; border-radius: 2px;"></span>
+              <span style="width: 10px; height: 10px; background: #10b981; border-radius: 2px;"></span>
+              <span style="width: 10px; height: 10px; background: #34d399; border-radius: 2px;"></span>
+              <span>More</span>
+            </div>
+          </div>
 
-  </div>
+          <!-- Heatmap Canvas Simulation -->
+          <div style="display: grid; grid-template-columns: repeat(52, 1fr); gap: 3px; overflow-x: auto; padding-bottom: 6px;">
+            <!-- Simulating 52 weeks of 7 days -->
+            <script>
+              // inline script generator for heatmap boxes
+              for (let i = 0; i < 52 * 7; i++) {
+                const colors = ['#141722', '#141722', '#064e3b', '#059669', '#10b981', '#34d399'];
+                const c = colors[Math.floor(Math.random() * colors.length)];
+                document.write(`<div style="width: 100%; aspect-ratio: 1; background: ${c}; border-radius: 2px;" title="${Math.floor(Math.random()*8)} contributions"></div>`);
+              }
+            </script>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-top: 8px;">
+            <span>Jan 2025</span>
+            <span>Apr 2025</span>
+            <span>Jul 2025</span>
+            <span>Oct 2025</span>
+            <span>Present</span>
+          </div>
+        </div>
 
-  <!-- EDIT PROFILE MODAL -->
-  <div id="edit-profile-modal" class="modal-backdrop">
-    <div class="modal-box">
-      <h3 style="font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 16px;">Edit Profile</h3>
-      
-      <div style="margin-bottom: 14px;">
-        <label style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Display Name</label>
-        <input type="text" id="modal-input-name" class="modal-input" value="Pradumn Saindane" />
-      </div>
+        <!-- Profile Tabs -->
+        <div class="tab-nav" style="margin-bottom: 24px;">
+          <button class="tab-btn active"><span class="material-symbols-outlined">folder_code</span> Featured Projects (6)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">code</span> Tech Stack & Skills</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">work_history</span> Work Experience</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">forum</span> Discussions & Solutions (34)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">diversity_3</span> Communities (8)</button>
+        </div>
 
-      <div style="margin-bottom: 14px;">
-        <label style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Bio</label>
-        <textarea id="modal-input-bio" class="modal-input" style="height: 80px; resize: none;">Full-Stack Developer &amp; Systems Engineer. Building products, learning in public, and writing deep-dives about software architecture, database internals, and distributed systems.</textarea>
-      </div>
+        <!-- Tab 1: Featured Projects Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 32px;">
+          <!-- Project 1 -->
+          <div class="card card-interactive">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+              <div>
+                <a href="projects.html" style="font-weight: 700; color: #fff; font-size: 1.05rem;">raft-ebpf-core</a>
+                <span class="badge badge-emerald" style="font-size: 0.7rem; margin-left: 6px;">Production</span>
+              </div>
+              <button class="btn btn-ghost btn-sm btn-star-project"><span class="material-symbols-outlined">star</span> <span class="star-count">840</span></button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              Zero-copy Raft consensus state machine utilizing eBPF network rings for sub-millisecond multi-region commit pipelines.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px;">
+              <span class="badge badge-primary">Rust</span>
+              <span class="badge">eBPF</span>
+              <span class="badge">Linux C</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 10px; font-size: 0.78rem; color: var(--text-muted);">
+              <span>Updated 2 days ago</span>
+              <a href="projects.html" style="color: var(--accent-primary); font-weight: 600;">View Project Hub →</a>
+            </div>
+          </div>
 
-      <div style="margin-bottom: 20px;">
-        <label style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Location</label>
-        <input type="text" id="modal-input-loc" class="modal-input" value="📍 Mumbai / Remote" />
-      </div>
+          <!-- Project 2 -->
+          <div class="card card-interactive">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+              <div>
+                <a href="projects.html" style="font-weight: 700; color: #fff; font-size: 1.05rem;">distributed-cache-go</a>
+                <span class="badge badge-blue" style="font-size: 0.7rem; margin-left: 6px;">Active Sprint</span>
+              </div>
+              <button class="btn btn-ghost btn-sm btn-star-project"><span class="material-symbols-outlined">star</span> <span class="star-count">412</span></button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              Consistent hashing memory caching layer with peer-to-peer gossip failure detectors and bloom filter replication.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px;">
+              <span class="badge badge-blue">Go</span>
+              <span class="badge">gRPC</span>
+              <span class="badge">Protobuf</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 10px; font-size: 0.78rem; color: var(--text-muted);">
+              <span>Updated 5 days ago</span>
+              <a href="projects.html" style="color: var(--accent-blue); font-weight: 600;">View Project Hub →</a>
+            </div>
+          </div>
+        </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button class="btn-follow-sm" onclick="closeEditModal()">Cancel</button>
-        <button class="btn-create-primary" style="margin-top: 0; width: auto; padding: 6px 18px;" onclick="saveProfileModal()">Save Changes</button>
+        <!-- Experience & Verified Badges Timeline -->
+        <div class="card">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 20px;">Work Experience & Systems Track Record</h3>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; gap: 16px;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--bg-elevated); border: 1px solid var(--border-muted); display: flex; align-items: center; justify-content: center; color: var(--accent-primary); flex-shrink: 0;">
+                <span class="material-symbols-outlined">domain</span>
+              </div>
+              <div>
+                <div style="font-weight: 700; color: #fff;">Principal Systems Architect @ Acme Cloud Platform</div>
+                <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 4px;">2024 — Present • San Francisco, CA</div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                  Leading the core storage engine engineering team. Reduced cross-datacenter snapshot replication latency by 68%.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--bg-elevated); border: 1px solid var(--border-muted); display: flex; align-items: center; justify-content: center; color: var(--accent-emerald); flex-shrink: 0;">
+                <span class="material-symbols-outlined">payments</span>
+              </div>
+              <div>
+                <div style="font-weight: 700; color: #fff;">Senior Infrastructure Engineer @ Stripe</div>
+                <div style="font-size: 0.8rem; color: var(--accent-emerald); margin-bottom: 4px;">2021 — 2024 • San Francisco, CA</div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                  Scaled transaction event buses across multi-region Kubernetes clusters handling 500k+ global operations per second.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <script type="module">
-    import './main.js';
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav-bar">
+    <a href="feed.html" class="mobile-nav-item"><span class="material-symbols-outlined">dynamic_feed</span><span>Feed</span></a>
+    <a href="discover.html" class="mobile-nav-item"><span class="material-symbols-outlined">explore</span><span>Discover</span></a>
+    <a href="projects.html" class="mobile-nav-item"><span class="material-symbols-outlined">folder_code</span><span>Projects</span></a>
+    <a href="messages.html" class="mobile-nav-item"><span class="material-symbols-outlined">chat</span><span>Chat</span></a>
+    <a href="profile.html" class="mobile-nav-item active"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+  </nav>
 
-    window.switchProfileTab = function(tabName, el) {
-      document.querySelectorAll('.feed-tabs .feed-tab').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
+  <!-- Project Invite Modal -->
+  <div id="modal-collab-invite" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: #fff;">Invite Alex Chen to Collaborate</h3>
+        <button class="btn btn-ghost btn-sm" data-close-modal><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label class="input-label">Select Your Project / Repo</label>
+          <select class="select-control">
+            <option>HyperScale AI — Triage Engine</option>
+            <option>CloudNative Operator — Kubernetes Core</option>
+            <option>Open Source Grant — Raft Cluster</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Target Role</label>
+          <input type="text" class="input-control" value="Lead Systems Architect / Reviewer">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Invitation Message</label>
+          <textarea class="textarea-control" rows="3" placeholder="Hey Alex, we saw your work on Raft consensus and would love your guidance on our memory storage layer..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" data-close-modal>Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="closeModal('modal-collab-invite'); showToast('🎉 Project invitation sent to Alex Chen!');">
+          Send Collaboration Invite
+        </button>
+      </div>
+    </div>
+  </div>
 
-      document.querySelectorAll('.profile-tab-content').forEach(c => c.classList.remove('active'));
-      const target = document.getElementById('tab-' + tabName);
-      if (target) target.classList.add('active');
-    };
+  <!-- Global Command Palette Modal (Cmd + K) -->
+  <div id="cmd-palette-modal" class="modal-backdrop">
+    <div class="cmd-palette" style="width: 100%;">
+      <div class="cmd-input-wrap">
+        <span class="material-symbols-outlined" style="color: var(--accent-primary);">search</span>
+        <input type="text" id="cmd-search-input" placeholder="Search developers, projects, jobs, discussions, commands...">
+        <kbd style="font-family: var(--font-mono); font-size: 0.72rem; background: var(--bg-card-subtle); border: 1px solid var(--border-muted); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">ESC</kbd>
+      </div>
+      <div id="cmd-results-list" class="cmd-results"></div>
+    </div>
+  </div>
 
-    window.openEditModal = function() {
-      document.getElementById('edit-profile-modal').classList.add('open');
-    };
-
-    window.closeEditModal = function() {
-      document.getElementById('edit-profile-modal').classList.remove('open');
-    };
-
-    window.saveProfileModal = function() {
-      const name = document.getElementById('modal-input-name').value;
-      const bio = document.getElementById('modal-input-bio').value;
-      const loc = document.getElementById('modal-input-loc').value;
-
-      document.getElementById('profile-name-display').textContent = name;
-      document.getElementById('profile-bio-display').textContent = bio;
-      document.getElementById('profile-loc-display').textContent = loc;
-
-      closeEditModal();
-      showToast('Profile updated successfully');
-    };
-  </script>
+  <script type="module" src="./main.js"></script>
 </body>
 </html>

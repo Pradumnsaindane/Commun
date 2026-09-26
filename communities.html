@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Communities & College Hubs — Commun</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <a href="index.html" class="brand-logo">
+            <div class="brand-icon"><span class="material-symbols-outlined" style="font-size: 20px;">hub</span></div>
+            <span class="sidebar-text">Commun<span style="color: var(--accent-primary);">.</span></span>
+          </a>
+        </div>
+
+        <a href="workspace.html" class="workspace-switcher">
+          <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+            <div style="width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, #a855f7, #6366f1); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff;">A</div>
+            <div class="sidebar-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Acme Cloud Platform</div>
+              <div style="font-size: 0.7rem; color: var(--accent-emerald);">Pro Organization</div>
+            </div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 16px; color: var(--text-dim);">unfold_more</span>
+        </a>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Network & Feed</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="feed.html"><span class="material-symbols-outlined">dynamic_feed</span> <span class="sidebar-text">Feed</span></a></li>
+            <li class="nav-item"><a href="discover.html"><span class="material-symbols-outlined">explore</span> <span class="sidebar-text">Discover</span></a></li>
+            <li class="nav-item"><a href="people.html"><span class="material-symbols-outlined">group</span> <span class="sidebar-text">People</span> <span class="nav-badge">12</span></a></li>
+            <li class="nav-item"><a href="projects.html"><span class="material-symbols-outlined">folder_code</span> <span class="sidebar-text">Projects</span></a></li>
+            <li class="nav-item"><a href="opportunities.html"><span class="material-symbols-outlined">work</span> <span class="sidebar-text">Opportunities</span> <span class="nav-badge unread">8 New</span></a></li>
+            <li class="nav-item"><a href="discussions.html"><span class="material-symbols-outlined">forum</span> <span class="sidebar-text">Discussions</span></a></li>
+            <li class="nav-item active"><a href="communities.html"><span class="material-symbols-outlined">diversity_3</span> <span class="sidebar-text">Communities</span></a></li>
+            <li class="nav-item"><a href="events.html"><span class="material-symbols-outlined">event</span> <span class="sidebar-text">Events</span></a></li>
+            <li class="nav-item"><a href="resources.html"><span class="material-symbols-outlined">library_books</span> <span class="sidebar-text">Resource Hub</span></a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Workspace SaaS</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="workspace.html"><span class="material-symbols-outlined">domain</span> <span class="sidebar-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="messages.html"><span class="material-symbols-outlined">chat</span> <span class="sidebar-text">Messages</span> <span class="nav-badge unread">3</span></a></li>
+            <li class="nav-item"><a href="notifications.html"><span class="material-symbols-outlined">notifications</span> <span class="sidebar-text">Notifications</span></a></li>
+            <li class="nav-item"><a href="saved.html"><span class="material-symbols-outlined">bookmark</span> <span class="sidebar-text">Saved Items</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-summary">
+          <div class="avatar avatar-sm">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Alex Chen">
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="sidebar-text" style="flex: 1; overflow: hidden;">
+            <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Alex Chen</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);">@alexchen • Senior Eng</div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 18px; color: var(--text-dim);">settings</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <div class="search-bar" style="width: 100%; max-width: 480px;">
+            <span class="material-symbols-outlined" style="color: var(--text-muted); font-size: 18px;">search</span>
+            <input type="text" placeholder="Search communities, college clubs, tech collectives... (Press ⌘K)" data-trigger="cmd-palette" readonly style="cursor: pointer;">
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary btn-sm btn-glow" data-open-modal="modal-create-community">
+            <span class="material-symbols-outlined">add</span>
+            <span>Create Community</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #fff;">Technical Communities & Guilds</h2>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Join specialized engineering guilds, college tech societies, and open source foundations.</p>
+          </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="tab-nav" style="margin-bottom: 24px;">
+          <button class="tab-btn active"><span class="material-symbols-outlined">explore</span> Explore All (180)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">school</span> College & Campus Clubs (45)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">terminal</span> Language & Stack Guilds (62)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">rocket_launch</span> Startup Incubators (24)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">groups</span> Joined Communities (4)</button>
+        </div>
+
+        <!-- Communities Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+          <!-- Community 1 -->
+          <div class="card card-interactive" onclick="window.location.href='community.html'">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div style="display: flex; gap: 14px; align-items: center;">
+                <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1.2rem;">
+                  R
+                </div>
+                <div>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff;">Rust Systems Guild</h3>
+                  <div style="font-size: 0.78rem; color: var(--accent-cyan);">4,820 Members • 140 Active Now</div>
+                </div>
+              </div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              A global technical community dedicated to async runtimes, eBPF, memory safety, and low-level Linux systems programming.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px;">
+              <span class="badge badge-primary">Rust</span>
+              <span class="badge">Tokio</span>
+              <span class="badge">eBPF</span>
+              <span class="badge">SIMD</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+              <span style="font-size: 0.75rem; color: var(--accent-emerald);">● Weekly Tech Talks</span>
+              <button class="btn btn-primary btn-sm btn-follow-main" onclick="event.stopPropagation();">Join Guild</button>
+            </div>
+          </div>
+
+          <!-- Community 2 -->
+          <div class="card card-interactive" onclick="window.location.href='community.html'">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div style="display: flex; gap: 14px; align-items: center;">
+                <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #10b981, #06b6d4); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1.2rem;">
+                  S
+                </div>
+                <div>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff;">Stanford DevGuild</h3>
+                  <div style="font-size: 0.78rem; color: var(--accent-emerald);">620 Student Members • College Hub</div>
+                </div>
+              </div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              The official developer society of Stanford University. Hackathon teams, project showcases, and alumni engineering mentorship.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px;">
+              <span class="badge badge-emerald">Campus Club</span>
+              <span class="badge">Hackathons</span>
+              <span class="badge">Startups</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+              <span style="font-size: 0.75rem; color: var(--accent-cyan);">● Hackathon in 2 Weeks</span>
+              <button class="btn btn-primary btn-sm btn-follow-main" onclick="event.stopPropagation();">Join Club</button>
+            </div>
+          </div>
+
+          <!-- Community 3 -->
+          <div class="card card-interactive" onclick="window.location.href='community.html'">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div style="display: flex; gap: 14px; align-items: center;">
+                <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #a855f7, #ec4899); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1.2rem;">
+                  K
+                </div>
+                <div>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff;">CloudNative & K8s Collective</h3>
+                  <div style="font-size: 0.78rem; color: var(--accent-purple);">6,190 Members • Multi-Tenant</div>
+                </div>
+              </div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              Dedicated to Kubernetes architecture, service meshes (Envoy/Istio), Terraform infrastructure as code, and SRE best practices.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px;">
+              <span class="badge badge-purple">Kubernetes</span>
+              <span class="badge">DevOps</span>
+              <span class="badge">Cloud</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+              <span style="font-size: 0.75rem; color: var(--accent-purple);">● Active RFCs</span>
+              <button class="btn btn-primary btn-sm btn-follow-main" onclick="event.stopPropagation();">Join Guild</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav-bar">
+    <a href="feed.html" class="mobile-nav-item"><span class="material-symbols-outlined">dynamic_feed</span><span>Feed</span></a>
+    <a href="discover.html" class="mobile-nav-item"><span class="material-symbols-outlined">explore</span><span>Discover</span></a>
+    <a href="projects.html" class="mobile-nav-item"><span class="material-symbols-outlined">folder_code</span><span>Projects</span></a>
+    <a href="communities.html" class="mobile-nav-item active"><span class="material-symbols-outlined">diversity_3</span><span>Hubs</span></a>
+    <a href="profile.html" class="mobile-nav-item"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+  </nav>
+
+  <!-- Create Community Modal -->
+  <div id="modal-create-community" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: #fff;">Create a Developer Community</h3>
+        <button class="btn btn-ghost btn-sm" data-close-modal><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label class="input-label">Community Name</label>
+          <input type="text" class="input-control" placeholder="e.g. Berkeley AI Collective, Rust Core Guild">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Community Type</label>
+          <select class="select-control">
+            <option>Tech Stack Guild</option>
+            <option>College / Campus Club</option>
+            <option>Open Source Foundation</option>
+            <option>Startup Accelerator</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Mission & Description</label>
+          <textarea class="textarea-control" rows="3" placeholder="What are the goals, rules, and activities of this community?"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" data-close-modal>Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="closeModal('modal-create-community'); showToast('🎉 Community created successfully!');">
+          Create Community
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Command Palette Modal (Cmd + K) -->
+  <div id="cmd-palette-modal" class="modal-backdrop">
+    <div class="cmd-palette" style="width: 100%;">
+      <div class="cmd-input-wrap">
+        <span class="material-symbols-outlined" style="color: var(--accent-primary);">search</span>
+        <input type="text" id="cmd-search-input" placeholder="Search developers, projects, jobs, discussions, commands...">
+        <kbd style="font-family: var(--font-mono); font-size: 0.72rem; background: var(--bg-card-subtle); border: 1px solid var(--border-muted); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">ESC</kbd>
+      </div>
+      <div id="cmd-results-list" class="cmd-results"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

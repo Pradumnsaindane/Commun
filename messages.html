@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Messages & Channels | Commun</title>
+  <meta name="description" content="Real-time developer chat, project channels, workspace rooms, code snippet sharing, and direct messaging on Commun.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg-mesh">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="brand-logo">
+          <div class="logo-symbol"><span class="logo-inner"></span></div>
+          <span class="brand-text">Commun<span class="text-accent">.</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Toggle Sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">MAIN NAVIGATION</div>
+        <a href="/feed.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          <span>Feed</span>
+        </a>
+        <a href="/discover.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span>Discover</span>
+        </a>
+        <a href="/people.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span>People</span>
+        </a>
+        <a href="/projects.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <span>Projects</span>
+        </a>
+        <a href="/discussions.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>Discussions</span>
+        </a>
+        <a href="/opportunities.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Opportunities</span>
+        </a>
+        <a href="/communities.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Communities</span>
+        </a>
+        <a href="/events.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Events</span>
+        </a>
+        <a href="/resources.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Resources</span>
+        </a>
+        <a href="/workspace.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Workspace</span>
+        </a>
+        <a href="/messages.html" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Messages</span>
+          <span class="nav-badge">3</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/profile.html" class="user-profile-pill">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+          <div class="user-meta">
+            <span class="user-name">Elena Rostova</span>
+            <span class="user-handle">@elena_dev</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-nav">
+        <div class="top-nav-left">
+          <button class="mobile-menu-btn" id="mobile-menu-toggle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="global-search-pill" id="cmd-k-trigger">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="search-placeholder">Search messages, channels, code snippets...</span>
+            <kbd class="kbd-shortcut">⌘K</kbd>
+          </div>
+        </div>
+        <div class="top-nav-right">
+          <button class="btn btn-secondary btn-sm" id="ai-copilot-btn">
+            <span class="sparkle-icon">✦</span> Commun AI
+          </button>
+        </div>
+      </header>
+
+      <!-- Messaging Layout (Chat Channels + Active Thread) -->
+      <div class="messaging-container card-glow">
+        <!-- Channels / Contacts Pane -->
+        <div class="chat-sidebar">
+          <div class="chat-sidebar-header">
+            <h2 class="chat-title">Messages</h2>
+            <button class="btn btn-ghost btn-xs" title="New Message" onclick="showToast('New DM composer opened')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+
+          <div class="chat-search-wrap">
+            <input type="text" class="input-field input-sm" placeholder="Jump to channel or person...">
+          </div>
+
+          <div class="chat-list-scroll">
+            <div class="chat-group-label">WORKSPACE CHANNELS</div>
+            <div class="chat-item active" onclick="selectConversation('channel-arch')">
+              <span class="channel-hash">#</span>
+              <div class="chat-item-info">
+                <div class="chat-item-name">architecture-rfc</div>
+                <div class="chat-item-snippet">Marcus: Pushed the SIMD benchmark</div>
+              </div>
+              <span class="unread-pill">2</span>
+            </div>
+
+            <div class="chat-item" onclick="selectConversation('channel-aether')">
+              <span class="channel-hash">#</span>
+              <div class="chat-item-info">
+                <div class="chat-item-name">proj-aetherdb-core</div>
+                <div class="chat-item-snippet">Dr. Aris: Memory leak fixed in Raft</div>
+              </div>
+            </div>
+
+            <div class="chat-item" onclick="selectConversation('channel-general')">
+              <span class="channel-hash">#</span>
+              <div class="chat-item-info">
+                <div class="chat-item-name">general-dev</div>
+                <div class="chat-item-snippet">Sarah: Deployed staging v2.4</div>
+              </div>
+            </div>
+
+            <div class="chat-group-label" style="margin-top: 1rem;">DIRECT MESSAGES</div>
+            <div class="chat-item" onclick="selectConversation('dm-marcus')">
+              <div class="avatar-with-status">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&auto=format&fit=crop&q=80" alt="Marcus" class="avatar-xs">
+                <span class="online-indicator online"></span>
+              </div>
+              <div class="chat-item-info">
+                <div class="chat-item-name">Marcus Vance</div>
+                <div class="chat-item-snippet">Let's review the Raft consensus PR</div>
+              </div>
+              <span class="unread-pill">1</span>
+            </div>
+
+            <div class="chat-item" onclick="selectConversation('dm-aris')">
+              <div class="avatar-with-status">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&auto=format&fit=crop&q=80" alt="Aris" class="avatar-xs">
+                <span class="online-indicator online"></span>
+              </div>
+              <div class="chat-item-info">
+                <div class="chat-item-name">Dr. Aris Thorne</div>
+                <div class="chat-item-snippet">The CUDA tensor kernel is ready</div>
+              </div>
+            </div>
+
+            <div class="chat-item" onclick="selectConversation('dm-sarah')">
+              <div class="avatar-with-status">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&auto=format&fit=crop&q=80" alt="Sarah" class="avatar-xs">
+                <span class="online-indicator away"></span>
+              </div>
+              <div class="chat-item-info">
+                <div class="chat-item-name">Sarah Lin</div>
+                <div class="chat-item-snippet">K8s manifests updated</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Conversation Area -->
+        <div class="chat-main">
+          <!-- Active Conversation Header -->
+          <div class="chat-header">
+            <div class="chat-header-info">
+              <div class="chat-header-title">
+                <span class="text-accent" style="font-family: 'JetBrains Mono'; font-weight: 700;">#</span>
+                <span id="active-chat-name">architecture-rfc</span>
+              </div>
+              <span class="chat-header-topic">Distributed consensus, Raft latency benchmarking, and SIMD quantization algorithms</span>
+            </div>
+            <div class="chat-header-actions">
+              <button class="btn btn-ghost btn-xs" onclick="showToast('Channel members: 42 engineers')">👥 42 Members</button>
+              <button class="btn btn-secondary btn-xs" onclick="showToast('Pinned items drawer opened')">📌 Pinned (3)</button>
+            </div>
+          </div>
+
+          <!-- Message Stream -->
+          <div class="chat-messages-stream" id="messages-stream">
+            <!-- Message 1 -->
+            <div class="chat-msg">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80" alt="Marcus" class="avatar-sm">
+              <div class="msg-body">
+                <div class="msg-meta">
+                  <span class="msg-author">Marcus Vance</span>
+                  <span class="badge badge-purple">Core Lead</span>
+                  <span class="msg-time">Today at 10:14 AM</span>
+                </div>
+                <div class="msg-text">
+                  Hey team, I just benchmarked the new zero-copy ring buffer with AVX-512 SIMD vector instructions against the baseline channel queue. Here is the micro-benchmark function in Rust:
+                </div>
+                <!-- Embedded Code Block -->
+                <div class="code-block-wrap">
+                  <div class="code-header">
+                    <span>ring_buffer_simd.rs</span>
+                    <button class="btn-copy-code" onclick="copyCode(this)">Copy</button>
+                  </div>
+                  <pre><code><span class="code-keyword">pub unsafe fn</span> <span class="code-fn">process_quantized_batch</span>(input: *<span class="code-keyword">const</span> <span class="code-keyword">f32</span>, len: <span class="code-keyword">usize</span>) -> <span class="code-keyword">f32</span> {
+    <span class="code-keyword">use</span> std::arch::x86_64::*;
+    <span class="code-keyword">let mut</span> sum_vec = _mm512_setzero_ps();
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> (0..len).step_by(16) {
+        <span class="code-keyword">let</span> chunk = _mm512_loadu_ps(input.add(i));
+        sum_vec = _mm512_add_ps(sum_vec, chunk);
+    }
+    _mm512_reduce_add_ps(sum_vec)
+}</code></pre>
+                </div>
+                <div class="msg-reactions">
+                  <button class="reaction-pill active" onclick="toggleReaction(this)">🔥 8</button>
+                  <button class="reaction-pill" onclick="toggleReaction(this)">🚀 5</button>
+                  <button class="reaction-pill" onclick="toggleReaction(this)">⚡ 3</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message 2 -->
+            <div class="chat-msg">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=80" alt="Aris" class="avatar-sm">
+              <div class="msg-body">
+                <div class="msg-meta">
+                  <span class="msg-author">Dr. Aris Thorne</span>
+                  <span class="badge badge-cyan">AI Kernel Lead</span>
+                  <span class="msg-time">Today at 10:19 AM</span>
+                </div>
+                <div class="msg-text">
+                  This reduces L2 cache thrashing by over <strong>38%</strong> in our initial PyTorch Triton integration tests. We can merge PR <code class="inline-code">#418</code> into <code class="inline-code">main</code> right now.
+                </div>
+              </div>
+            </div>
+
+            <!-- Message 3 (Current User) -->
+            <div class="chat-msg">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80" alt="Elena" class="avatar-sm">
+              <div class="msg-body">
+                <div class="msg-meta">
+                  <span class="msg-author">Elena Rostova</span>
+                  <span class="badge badge-purple">Org Admin</span>
+                  <span class="msg-time">Today at 10:22 AM</span>
+                </div>
+                <div class="msg-text">
+                  Approved! The web dashboard telemetry graph is already wired up to stream this metric in real-time. Shipping to staging cluster.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message Composer Form -->
+          <div class="chat-composer-wrap">
+            <form class="chat-composer-form" id="chat-form" onsubmit="handleSendMessage(event)">
+              <div class="chat-composer-tools">
+                <button type="button" class="tool-btn" title="Code snippet" onclick="insertCodeSnippet()">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </button>
+                <button type="button" class="tool-btn" title="Attach file" onclick="showToast('File upload attached')">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </button>
+                <button type="button" class="tool-btn" title="Commun AI Assistant" onclick="showToast('Commun AI snippet generator triggered')">
+                  <span class="sparkle-icon">✦</span>
+                </button>
+              </div>
+              <textarea class="chat-input" id="chat-textarea" placeholder="Message #architecture-rfc (Markdown & code blocks supported)..." rows="2"></textarea>
+              <div class="chat-composer-footer">
+                <span class="chat-help-hint">Press <strong>Enter</strong> to send • <strong>Shift+Enter</strong> for newline</span>
+                <button type="submit" class="btn btn-primary btn-sm">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/main.js"></script>
+  <script>
+    function selectConversation(id) {
+      document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      const name = event.currentTarget.querySelector('.chat-item-name').innerText;
+      document.getElementById('active-chat-name').innerText = name;
+      if (typeof showToast === 'function') {
+        showToast(`Switched to: ${name}`);
+      }
+    }
+
+    function handleSendMessage(e) {
+      e.preventDefault();
+      const ta = document.getElementById('chat-textarea');
+      const text = ta.value.trim();
+      if (!text) return;
+
+      const stream = document.getElementById('messages-stream');
+      const msg = document.createElement('div');
+      msg.className = 'chat-msg';
+      msg.innerHTML = `
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80" alt="Elena" class="avatar-sm">
+        <div class="msg-body">
+          <div class="msg-meta">
+            <span class="msg-author">Elena Rostova</span>
+            <span class="badge badge-purple">Org Admin</span>
+            <span class="msg-time">Just now</span>
+          </div>
+          <div class="msg-text">${text}</div>
+        </div>
+      `;
+      stream.appendChild(msg);
+      ta.value = '';
+      stream.scrollTop = stream.scrollHeight;
+      if (typeof showToast === 'function') showToast('Message sent');
+    }
+
+    function insertCodeSnippet() {
+      const ta = document.getElementById('chat-textarea');
+      ta.value += '\n```typescript\n// Code snippet\nconst engine = new CommunEngine();\n```\n';
+      ta.focus();
+    }
+
+    function toggleReaction(btn) {
+      btn.classList.toggle('active');
+    }
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block-wrap').querySelector('code');
+      navigator.clipboard.writeText(pre.innerText);
+      btn.innerText = 'Copied!';
+      setTimeout(() => btn.innerText = 'Copy', 2000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Plans & Subscriptions | Commun SaaS</title>
+  <meta name="description" content="Transparent pricing for individual developers, open-source maintainers, fast-growing engineering teams, and enterprise organizations.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg-mesh">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+
+  <!-- Public Top Navigation -->
+  <header class="public-nav">
+    <div class="public-nav-inner">
+      <a href="/" class="brand-logo">
+        <div class="logo-symbol"><span class="logo-inner"></span></div>
+        <span class="brand-text">Commun<span class="text-accent">.</span></span>
+      </a>
+
+      <nav class="public-nav-links">
+        <a href="/discover.html" class="nav-link">Discover</a>
+        <a href="/projects.html" class="nav-link">Projects</a>
+        <a href="/opportunities.html" class="nav-link">Opportunities</a>
+        <a href="/discussions.html" class="nav-link">Discussions</a>
+        <a href="/communities.html" class="nav-link">Communities</a>
+        <a href="/pricing.html" class="nav-link active">Pricing</a>
+        <a href="/about.html" class="nav-link">About</a>
+      </nav>
+
+      <div class="public-nav-actions">
+        <a href="/login.html" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="/register.html" class="btn btn-primary btn-sm">Get Started →</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-body" style="max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem 6rem;">
+    <!-- Pricing Header -->
+    <div class="pricing-header-center">
+      <span class="badge badge-purple" style="margin-bottom: 1rem;">Simple, Predictable Developer Pricing</span>
+      <h1 class="pricing-headline">Invest in your engineering velocity</h1>
+      <p class="pricing-subheadline">Start free as an individual developer or superpower your engineering organization with team collaboration, RBAC, and AI matchmaking.</p>
+
+      <!-- Monthly vs Annual Billing Toggle -->
+      <div class="billing-toggle-wrap">
+        <span class="toggle-label" id="label-monthly">Monthly Billing</span>
+        <label class="switch">
+          <input type="checkbox" id="billing-cycle-toggle" onchange="toggleBillingCycle(this.checked)">
+          <span class="slider"></span>
+        </label>
+        <span class="toggle-label active" id="label-annual">Annual Billing <span class="badge badge-green" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">Save 20%</span></span>
+      </div>
+    </div>
+
+    <!-- Pricing Cards Grid -->
+    <div class="pricing-grid-4col" style="margin-top: 3rem;">
+      <!-- Free Plan -->
+      <div class="pricing-card card-glow">
+        <div class="pricing-card-header">
+          <h3 class="plan-name">Community / Free</h3>
+          <p class="plan-desc">For individual developers building a public portfolio and finding projects.</p>
+          <div class="plan-price-row">
+            <span class="price-val">$0</span>
+            <span class="price-period">/ forever</span>
+          </div>
+        </div>
+        <ul class="plan-features-list">
+          <li>✓ Public verified developer profile</li>
+          <li>✓ 365-day contribution heatmap</li>
+          <li>✓ Join unlimited public communities</li>
+          <li>✓ Apply to open collaboration requests</li>
+          <li>✓ Access discussions & resource hub</li>
+          <li>✓ 5 Commun AI queries / day</li>
+        </ul>
+        <div class="plan-cta">
+          <a href="/register.html" class="btn btn-secondary" style="width: 100%;">Get Started Free</a>
+        </div>
+      </div>
+
+      <!-- Pro Developer Plan -->
+      <div class="pricing-card card-glow">
+        <div class="pricing-card-header">
+          <h3 class="plan-name">Pro Builder</h3>
+          <p class="plan-desc">For serious open-source contributors, freelancers, and mentors.</p>
+          <div class="plan-price-row">
+            <span class="price-val" data-monthly="$19" data-annual="$15">$15</span>
+            <span class="price-period">/ mo (billed annually)</span>
+          </div>
+        </div>
+        <ul class="plan-features-list">
+          <li>✓ Everything in Free, plus:</li>
+          <li>✓ Verified Pro Builder badge</li>
+          <li>✓ Priority search & talent discovery ranking</li>
+          <li>✓ Unlimited collaboration request posts</li>
+          <li>✓ Unlimited Commun AI Copilot queries</li>
+          <li>✓ Direct messaging with hiring leads</li>
+          <li>✓ Private project task boards</li>
+        </ul>
+        <div class="plan-cta">
+          <a href="/register.html" class="btn btn-secondary" style="width: 100%;">Upgrade to Pro</a>
+        </div>
+      </div>
+
+      <!-- Team Plan (Popular) -->
+      <div class="pricing-card card-glow featured-tier">
+        <div class="tier-popular-badge">MOST POPULAR FOR STARTUPS</div>
+        <div class="pricing-card-header">
+          <h3 class="plan-name">Startup Team</h3>
+          <p class="plan-desc">For engineering pods, startups, and college hackathon guilds.</p>
+          <div class="plan-price-row">
+            <span class="price-val" data-monthly="$49" data-annual="$39">$39</span>
+            <span class="price-period">/ seat / mo</span>
+          </div>
+        </div>
+        <ul class="plan-features-list">
+          <li>✓ Everything in Pro, plus:</li>
+          <li>✓ Multi-tenant SaaS workspace</li>
+          <li>✓ Up to 50 engineering team members</li>
+          <li>✓ Team & Pod management (Frontend, AI, SRE)</li>
+          <li>✓ Role-based access control (RBAC)</li>
+          <li>✓ Shared team channels & code boards</li>
+          <li>✓ Job & opportunity post manager</li>
+        </ul>
+        <div class="plan-cta">
+          <a href="/register.html" class="btn btn-primary" style="width: 100%;">Start 14-Day Team Trial</a>
+        </div>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="pricing-card card-glow">
+        <div class="pricing-card-header">
+          <h3 class="plan-name">Enterprise Org</h3>
+          <p class="plan-desc">For tech companies, universities, and enterprise organizations.</p>
+          <div class="plan-price-row">
+            <span class="price-val">Custom</span>
+            <span class="price-period">/ tailored SLAs</span>
+          </div>
+        </div>
+        <ul class="plan-features-list">
+          <li>✓ Everything in Team, plus:</li>
+          <li>✓ Unlimited members & workspaces</li>
+          <li>✓ Custom SAML 2.0 / Okta SSO & SCIM</li>
+          <li>✓ SOC2 Type II & HIPAA compliance</li>
+          <li>✓ Dedicated Cloud & Vector compute nodes</li>
+          <li>✓ Audit logs with immutable exports</li>
+          <li>✓ 99.99% uptime SLA & dedicated TAM</li>
+        </ul>
+        <div class="plan-cta">
+          <button class="btn btn-secondary" style="width: 100%;" onclick="showToast('Enterprise sales consultation booked')">Contact Sales</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="faq-section" style="margin-top: 5rem;">
+      <div class="section-header-center">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtext">Everything you need to know about Commun subscriptions and workspaces.</p>
+      </div>
+
+      <div class="faq-accordion-list" style="margin-top: 2rem;">
+        <div class="faq-item card-glow" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Can individual developers always use Commun for free?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes! Individual profiles, participating in open-source projects, asking/answering questions, and discovering opportunities are 100% free forever for engineers.
+          </div>
+        </div>
+
+        <div class="faq-item card-glow" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>How does multi-tenancy work for colleges and companies?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            Organizations receive an isolated tenant workspace with customized branding, member seat allocation, pod structuring, role permissions (Admin, Manager, Member, Guest), and private repository collaboration.
+          </div>
+        </div>
+
+        <div class="faq-item card-glow" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <span>Can I switch between monthly and annual plans at any time?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes. Upgrades are prorated immediately, and downgrades apply at the close of your current billing cycle without penalties.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="public-footer">
+    <div class="footer-bottom" style="text-align: center; padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.06);">
+      <p>© 2026 Commun Inc. Build. Connect. Grow. Together.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/main.js"></script>
+  <script>
+    function toggleBillingCycle(isAnnual) {
+      document.getElementById('label-annual').classList.toggle('active', isAnnual);
+      document.getElementById('label-monthly').classList.toggle('active', !isAnnual);
+      document.querySelectorAll('.price-val[data-monthly]').forEach(el => {
+        el.innerText = isAnnual ? el.dataset.annual : el.dataset.monthly;
+      });
+    }
+
+    function toggleFaq(item) {
+      item.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

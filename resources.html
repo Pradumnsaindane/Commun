@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Resource Hub & Architecture Blueprints | Commun</title>
+  <meta name="description" content="Curated engineering roadmaps, distributed system RFCs, cheat sheets, books, and open-source documentation on Commun.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="bg-mesh">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="brand-logo">
+          <div class="logo-symbol"><span class="logo-inner"></span></div>
+          <span class="brand-text">Commun<span class="text-accent">.</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Toggle Sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">MAIN NAVIGATION</div>
+        <a href="/feed.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          <span>Feed</span>
+        </a>
+        <a href="/discover.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span>Discover</span>
+        </a>
+        <a href="/people.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span>People</span>
+        </a>
+        <a href="/projects.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <span>Projects</span>
+        </a>
+        <a href="/discussions.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>Discussions</span>
+        </a>
+        <a href="/opportunities.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Opportunities</span>
+        </a>
+        <a href="/communities.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Communities</span>
+        </a>
+        <a href="/events.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Events</span>
+        </a>
+        <a href="/resources.html" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Resources</span>
+        </a>
+        <a href="/workspace.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Workspace</span>
+        </a>
+        <a href="/messages.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Messages</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/profile.html" class="user-profile-pill">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+          <div class="user-meta">
+            <span class="user-name">Elena Rostova</span>
+            <span class="user-handle">@elena_dev</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-nav">
+        <div class="top-nav-left">
+          <button class="mobile-menu-btn" id="mobile-menu-toggle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="global-search-pill" id="cmd-k-trigger">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="search-placeholder">Search roadmaps, cheat sheets, blueprints, RFCs...</span>
+            <kbd class="kbd-shortcut">⌘K</kbd>
+          </div>
+        </div>
+        <div class="top-nav-right">
+          <button class="btn btn-secondary btn-sm" id="ai-copilot-btn"><span class="sparkle-icon">✦</span> Commun AI</button>
+          <button class="btn btn-primary btn-sm" onclick="showToast('Submit Resource modal opened')">+ Submit Resource</button>
+        </div>
+      </header>
+
+      <div class="page-body">
+        <div class="section-header-row">
+          <div>
+            <h1 class="page-title">Developer Resource Hub</h1>
+            <p class="section-subtext">Verified roadmaps, distributed system RFCs, cheatsheets, and deep technical guides.</p>
+          </div>
+        </div>
+
+        <!-- Filter Pills -->
+        <div class="filter-bar card-glow" style="margin-top: 1rem;">
+          <div class="filter-tabs">
+            <button class="filter-pill active" onclick="filterResources('all')">All Resources (34)</button>
+            <button class="filter-pill" onclick="filterResources('roadmap')">Roadmaps (8)</button>
+            <button class="filter-pill" onclick="filterResources('cheatsheet')">Cheat Sheets (11)</button>
+            <button class="filter-pill" onclick="filterResources('rfc')">Architecture RFCs (9)</button>
+            <button class="filter-pill" onclick="filterResources('book')">Books & Papers (6)</button>
+          </div>
+        </div>
+
+        <!-- Resource Cards Grid -->
+        <div class="resources-grid" style="margin-top: 1.5rem;">
+          <!-- Resource 1: Distributed Raft Consensus -->
+          <div class="resource-card card-glow" data-type="rfc">
+            <div class="resource-card-top">
+              <span class="badge badge-purple">Architecture RFC</span>
+              <button class="bookmark-btn" onclick="toggleBookmark(this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+            <h3 class="resource-title">Implementing Distributed Raft Consensus with Zero-Copy Tokio in Rust</h3>
+            <p class="resource-desc">Full step-by-step RFC covering leader election, term numbering, log replication with disk sync, and snapshotting.</p>
+            <div class="resource-tags">
+              <span class="tag-pill">Rust</span>
+              <span class="tag-pill">Distributed Systems</span>
+              <span class="tag-pill">Raft</span>
+            </div>
+            <div class="resource-footer">
+              <div class="resource-meta">
+                <span>By <strong>Marcus Vance</strong></span>
+                <span>⭐ 4.9 (420 bookmarks)</span>
+              </div>
+              <a href="/article.html" class="btn btn-secondary btn-sm">Read RFC</a>
+            </div>
+          </div>
+
+          <!-- Resource 2: Modern Full-Stack AI Engineer Roadmap -->
+          <div class="resource-card card-glow" data-type="roadmap">
+            <div class="resource-card-top">
+              <span class="badge badge-cyan">2026 Roadmap</span>
+              <button class="bookmark-btn" onclick="toggleBookmark(this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+            <h3 class="resource-title">The Complete Full-Stack Autonomous AI Engineer Roadmap</h3>
+            <p class="resource-desc">From transformer attention math to Triton GPU kernels, vLLM serving, LangGraph agents, and Next.js streaming UIs.</p>
+            <div class="resource-tags">
+              <span class="tag-pill">PyTorch</span>
+              <span class="tag-pill">Next.js</span>
+              <span class="tag-pill">CUDA</span>
+              <span class="tag-pill">LLMs</span>
+            </div>
+            <div class="resource-footer">
+              <div class="resource-meta">
+                <span>By <strong>Dr. Aris Thorne</strong></span>
+                <span>⭐ 5.0 (1,840 bookmarks)</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Roadmap opened')">View Roadmap</button>
+            </div>
+          </div>
+
+          <!-- Resource 3: Kubernetes Production Hardening Cheatsheet -->
+          <div class="resource-card card-glow" data-type="cheatsheet">
+            <div class="resource-card-top">
+              <span class="badge badge-green">Cheat Sheet</span>
+              <button class="bookmark-btn" onclick="toggleBookmark(this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              </button>
+            </div>
+            <h3 class="resource-title">Production Kubernetes Security, RBAC & Cilium eBPF Cheatsheet</h3>
+            <p class="resource-desc">Quick-reference commands for seccomp profiles, network policies, mTLS encryption, and real-time kernel packet tracing.</p>
+            <div class="resource-tags">
+              <span class="tag-pill">Kubernetes</span>
+              <span class="tag-pill">eBPF</span>
+              <span class="tag-pill">Security</span>
+            </div>
+            <div class="resource-footer">
+              <div class="resource-meta">
+                <span>By <strong>Sarah Lin</strong></span>
+                <span>⭐ 4.8 (890 bookmarks)</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Cheatsheet downloaded')">Download PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/main.js"></script>
+  <script>
+    function filterResources(type) {
+      document.querySelectorAll('.filter-pill').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      document.querySelectorAll('.resource-card').forEach(card => {
+        if (type === 'all' || card.dataset.type === type) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleBookmark(btn) {
+      btn.classList.toggle('active');
+      const isSaved = btn.classList.contains('active');
+      if (typeof showToast === 'function') {
+        showToast(isSaved ? 'Resource saved to your bookmarks!' : 'Resource removed from bookmarks');
+      }
+    }
+  </script>
+</body>
+</html>
