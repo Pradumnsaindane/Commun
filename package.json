@@ -1,12 +1,15 @@
 {
-  "name": "commun-com",
+  "name": "commun-dev",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
-  "description": "Commun.dev workspace",
+  "description": "Commun - Developer Collaboration and SaaS Platform",
   "scripts": {
-    "dev": "npm --prefix commun.dev run dev --",
-    "build": "npm --prefix commun.dev run build --",
-    "preview": "npm --prefix commun.dev run preview --",
-    "install:app": "npm --prefix commun.dev install"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
   }
 }
