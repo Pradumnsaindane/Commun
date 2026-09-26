@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Onboarding | Commun</title>
+  <meta name="description" content="Set up your developer profile, technical interests, collaboration goals, and discover personalized engineers on Commun.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="onboarding-body">
+  <div class="bg-mesh">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+
+  <div class="onboarding-wrapper">
+    <!-- Progress Indicator Header -->
+    <div class="onboarding-header">
+      <a href="/" class="brand-logo" style="margin-bottom: 1.5rem;">
+        <div class="logo-symbol"><span class="logo-inner"></span></div>
+        <span class="brand-text">Commun<span class="text-accent">.</span></span>
+      </a>
+      <div class="step-progress-bar">
+        <div class="step-item active" id="step-node-1"><span class="step-num">1</span> Account Type</div>
+        <div class="step-line" id="line-1"></div>
+        <div class="step-item" id="step-node-2"><span class="step-num">2</span> Profile</div>
+        <div class="step-line" id="line-2"></div>
+        <div class="step-item" id="step-node-3"><span class="step-num">3</span> Tech Stacks</div>
+        <div class="step-line" id="line-3"></div>
+        <div class="step-item" id="step-node-4"><span class="step-num">4</span> Goals</div>
+        <div class="step-line" id="line-4"></div>
+        <div class="step-item" id="step-node-5"><span class="step-num">5</span> Matches</div>
+      </div>
+    </div>
+
+    <!-- Container Card for Steps -->
+    <div class="onboarding-card card-glow">
+      <!-- STEP 1: Account Type -->
+      <div class="onboarding-step-pane active" id="pane-step-1">
+        <h2 class="step-title">How do you plan to use Commun?</h2>
+        <p class="step-desc">Choose the experience tailored to your engineering workflows.</p>
+
+        <div class="account-options-grid">
+          <div class="option-card active" onclick="selectOnboardingType(this, 'developer')">
+            <div class="option-icon">👨‍💻</div>
+            <h3 class="option-title">Individual Developer</h3>
+            <p class="option-desc">Build a verified portfolio, discover open-source projects, find collaborators, participate in hackathons, and land opportunities.</p>
+          </div>
+
+          <div class="option-card" onclick="selectOnboardingType(this, 'organization')">
+            <div class="option-icon">🏢</div>
+            <h3 class="option-title">Organization / College / Guild</h3>
+            <p class="option-desc">Create a multi-tenant SaaS workspace, manage engineering teams and pods, post job opportunities, host hackathons, and share internal resources.</p>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <div></div>
+          <button class="btn btn-primary" onclick="goToStep(2)">Continue to Profile →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Profile Info -->
+      <div class="onboarding-step-pane" id="pane-step-2">
+        <h2 class="step-title">Build your developer identity</h2>
+        <p class="step-desc">This powers your public portfolio and technical matchmaking.</p>
+
+        <div class="profile-form-grid">
+          <div class="avatar-upload-col">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-lg" id="avatar-preview">
+            <button class="btn btn-secondary btn-xs" style="margin-top: 0.75rem;" onclick="showToast('Upload avatar triggered')">Change Photo</button>
+          </div>
+
+          <div class="profile-fields-col">
+            <div class="form-row-2col">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="input-field" value="Elena Rostova" id="ob-name">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" class="input-field" value="elena_dev" id="ob-username">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Professional Headline</label>
+              <input type="text" class="input-field" value="Distributed Systems & Rust Kernel Engineer • Open Source Core" id="ob-headline">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Short Technical Bio</label>
+              <textarea class="input-field" rows="3" id="ob-bio">Passionate about zero-copy network sockets, Raft consensus, SIMD optimizations, and building developer tools that scale.</textarea>
+            </div>
+
+            <div class="form-row-2col">
+              <div class="form-group">
+                <label class="form-label">Location / Timezone</label>
+                <input type="text" class="input-field" value="San Francisco, CA (PST)" id="ob-location">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Years of Experience</label>
+                <select class="input-field">
+                  <option>1-3 Years (Early Career)</option>
+                  <option selected>4-7 Years (Mid/Senior)</option>
+                  <option>8+ Years (Staff / Principal)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
+          <button class="btn btn-primary" onclick="goToStep(3)">Next: Tech Stack →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Tech Stacks & Interests -->
+      <div class="onboarding-step-pane" id="pane-step-3">
+        <h2 class="step-title">Select your core technologies</h2>
+        <p class="step-desc">Pick what you build with and topics you want in your feed.</p>
+
+        <div class="tags-selector-grid">
+          <div class="tag-select-chip active" onclick="toggleChip(this)">🦀 Rust</div>
+          <div class="tag-select-chip active" onclick="toggleChip(this)">⚡ WebAssembly</div>
+          <div class="tag-select-chip active" onclick="toggleChip(this)">🧠 PyTorch & AI</div>
+          <div class="tag-select-chip active" onclick="toggleChip(this)">☸️ Kubernetes</div>
+          <div class="tag-select-chip active" onclick="toggleChip(this)">⚛️ React / Next.js</div>
+          <div class="tag-select-chip" onclick="toggleChip(this)">🔷 TypeScript</div>
+          <div class="tag-select-chip" onclick="toggleChip(this)">🐹 Go (Golang)</div>
+          <div class="tag-select-chip" onclick="toggleChip(this)">☕ Java / Spring</div>
+          <div class="tag-select-chip" onclick="toggleChip(this)">🐍 Python Core</div>
+          <div class="tag-select-chip" onclick="toggleChip(this)">🛡️ eBPF & Linux Kernel</div>
+          <div class="tag-select-chip" onclick="toggleChip(this)">📊 Kafka & Raft</div>
+          <div class="tag-select-chip" onclick="toggleChip(this)">🗄️ PostgreSQL & Vector DBs</div>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn-secondary" onclick="goToStep(2)">← Back</button>
+          <button class="btn btn-primary" onclick="goToStep(4)">Next: Your Goals →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Goals -->
+      <div class="onboarding-step-pane" id="pane-step-4">
+        <h2 class="step-title">What are your primary goals on Commun?</h2>
+        <p class="step-desc">Select all that apply to calibrate our recommendation engine.</p>
+
+        <div class="goals-grid">
+          <div class="goal-card active" onclick="toggleGoal(this)">
+            <input type="checkbox" checked class="goal-checkbox">
+            <div class="goal-info">
+              <h4>Find Project Collaborators</h4>
+              <p>Team up with engineers on open-source and startup MVPs.</p>
+            </div>
+          </div>
+
+          <div class="goal-card active" onclick="toggleGoal(this)">
+            <input type="checkbox" checked class="goal-checkbox">
+            <div class="goal-info">
+              <h4>Discover Open Source Projects</h4>
+              <p>Contribute code and build a public verified track record.</p>
+            </div>
+          </div>
+
+          <div class="goal-card active" onclick="toggleGoal(this)">
+            <input type="checkbox" checked class="goal-checkbox">
+            <div class="goal-info">
+              <h4>Find High-Impact Tech Roles</h4>
+              <p>Discover internships, staff engineer roles, and contracts.</p>
+            </div>
+          </div>
+
+          <div class="goal-card" onclick="toggleGoal(this)">
+            <input type="checkbox" class="goal-checkbox">
+            <div class="goal-info">
+              <h4>Share Knowledge & Answer RFCs</h4>
+              <p>Engage in technical discussions, publish RFCs, and mentor.</p>
+            </div>
+          </div>
+
+          <div class="goal-card" onclick="toggleGoal(this)">
+            <input type="checkbox" class="goal-checkbox">
+            <div class="goal-info">
+              <h4>Participate in Hackathons</h4>
+              <p>Compete in international virtual and in-person hackathons.</p>
+            </div>
+          </div>
+
+          <div class="goal-card" onclick="toggleGoal(this)">
+            <input type="checkbox" class="goal-checkbox">
+            <div class="goal-info">
+              <h4>Launch a Developer Community</h4>
+              <p>Grow a student club, tech meetup, or developer organization.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn-secondary" onclick="goToStep(3)">← Back</button>
+          <button class="btn btn-primary" onclick="goToStep(5)">Generate Recommendations ✨</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Matches & Recommendations -->
+      <div class="onboarding-step-pane" id="pane-step-5">
+        <div class="matches-header">
+          <span class="sparkle-icon" style="font-size: 1.5rem;">✦</span>
+          <h2 class="step-title">Your Tailored Developer Network</h2>
+          <p class="step-desc">Based on Rust, PyTorch, and Distributed Systems, we recommend connecting with:</p>
+        </div>
+
+        <div class="matches-grid">
+          <!-- Person 1 -->
+          <div class="match-card card-glow">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Marcus" class="avatar-md">
+            <div class="match-info">
+              <h4>Marcus Vance</h4>
+              <span class="match-headline">Systems Architect • AetherDB</span>
+              <span class="tag-pill tag-purple">98% Match</span>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="toggleFollow(this)">+ Connect</button>
+          </div>
+
+          <!-- Project 1 -->
+          <div class="match-card card-glow">
+            <div class="project-icon-box" style="background: rgba(0, 242, 254, 0.15); color: #00f2fe; width: 44px; height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold;">⚡</div>
+            <div class="match-info">
+              <h4>AetherDB Distributed</h4>
+              <span class="match-headline">Open Source Raft Engine</span>
+              <span class="tag-pill tag-cyan">Looking for Rust Dev</span>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="toggleFollow(this)">★ Star</button>
+          </div>
+
+          <!-- Community 1 -->
+          <div class="match-card card-glow">
+            <div class="project-icon-box" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; width: 44px; height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold;">🦀</div>
+            <div class="match-info">
+              <h4>Rust Systems Guild</h4>
+              <span class="match-headline">3,420 Active Engineers</span>
+              <span class="tag-pill tag-purple">Guild</span>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="toggleFollow(this)">Join Guild</button>
+          </div>
+        </div>
+
+        <div class="step-actions" style="margin-top: 2rem;">
+          <button class="btn btn-secondary" onclick="goToStep(4)">← Back</button>
+          <a href="/feed.html" class="btn btn-primary">Complete Setup & Launch Feed 🚀</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/main.js"></script>
+  <script>
+    let currentStep = 1;
+
+    function goToStep(step) {
+      currentStep = step;
+      document.querySelectorAll('.onboarding-step-pane').forEach((p, idx) => {
+        p.classList.toggle('active', idx + 1 === step);
+      });
+      for (let i = 1; i <= 5; i++) {
+        const node = document.getElementById('step-node-' + i);
+        if (node) {
+          node.classList.toggle('active', i === step);
+          node.classList.toggle('completed', i < step);
+        }
+        if (i < 5) {
+          const line = document.getElementById('line-' + i);
+          if (line) line.classList.toggle('completed', i < step);
+        }
+      }
+    }
+
+    function selectOnboardingType(card, type) {
+      document.querySelectorAll('.account-options-grid .option-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    }
+
+    function toggleChip(chip) {
+      chip.classList.toggle('active');
+    }
+
+    function toggleGoal(card) {
+      card.classList.toggle('active');
+      const cb = card.querySelector('.goal-checkbox');
+      cb.checked = !cb.checked;
+    }
+
+    function toggleFollow(btn) {
+      btn.classList.toggle('btn-primary');
+      btn.classList.toggle('btn-secondary');
+      if (btn.innerText.includes('+') || btn.innerText.includes('Join') || btn.innerText.includes('Star')) {
+        btn.innerText = 'Joined ✓';
+      } else {
+        btn.innerText = '+ Connect';
+      }
+    }
+  </script>
+</body>
+</html>

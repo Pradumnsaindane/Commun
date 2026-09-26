@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover — Commun Global Developer Search</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <div class="app-layout">
+    <!-- Persistent Left Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <a href="index.html" class="brand-logo">
+            <div class="brand-icon"><span class="material-symbols-outlined" style="font-size: 20px;">hub</span></div>
+            <span class="sidebar-text">Commun<span style="color: var(--accent-primary);">.</span></span>
+          </a>
+        </div>
+
+        <a href="workspace.html" class="workspace-switcher">
+          <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+            <div style="width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, #a855f7, #6366f1); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff;">A</div>
+            <div class="sidebar-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Acme Cloud Platform</div>
+              <div style="font-size: 0.7rem; color: var(--accent-emerald);">Pro Organization</div>
+            </div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 16px; color: var(--text-dim);">unfold_more</span>
+        </a>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Network & Feed</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="feed.html"><span class="material-symbols-outlined">dynamic_feed</span> <span class="sidebar-text">Feed</span></a></li>
+            <li class="nav-item active"><a href="discover.html"><span class="material-symbols-outlined">explore</span> <span class="sidebar-text">Discover</span></a></li>
+            <li class="nav-item"><a href="people.html"><span class="material-symbols-outlined">group</span> <span class="sidebar-text">People</span> <span class="nav-badge">12</span></a></li>
+            <li class="nav-item"><a href="projects.html"><span class="material-symbols-outlined">folder_code</span> <span class="sidebar-text">Projects</span></a></li>
+            <li class="nav-item"><a href="opportunities.html"><span class="material-symbols-outlined">work</span> <span class="sidebar-text">Opportunities</span> <span class="nav-badge unread">8 New</span></a></li>
+            <li class="nav-item"><a href="discussions.html"><span class="material-symbols-outlined">forum</span> <span class="sidebar-text">Discussions</span></a></li>
+            <li class="nav-item"><a href="communities.html"><span class="material-symbols-outlined">diversity_3</span> <span class="sidebar-text">Communities</span></a></li>
+            <li class="nav-item"><a href="events.html"><span class="material-symbols-outlined">event</span> <span class="sidebar-text">Events</span></a></li>
+            <li class="nav-item"><a href="resources.html"><span class="material-symbols-outlined">library_books</span> <span class="sidebar-text">Resource Hub</span></a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Workspace SaaS</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="workspace.html"><span class="material-symbols-outlined">domain</span> <span class="sidebar-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="messages.html"><span class="material-symbols-outlined">chat</span> <span class="sidebar-text">Messages</span> <span class="nav-badge unread">3</span></a></li>
+            <li class="nav-item"><a href="notifications.html"><span class="material-symbols-outlined">notifications</span> <span class="sidebar-text">Notifications</span></a></li>
+            <li class="nav-item"><a href="saved.html"><span class="material-symbols-outlined">bookmark</span> <span class="sidebar-text">Saved Items</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-summary">
+          <div class="avatar avatar-sm">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Alex Chen">
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="sidebar-text" style="flex: 1; overflow: hidden;">
+            <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Alex Chen</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);">@alexchen • Senior Eng</div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 18px; color: var(--text-dim);">settings</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <h2 style="font-size: 1.15rem; font-weight: 700; color: #fff;">Global Discovery Hub</h2>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-outline btn-sm" onclick="toggleAIAssistant(true)">
+            <span class="material-symbols-outlined" style="color: var(--accent-purple); font-size: 18px;">auto_awesome</span>
+            <span>AI Copilot</span>
+          </button>
+          <a href="write.html" class="btn btn-primary btn-sm">
+            <span class="material-symbols-outlined">add</span>
+            <span>Publish</span>
+          </a>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- Hero Search Bar -->
+        <div class="card card-glass" style="padding: 28px; margin-bottom: 28px; border: 1px solid var(--border-highlight); box-shadow: var(--shadow-glow);">
+          <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+            <div class="search-bar" style="flex: 1; background: var(--bg-input); padding: 12px 18px; border-radius: var(--radius-md);">
+              <span class="material-symbols-outlined" style="color: var(--accent-primary); font-size: 22px;">search</span>
+              <input type="text" id="discover-global-input" placeholder="Search developers, projects, jobs, discussions, communities, events..." style="font-size: 1rem;">
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="showToast('Filtering results across Commun graph...')">
+              Search Index
+            </button>
+          </div>
+
+          <!-- Quick Discovery Tabs -->
+          <div class="tab-nav" style="border: none; padding: 0;">
+            <button class="tab-btn active" data-disc-tab="all"><span class="material-symbols-outlined">apps</span> All Entities</button>
+            <button class="tab-btn" data-disc-tab="people"><span class="material-symbols-outlined">group</span> People</button>
+            <button class="tab-btn" data-disc-tab="projects"><span class="material-symbols-outlined">folder_code</span> Projects</button>
+            <button class="tab-btn" data-disc-tab="jobs"><span class="material-symbols-outlined">work</span> Opportunities</button>
+            <button class="tab-btn" data-disc-tab="discussions"><span class="material-symbols-outlined">forum</span> Discussions</button>
+            <button class="tab-btn" data-disc-tab="communities"><span class="material-symbols-outlined">diversity_3</span> Communities</button>
+            <button class="tab-btn" data-disc-tab="events"><span class="material-symbols-outlined">event</span> Events</button>
+          </div>
+        </div>
+
+        <!-- Filter Grid Layout -->
+        <div class="layout-3-col" style="grid-template-columns: 280px 1fr; gap: 24px;">
+          <!-- Left Filter Sidebar -->
+          <aside class="card" style="height: fit-content;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+              <strong style="color: #fff; font-size: 0.92rem;">Filter Search</strong>
+              <button class="btn btn-ghost btn-sm" style="padding: 2px 6px; font-size: 0.75rem; color: var(--accent-primary);" onclick="showToast('Filters reset')">Reset</button>
+            </div>
+
+            <!-- Technology Filter -->
+            <div class="input-group">
+              <label class="input-label">Tech Stacks & Languages</label>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox" checked> Rust (240)
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox" checked> Go / Golang (310)
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox" checked> React / Next.js (580)
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox"> Spring Boot (190)
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox"> Kubernetes & AWS (420)
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox"> Python / PyTorch (350)
+                </label>
+              </div>
+            </div>
+
+            <!-- Availability Filter -->
+            <div class="input-group" style="border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+              <label class="input-label">Availability & Role</label>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox" checked> Open for Collaboration
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox"> Looking for Job / Hiring
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox"> Open Source Maintainer
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">
+                  <input type="checkbox"> Mentor / Advisor
+                </label>
+              </div>
+            </div>
+
+            <!-- Location & Remote -->
+            <div class="input-group" style="border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+              <label class="input-label">Location / Remote</label>
+              <select class="select-control" style="font-size: 0.82rem;">
+                <option>Any Location (Worldwide)</option>
+                <option selected>100% Remote Only</option>
+                <option>North America (UTC-5 to UTC-8)</option>
+                <option>Europe (UTC+0 to UTC+2)</option>
+                <option>Asia Pacific (UTC+5:30 to UTC+9)</option>
+              </select>
+            </div>
+          </aside>
+
+          <!-- Right Discovery Results Stream -->
+          <div>
+            <!-- Section 1: Top Developer Matches -->
+            <div style="margin-bottom: 32px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+                  <span class="material-symbols-outlined" style="color: var(--accent-primary);">group</span>
+                  Matching Developers (18 Found)
+                </h3>
+                <a href="people.html" style="font-size: 0.82rem; color: var(--accent-primary); font-weight: 600;">View all people →</a>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <div class="card card-interactive">
+                  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div class="avatar avatar-md"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150" alt="Sarah"><span class="status-dot status-online"></span></div>
+                    <div>
+                      <a href="profile.html" style="font-weight: 700; color: #fff;">Sarah Jenkins</a>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Distributed Rust Architect</div>
+                    </div>
+                  </div>
+                  <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Ex-Cloudflare • Author of @tokio-raft • 45 GitHub repos</p>
+                  <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px;">
+                    <span class="badge badge-primary">Rust</span>
+                    <span class="badge">eBPF</span>
+                    <span class="badge">WASM</span>
+                  </div>
+                  <div style="display: flex; gap: 8px;">
+                    <a href="profile.html" class="btn btn-outline btn-sm" style="flex: 1;">Profile</a>
+                    <button class="btn btn-primary btn-sm btn-follow-main" style="flex: 1;">Connect</button>
+                  </div>
+                </div>
+
+                <div class="card card-interactive">
+                  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div class="avatar avatar-md"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Marcus"><span class="status-dot status-online"></span></div>
+                    <div>
+                      <a href="profile.html" style="font-weight: 700; color: #fff;">Marcus Vance</a>
+                      <div style="font-size: 0.78rem; color: var(--text-secondary);">Kubernetes & Go SRE Lead</div>
+                    </div>
+                  </div>
+                  <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Staff SRE @ Stripe • Maintainer of CloudNative Operator</p>
+                  <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px;">
+                    <span class="badge badge-blue">Go</span>
+                    <span class="badge">Kube</span>
+                    <span class="badge">AWS</span>
+                  </div>
+                  <div style="display: flex; gap: 8px;">
+                    <a href="profile.html" class="btn btn-outline btn-sm" style="flex: 1;">Profile</a>
+                    <button class="btn btn-primary btn-sm btn-follow-main" style="flex: 1;">Connect</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 2: Trending Projects -->
+            <div style="margin-bottom: 32px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+                  <span class="material-symbols-outlined" style="color: var(--accent-cyan);">folder_code</span>
+                  Open Source Projects Seeking Contributors
+                </h3>
+                <a href="projects.html" style="font-size: 0.82rem; color: var(--accent-primary); font-weight: 600;">View all projects →</a>
+              </div>
+
+              <div class="card card-interactive" style="margin-bottom: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <a href="projects.html" style="font-weight: 700; color: #fff; font-size: 1.05rem;">HyperScale AI / Triage Engine</a>
+                      <span class="badge badge-emerald">Active Sprint</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+                      High-throughput medical triage platform powered by local on-device LLM embeddings and client-side encryption.
+                    </p>
+                  </div>
+                  <button class="btn btn-ghost btn-sm btn-star-project"><span class="material-symbols-outlined">star</span> <span class="star-count">482</span></button>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 10px;">
+                  <div style="display: flex; gap: 6px;">
+                    <span class="badge">React</span>
+                    <span class="badge">Rust</span>
+                    <span class="badge">PostgreSQL</span>
+                  </div>
+                  <a href="projects.html" class="btn btn-primary btn-sm">Explore Project & Tasks →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: High Priority Jobs & Hackathons -->
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+                  <span class="material-symbols-outlined" style="color: var(--accent-amber);">work</span>
+                  Featured Opportunities
+                </h3>
+                <a href="opportunities.html" style="font-size: 0.82rem; color: var(--accent-primary); font-weight: 600;">View all 42 opportunities →</a>
+              </div>
+
+              <div class="card card-interactive" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <strong style="color: #fff; font-size: 1rem;">Senior Distributed Systems Core Engineer</strong>
+                    <span class="badge badge-blue">Remote • Full-time</span>
+                  </div>
+                  <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">
+                    Acme Cloud Platform • $160,000 - $210,000 + 0.25% Equity
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-sm" data-apply-opp data-opp-title="Senior Distributed Systems Core Engineer" data-opp-org="Acme Cloud Platform">
+                  Quick Apply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav-bar">
+    <a href="feed.html" class="mobile-nav-item"><span class="material-symbols-outlined">dynamic_feed</span><span>Feed</span></a>
+    <a href="discover.html" class="mobile-nav-item active"><span class="material-symbols-outlined">explore</span><span>Discover</span></a>
+    <a href="projects.html" class="mobile-nav-item"><span class="material-symbols-outlined">folder_code</span><span>Projects</span></a>
+    <a href="messages.html" class="mobile-nav-item"><span class="material-symbols-outlined">chat</span><span>Chat</span></a>
+    <a href="profile.html" class="mobile-nav-item"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+  </nav>
+
+  <!-- Job Quick Apply Modal -->
+  <div id="modal-apply-job" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="job-modal-title" style="font-size: 1.1rem; font-weight: 700; color: #fff;">Apply for Opportunity</h3>
+        <button class="btn btn-ghost btn-sm" data-close-modal><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label class="input-label">Full Name</label>
+          <input type="text" class="input-control" value="Alex Chen">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Email Address</label>
+          <input type="email" class="input-control" value="alex.chen@commun.dev">
+        </div>
+        <div class="input-group">
+          <label class="input-label">GitHub / Portfolio Profile Link</label>
+          <input type="text" class="input-control" value="https://github.com/alexchen">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Cover Note / Key System Achievements</label>
+          <textarea class="textarea-control" rows="3" placeholder="Highlight relevant experience, production systems scaled, or notable repositories..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" data-close-modal>Cancel</button>
+        <button id="btn-submit-application" class="btn btn-primary btn-sm">
+          Submit Application
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Command Palette Modal (Cmd + K) -->
+  <div id="cmd-palette-modal" class="modal-backdrop">
+    <div class="cmd-palette" style="width: 100%;">
+      <div class="cmd-input-wrap">
+        <span class="material-symbols-outlined" style="color: var(--accent-primary);">search</span>
+        <input type="text" id="cmd-search-input" placeholder="Search developers, projects, jobs, discussions, commands...">
+        <kbd style="font-family: var(--font-mono); font-size: 0.72rem; background: var(--bg-card-subtle); border: 1px solid var(--border-muted); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">ESC</kbd>
+      </div>
+      <div id="cmd-results-list" class="cmd-results"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

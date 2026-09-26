@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organization Workspace | Commun SaaS Platform</title>
+  <meta name="description" content="Multi-tenant developer workspace for startups, universities, open-source guilds, and engineering organizations. Manage teams, sprints, roles, analytics, and billing.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Background glow effects -->
+  <div class="bg-mesh">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Collapsible / Grouped App Sidebar -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="brand-logo">
+          <div class="logo-symbol">
+            <span class="logo-inner"></span>
+          </div>
+          <span class="brand-text">Commun<span class="text-accent">.</span></span>
+        </a>
+        <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Toggle Sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- Multi-Tenant Workspace Selector -->
+      <div class="workspace-switcher-wrap">
+        <div class="workspace-pill-select" id="workspace-dropdown-trigger">
+          <div class="ws-logo">⚡</div>
+          <div class="ws-info">
+            <span class="ws-name" id="current-ws-name">HyperScale AI Lab</span>
+            <span class="ws-tier badge badge-purple">Enterprise</span>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">WORKSPACE SAAS</div>
+        <a href="/workspace.html" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#teams-section" class="nav-item" onclick="switchWorkspaceTab('teams')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Teams & Guilds</span>
+          <span class="nav-badge">4</span>
+        </a>
+        <a href="#members-section" class="nav-item" onclick="switchWorkspaceTab('members')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Members & Roles</span>
+          <span class="nav-badge">128</span>
+        </a>
+        <a href="/projects.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <span>Projects</span>
+          <span class="nav-badge">18</span>
+        </a>
+        <a href="#analytics-section" class="nav-item" onclick="switchWorkspaceTab('analytics')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Analytics</span>
+        </a>
+        <a href="#billing-section" class="nav-item" onclick="switchWorkspaceTab('billing')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <span>Billing & Plan</span>
+        </a>
+
+        <div class="nav-group-title">EXPLORE & COMMUNITY</div>
+        <a href="/feed.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+          <span>Feed</span>
+        </a>
+        <a href="/discover.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span>Discover</span>
+        </a>
+        <a href="/people.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span>People</span>
+        </a>
+        <a href="/discussions.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>Discussions</span>
+        </a>
+        <a href="/opportunities.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Opportunities</span>
+        </a>
+        <a href="/communities.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Communities</span>
+        </a>
+        <a href="/events.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Events</span>
+        </a>
+        <a href="/resources.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Resources</span>
+        </a>
+        <a href="/messages.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Messages</span>
+          <span class="nav-badge">3</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/settings.html" class="user-profile-pill">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+          <div class="user-meta">
+            <span class="user-name">Elena Rostova</span>
+            <span class="user-handle">@elena_dev • Org Admin</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Navigation Bar -->
+      <header class="top-nav">
+        <div class="top-nav-left">
+          <button class="mobile-menu-btn" id="mobile-menu-toggle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="global-search-pill" id="cmd-k-trigger">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="search-placeholder">Search members, teams, repositories...</span>
+            <kbd class="kbd-shortcut">⌘K</kbd>
+          </div>
+        </div>
+
+        <div class="top-nav-right">
+          <!-- Live RBAC Role Simulation Switcher -->
+          <div class="rbac-role-pill" title="Simulate role-based UI views">
+            <span class="rbac-dot"></span>
+            <span class="rbac-label">Role:</span>
+            <select class="rbac-select" id="rbac-role-selector" onchange="simulateRoleChange(this.value)">
+              <option value="owner" selected>Org Owner</option>
+              <option value="admin">Org Admin</option>
+              <option value="manager">Engineering Manager</option>
+              <option value="member">Core Member</option>
+              <option value="guest">Guest / Contractor</option>
+            </select>
+          </div>
+
+          <button class="btn btn-secondary btn-sm" id="ai-copilot-btn">
+            <span class="sparkle-icon">✦</span> Commun AI
+          </button>
+          <a href="/write.html" class="btn btn-primary btn-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Invite Member
+          </a>
+        </div>
+      </header>
+
+      <!-- Workspace Container -->
+      <div class="page-body">
+        <!-- Workspace Header Banner -->
+        <div class="workspace-header-banner card-glow">
+          <div class="ws-banner-meta">
+            <div class="ws-hero-avatar">
+              <span>⚡</span>
+            </div>
+            <div class="ws-hero-details">
+              <div class="ws-hero-title-row">
+                <h1 class="ws-hero-title" id="ws-display-title">HyperScale AI Lab</h1>
+                <span class="badge badge-purple">Enterprise Verified</span>
+                <span class="badge badge-cyan">SaaS Multi-tenant ID: ws_hyperscale_09</span>
+              </div>
+              <p class="ws-hero-desc">Building autonomous inference orchestration and distributed LLM fine-tuning pipelines for technical teams worldwide.</p>
+              <div class="ws-meta-stats">
+                <span>📍 San Francisco & Distributed</span>
+                <span>🌐 <a href="#" class="text-accent">hyperscale.ai</a></span>
+                <span>👥 128 Engineering Members</span>
+                <span>📦 18 Active Repositories & Projects</span>
+              </div>
+            </div>
+          </div>
+          <div class="ws-banner-actions">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Workspace settings opened')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              Org Settings
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="openInviteModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Teammate
+            </button>
+          </div>
+        </div>
+
+        <!-- Workspace Tabs -->
+        <div class="tabs-nav-container">
+          <div class="tabs-nav" id="ws-tabs">
+            <button class="tab-btn active" data-tab="overview" onclick="switchWorkspaceTab('overview')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Overview & Analytics
+            </button>
+            <button class="tab-btn" data-tab="teams" onclick="switchWorkspaceTab('teams')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Engineering Teams (4)
+            </button>
+            <button class="tab-btn" data-tab="members" onclick="switchWorkspaceTab('members')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Directory & Roles (128)
+            </button>
+            <button class="tab-btn" data-tab="projects" onclick="switchWorkspaceTab('projects')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              Workspace Projects (18)
+            </button>
+            <button class="tab-btn" data-tab="billing" onclick="switchWorkspaceTab('billing')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              SaaS Billing & Tier
+            </button>
+            <button class="tab-btn" data-tab="audit" onclick="switchWorkspaceTab('audit')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Audit Log
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: OVERVIEW -->
+        <div class="ws-tab-pane active" id="pane-overview">
+          <!-- KPI Metrics Row -->
+          <div class="metrics-grid">
+            <div class="metric-card card-glow">
+              <div class="metric-icon-wrap icon-cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="metric-data">
+                <span class="metric-label">Total Organization Members</span>
+                <span class="metric-value">128 <span class="metric-trend positive">+14% vs last mo</span></span>
+              </div>
+            </div>
+
+            <div class="metric-card card-glow">
+              <div class="metric-icon-wrap icon-purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              </div>
+              <div class="metric-data">
+                <span class="metric-label">Active Projects & Sprints</span>
+                <span class="metric-value">18 <span class="metric-trend positive">92% velocity</span></span>
+              </div>
+            </div>
+
+            <div class="metric-card card-glow">
+              <div class="metric-icon-wrap icon-green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="metric-data">
+                <span class="metric-label">Engineering Commits / Week</span>
+                <span class="metric-value">1,482 <span class="metric-trend positive">+28.4%</span></span>
+              </div>
+            </div>
+
+            <div class="metric-card card-glow">
+              <div class="metric-icon-wrap icon-orange">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div class="metric-data">
+                <span class="metric-label">Open Collaboration Reqs</span>
+                <span class="metric-value">7 <span class="metric-trend">3 filled this wk</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive SaaS Analytics Grid -->
+          <div class="dashboard-grid-2col">
+            <!-- Chart 1: Member Growth & Activity -->
+            <div class="card-glow chart-box">
+              <div class="chart-header">
+                <div>
+                  <h3 class="card-title">Engineering Velocity & Commits</h3>
+                  <p class="card-subtitle">Aggregated pull requests, code reviews, and merged commits across all teams</p>
+                </div>
+                <div class="chart-legend">
+                  <span class="legend-item"><span class="legend-color color-cyan"></span> Commits</span>
+                  <span class="legend-item"><span class="legend-color color-purple"></span> PRs Merged</span>
+                </div>
+              </div>
+              <div class="chart-svg-container">
+                <svg viewBox="0 0 600 200" class="chart-svg" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="gradCyan" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0.0"/>
+                    </linearGradient>
+                    <linearGradient id="gradPurple" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#7928ca" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="#7928ca" stop-opacity="0.0"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid Lines -->
+                  <line x1="0" y1="40" x2="600" y2="40" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+                  <line x1="0" y1="90" x2="600" y2="90" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+                  <line x1="0" y1="140" x2="600" y2="140" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+                  
+                  <!-- Area 1: Cyan -->
+                  <polygon points="0,180 50,140 100,150 150,110 200,125 250,80 300,95 350,60 400,75 450,45 500,55 550,30 600,20 600,180 0,180" fill="url(#gradCyan)" />
+                  <polyline points="0,180 50,140 100,150 150,110 200,125 250,80 300,95 350,60 400,75 450,45 500,55 550,30 600,20" fill="none" stroke="#00f2fe" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+                  <!-- Area 2: Purple -->
+                  <polygon points="0,180 50,165 100,170 150,140 200,155 250,120 300,135 350,100 400,110 450,80 500,90 550,65 600,50 600,180 0,180" fill="url(#gradPurple)" />
+                  <polyline points="0,180 50,165 100,170 150,140 200,155 250,120 300,135 350,100 400,110 450,80 500,90 550,65 600,50" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="chart-timeline-labels">
+                <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span><span>Week 5</span><span>Week 6</span><span>Current</span>
+              </div>
+            </div>
+
+            <!-- Tech Stack & Skill Distribution -->
+            <div class="card-glow chart-box">
+              <div class="chart-header">
+                <div>
+                  <h3 class="card-title">Technology & Guild Breakdown</h3>
+                  <p class="card-subtitle">Active tech stacks utilized across repositories and teams</p>
+                </div>
+              </div>
+              <div class="skills-progress-list">
+                <div class="skill-bar-row">
+                  <div class="skill-bar-info">
+                    <span class="skill-name">Rust & WebAssembly Core</span>
+                    <span class="skill-pct">38% • 49 engineers</span>
+                  </div>
+                  <div class="progress-track"><div class="progress-fill" style="width: 38%; background: #ff8000;"></div></div>
+                </div>
+
+                <div class="skill-bar-row">
+                  <div class="skill-bar-info">
+                    <span class="skill-name">Python / PyTorch / CUDA ML</span>
+                    <span class="skill-pct">32% • 41 engineers</span>
+                  </div>
+                  <div class="progress-track"><div class="progress-fill" style="width: 32%; background: #3b82f6;"></div></div>
+                </div>
+
+                <div class="skill-bar-row">
+                  <div class="skill-bar-info">
+                    <span class="skill-name">TypeScript / React / Next.js</span>
+                    <span class="skill-pct">18% • 23 engineers</span>
+                  </div>
+                  <div class="progress-track"><div class="progress-fill" style="width: 18%; background: #00f2fe;"></div></div>
+                </div>
+
+                <div class="skill-bar-row">
+                  <div class="skill-bar-info">
+                    <span class="skill-name">Go & Kubernetes Infrastructure</span>
+                    <span class="skill-pct">12% • 15 engineers</span>
+                  </div>
+                  <div class="progress-track"><div class="progress-fill" style="width: 12%; background: #10b981;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Workspace Activity Stream -->
+          <div class="card-glow" style="margin-top: 1.5rem;">
+            <div class="card-header-flex">
+              <div>
+                <h3 class="card-title">Real-Time Workspace Audit & Activity</h3>
+                <p class="card-subtitle">Live events streaming from repos, teams, sprints, and role permission updates</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Activity stream refreshed')">Refresh Feed</button>
+            </div>
+
+            <div class="timeline-activity-list">
+              <div class="activity-item">
+                <div class="activity-avatar">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80" alt="User">
+                </div>
+                <div class="activity-content">
+                  <p><strong>Elena Rostova</strong> created a new collaboration requirement: <span class="tag-pill tag-cyan">Looking for Rust / WebAssembly Kernel Architect</span> in project <a href="/projects.html" class="text-accent">AetherDB Distributed Engine</a></p>
+                  <span class="activity-time">12 minutes ago • Automated Workspace Log</span>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-avatar">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80" alt="User">
+                </div>
+                <div class="activity-content">
+                  <p><strong>Marcus Vance</strong> merged Pull Request <code class="inline-code">#418 (feat: SIMD quantization kernel)</code> into <code class="inline-code">main</code></p>
+                  <span class="activity-time">1 hour ago • GitHub Sync Webhook</span>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-avatar">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=80" alt="User">
+                </div>
+                <div class="activity-content">
+                  <p><strong>Dr. Aris Thorne</strong> published a new internal RFC: <span class="tag-pill tag-purple">RFC-88: Multi-Region KV Replication Strategy</span></p>
+                  <span class="activity-time">3 hours ago • Internal Guilds</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: TEAMS -->
+        <div class="ws-tab-pane" id="pane-teams">
+          <div class="section-header-row">
+            <div>
+              <h2 class="section-heading">Engineering Teams & Guilds</h2>
+              <p class="section-subtext">Manage pods, leads, cross-functional sprints, and permissions.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Create Team modal triggered')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Create New Pod
+            </button>
+          </div>
+
+          <div class="teams-grid">
+            <!-- Team 1: AI/ML Inference -->
+            <div class="team-card card-glow">
+              <div class="team-card-header">
+                <div class="team-icon" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">🧠</div>
+                <div class="team-meta">
+                  <h3 class="team-name">AI / ML Kernel Pod</h3>
+                  <span class="team-lead">Lead: Dr. Aris Thorne</span>
+                </div>
+                <span class="badge badge-purple">41 Engineers</span>
+              </div>
+              <p class="team-desc">Responsible for PyTorch runtime optimization, GPU memory kernel scheduling, and quant models.</p>
+              <div class="team-tags">
+                <span class="tag-pill">CUDA</span>
+                <span class="tag-pill">PyTorch</span>
+                <span class="tag-pill">Triton</span>
+                <span class="tag-pill">vLLM</span>
+              </div>
+              <div class="team-card-footer">
+                <div class="member-avatars-stack">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" alt="m1">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&auto=format&fit=crop&q=80" alt="m2">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&auto=format&fit=crop&q=80" alt="m3">
+                  <span class="avatar-more">+38</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('AI Pod details loaded')">Manage Pod</button>
+              </div>
+            </div>
+
+            <!-- Team 2: Distributed Systems Core -->
+            <div class="team-card card-glow">
+              <div class="team-card-header">
+                <div class="team-icon" style="background: rgba(0, 242, 254, 0.15); color: #00f2fe;">⚡</div>
+                <div class="team-meta">
+                  <h3 class="team-name">Core Systems & Rust Guild</h3>
+                  <span class="team-lead">Lead: Marcus Vance</span>
+                </div>
+                <span class="badge badge-cyan">49 Engineers</span>
+              </div>
+              <p class="team-desc">Architecting low-latency consensus, Raft clusters, zero-copy socket layers, and WebAssembly sandbox modules.</p>
+              <div class="team-tags">
+                <span class="tag-pill">Rust</span>
+                <span class="tag-pill">Tokio</span>
+                <span class="tag-pill">Raft</span>
+                <span class="tag-pill">Wasm</span>
+              </div>
+              <div class="team-card-footer">
+                <div class="member-avatars-stack">
+                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=50&auto=format&fit=crop&q=80" alt="m1">
+                  <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=50&auto=format&fit=crop&q=80" alt="m2">
+                  <span class="avatar-more">+47</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Core Systems Pod details loaded')">Manage Pod</button>
+              </div>
+            </div>
+
+            <!-- Team 3: Frontend Platform -->
+            <div class="team-card card-glow">
+              <div class="team-card-header">
+                <div class="team-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🎨</div>
+                <div class="team-meta">
+                  <h3 class="team-name">Frontend & Dev Experience</h3>
+                  <span class="team-lead">Lead: Elena Rostova</span>
+                </div>
+                <span class="badge badge-green">23 Engineers</span>
+              </div>
+              <p class="team-desc">Building the cloud console, high-FPS canvas topology visualizers, CLI binaries, and public SDK packages.</p>
+              <div class="team-tags">
+                <span class="tag-pill">TypeScript</span>
+                <span class="tag-pill">Next.js</span>
+                <span class="tag-pill">WebGL</span>
+                <span class="tag-pill">Tailwind</span>
+              </div>
+              <div class="team-card-footer">
+                <div class="member-avatars-stack">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" alt="m1">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&auto=format&fit=crop&q=80" alt="m2">
+                  <span class="avatar-more">+21</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Frontend Pod details loaded')">Manage Pod</button>
+              </div>
+            </div>
+
+            <!-- Team 4: SRE & DevOps Cloud -->
+            <div class="team-card card-glow">
+              <div class="team-card-header">
+                <div class="team-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">🛡️</div>
+                <div class="team-meta">
+                  <h3 class="team-name">Cloud SRE & Kubernetes</h3>
+                  <span class="team-lead">Lead: Sarah Lin</span>
+                </div>
+                <span class="badge badge-orange">15 Engineers</span>
+              </div>
+              <p class="team-desc">Multi-region cluster provisioning, automated failover, telemetry pipelines, and security compliance.</p>
+              <div class="team-tags">
+                <span class="tag-pill">Kubernetes</span>
+                <span class="tag-pill">Terraform</span>
+                <span class="tag-pill">Prometheus</span>
+                <span class="tag-pill">AWS/GCP</span>
+              </div>
+              <div class="team-card-footer">
+                <div class="member-avatars-stack">
+                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&auto=format&fit=crop&q=80" alt="m1">
+                  <span class="avatar-more">+14</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('SRE Pod details loaded')">Manage Pod</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: MEMBERS & ROLES -->
+        <div class="ws-tab-pane" id="pane-members">
+          <div class="section-header-row">
+            <div>
+              <h2 class="section-heading">Workspace Member Directory & RBAC</h2>
+              <p class="section-subtext">Manage seat allocation, access keys, team assignments, and security levels.</p>
+            </div>
+            <div class="actions-group">
+              <input type="text" class="input-field input-sm" placeholder="Filter members by name, skill, role..." style="width: 260px;">
+              <button class="btn btn-primary btn-sm" onclick="openInviteModal()">+ Invite New Member</button>
+            </div>
+          </div>
+
+          <div class="card-glow table-container">
+            <table class="saas-table">
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>Assigned Pod / Team</th>
+                  <th>RBAC Role</th>
+                  <th>Activity / Commits</th>
+                  <th>2FA Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="user-row-cell">
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+                      <div>
+                        <div class="name-bold">Elena Rostova</div>
+                        <div class="user-subtext">elena@hyperscale.ai</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="tag-pill tag-cyan">Frontend & DevEx</span></td>
+                  <td><span class="badge badge-purple">Org Admin</span></td>
+                  <td>42 commits • Active now</td>
+                  <td><span class="status-badge status-active">Enforced</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-ghost btn-xs" onclick="showToast('Edit member: Elena')">Edit</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="user-row-cell">
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+                      <div>
+                        <div class="name-bold">Marcus Vance</div>
+                        <div class="user-subtext">marcus@hyperscale.ai</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="tag-pill tag-purple">Core Systems</span></td>
+                  <td><span class="badge badge-cyan">Org Owner</span></td>
+                  <td>89 commits • Active now</td>
+                  <td><span class="status-badge status-active">Enforced</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-ghost btn-xs" onclick="showToast('Edit member: Marcus')">Edit</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="user-row-cell">
+                      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+                      <div>
+                        <div class="name-bold">Dr. Aris Thorne</div>
+                        <div class="user-subtext">aris@hyperscale.ai</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="tag-pill tag-purple">AI / ML Kernel</span></td>
+                  <td><span class="badge badge-cyan">Eng Manager</span></td>
+                  <td>31 commits • 2h ago</td>
+                  <td><span class="status-badge status-active">Enforced</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-ghost btn-xs" onclick="showToast('Edit member: Dr. Aris')">Edit</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="user-row-cell">
+                      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+                      <div>
+                        <div class="name-bold">Sarah Lin</div>
+                        <div class="user-subtext">sarah@hyperscale.ai</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="tag-pill tag-orange">Cloud SRE</span></td>
+                  <td><span class="badge badge-green">Core Member</span></td>
+                  <td>19 commits • 4h ago</td>
+                  <td><span class="status-badge status-active">Enforced</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-ghost btn-xs" onclick="showToast('Edit member: Sarah')">Edit</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="user-row-cell">
+                      <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=60&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+                      <div>
+                        <div class="name-bold">Alex Rivera</div>
+                        <div class="user-subtext">alex.external@contractor.dev</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="tag-pill">UI Design System</span></td>
+                  <td><span class="badge">Guest / Contractor</span></td>
+                  <td>8 commits • Yesterday</td>
+                  <td><span class="status-badge status-active">Enforced</span></td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-ghost btn-xs" onclick="showToast('Edit member: Alex')">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: BILLING & SAAS SUBSCRIPTION -->
+        <div class="ws-tab-pane" id="pane-billing">
+          <div class="billing-header-card card-glow">
+            <div class="billing-tier-info">
+              <div class="tier-badge-row">
+                <span class="badge badge-purple" style="font-size: 0.9rem; padding: 0.35rem 0.8rem;">Current Plan: Enterprise SaaS</span>
+                <span class="status-badge status-active">Annual Active ($3,840/yr)</span>
+              </div>
+              <h2 class="tier-title">Unlimited Scale for Modern Technical Orgs</h2>
+              <p class="tier-subtext">Includes custom domain, SSO SAML 2.0, audit log exports, priority SLA support, and dedicated cloud compute runners.</p>
+            </div>
+            <div class="billing-actions">
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Payment methods opened')">Manage Card & Invoices</button>
+              <button class="btn btn-primary btn-sm" onclick="showToast('Enterprise plan customizer opened')">Change Plan</button>
+            </div>
+          </div>
+
+          <!-- Usage Meters Grid -->
+          <h3 class="section-title-sm" style="margin-top: 2rem; margin-bottom: 1rem;">Resource Consumption & Quotas</h3>
+          <div class="metrics-grid">
+            <div class="card-glow usage-card">
+              <div class="usage-head">
+                <span>Active Seats</span>
+                <strong>128 / 250 Seats</strong>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 51.2%; background: #00f2fe;"></div></div>
+              <span class="usage-note">51% utilized • 122 seats remaining</span>
+            </div>
+
+            <div class="card-glow usage-card">
+              <div class="usage-head">
+                <span>CI/CD & Cloud Build Minutes</span>
+                <strong>14,280 / 50,000 Min</strong>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 28.5%; background: #a855f7;"></div></div>
+              <span class="usage-note">28.5% consumed • Renews Oct 1</span>
+            </div>
+
+            <div class="card-glow usage-card">
+              <div class="usage-head">
+                <span>Artifact & Vector DB Storage</span>
+                <strong>42.8 GB / 100 GB</strong>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 42.8%; background: #10b981;"></div></div>
+              <span class="usage-note">42.8% capacity</span>
+            </div>
+
+            <div class="card-glow usage-card">
+              <div class="usage-head">
+                <span>Commun AI Inference Queries</span>
+                <strong>18,400 / Unlimited</strong>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 15%; background: #f59e0b;"></div></div>
+              <span class="usage-note">High priority queue</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: AUDIT LOG -->
+        <div class="ws-tab-pane" id="pane-audit">
+          <div class="section-header-row">
+            <div>
+              <h2 class="section-heading">Workspace Security & Compliance Audit Log</h2>
+              <p class="section-subtext">Immutable log of security-sensitive events, role elevations, and token generations.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('CSV export downloaded')">Export CSV</button>
+          </div>
+
+          <div class="card-glow table-container">
+            <table class="saas-table">
+              <thead>
+                <tr>
+                  <th>Timestamp (UTC)</th>
+                  <th>Actor</th>
+                  <th>Action</th>
+                  <th>Target Resource</th>
+                  <th>IP / User Agent</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>2026-09-26 09:41:12</code></td>
+                  <td>marcus@hyperscale.ai</td>
+                  <td><span class="badge badge-purple">ROLE_UPDATE</span></td>
+                  <td>Elena Rostova elevated to Org Admin</td>
+                  <td><code>198.51.100.44 (US-CA)</code></td>
+                </tr>
+                <tr>
+                  <td><code>2026-09-26 08:14:02</code></td>
+                  <td>elena@hyperscale.ai</td>
+                  <td><span class="badge badge-cyan">REPO_SECRET_CREATED</span></td>
+                  <td>PROD_AWS_DEPLOY_KEY</td>
+                  <td><code>192.0.2.19 (US-WA)</code></td>
+                </tr>
+                <tr>
+                  <td><code>2026-09-25 22:04:19</code></td>
+                  <td>aris@hyperscale.ai</td>
+                  <td><span class="badge badge-green">WEBHOOK_SUBSCRIBED</span></td>
+                  <td>GitHub Push & Release Webhook</td>
+                  <td><code>203.0.113.88 (EU-DE)</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Invite Member Modal -->
+  <div class="modal-backdrop" id="invite-modal">
+    <div class="modal-dialog card-glow">
+      <div class="modal-header">
+        <h3 class="modal-title">Invite Engineers to Workspace</h3>
+        <button class="modal-close" onclick="closeInviteModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Email Addresses (comma separated)</label>
+          <input type="text" class="input-field" placeholder="engineer@startup.com, lead@guild.org">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assign Team / Pod</label>
+          <select class="input-field">
+            <option>Core Systems & Rust Guild</option>
+            <option>AI / ML Kernel Pod</option>
+            <option>Frontend & Dev Experience</option>
+            <option>Cloud SRE & Kubernetes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select RBAC Permission Role</label>
+          <select class="input-field">
+            <option>Org Admin (Manage members & billing)</option>
+            <option>Engineering Manager (Create projects & reviews)</option>
+            <option selected>Core Member (Push code & collaborate)</option>
+            <option>Guest / Contractor (Scoped repository access)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closeInviteModal()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="sendInvite()">Send Invitations</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Placeholder -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="/main.js"></script>
+  <script>
+    function switchWorkspaceTab(tabName) {
+      document.querySelectorAll('#ws-tabs .tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabName);
+      });
+      document.querySelectorAll('.ws-tab-pane').forEach(pane => {
+        pane.classList.remove('active');
+      });
+      const target = document.getElementById('pane-' + tabName);
+      if (target) target.classList.add('active');
+    }
+
+    function openInviteModal() {
+      document.getElementById('invite-modal').classList.add('active');
+    }
+    function closeInviteModal() {
+      document.getElementById('invite-modal').classList.remove('active');
+    }
+    function sendInvite() {
+      closeInviteModal();
+      if (typeof showToast === 'function') {
+        showToast('Invitations sent successfully to engineers!');
+      } else {
+        alert('Invitations sent!');
+      }
+    }
+
+    function simulateRoleChange(role) {
+      if (typeof showToast === 'function') {
+        showToast(`Simulated active view as: ${role.toUpperCase()}`);
+      }
+    }
+  </script>
+</body>
+</html>

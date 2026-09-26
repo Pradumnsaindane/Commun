@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects & Collaboration Hub — Commun</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <a href="index.html" class="brand-logo">
+            <div class="brand-icon"><span class="material-symbols-outlined" style="font-size: 20px;">hub</span></div>
+            <span class="sidebar-text">Commun<span style="color: var(--accent-primary);">.</span></span>
+          </a>
+        </div>
+
+        <a href="workspace.html" class="workspace-switcher">
+          <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+            <div style="width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, #a855f7, #6366f1); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff;">A</div>
+            <div class="sidebar-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Acme Cloud Platform</div>
+              <div style="font-size: 0.7rem; color: var(--accent-emerald);">Pro Organization</div>
+            </div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 16px; color: var(--text-dim);">unfold_more</span>
+        </a>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Network & Feed</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="feed.html"><span class="material-symbols-outlined">dynamic_feed</span> <span class="sidebar-text">Feed</span></a></li>
+            <li class="nav-item"><a href="discover.html"><span class="material-symbols-outlined">explore</span> <span class="sidebar-text">Discover</span></a></li>
+            <li class="nav-item"><a href="people.html"><span class="material-symbols-outlined">group</span> <span class="sidebar-text">People</span> <span class="nav-badge">12</span></a></li>
+            <li class="nav-item active"><a href="projects.html"><span class="material-symbols-outlined">folder_code</span> <span class="sidebar-text">Projects</span></a></li>
+            <li class="nav-item"><a href="opportunities.html"><span class="material-symbols-outlined">work</span> <span class="sidebar-text">Opportunities</span> <span class="nav-badge unread">8 New</span></a></li>
+            <li class="nav-item"><a href="discussions.html"><span class="material-symbols-outlined">forum</span> <span class="sidebar-text">Discussions</span></a></li>
+            <li class="nav-item"><a href="communities.html"><span class="material-symbols-outlined">diversity_3</span> <span class="sidebar-text">Communities</span></a></li>
+            <li class="nav-item"><a href="events.html"><span class="material-symbols-outlined">event</span> <span class="sidebar-text">Events</span></a></li>
+            <li class="nav-item"><a href="resources.html"><span class="material-symbols-outlined">library_books</span> <span class="sidebar-text">Resource Hub</span></a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Workspace SaaS</div>
+          <ul class="nav-list">
+            <li class="nav-item"><a href="workspace.html"><span class="material-symbols-outlined">domain</span> <span class="sidebar-text">Dashboard</span></a></li>
+            <li class="nav-item"><a href="messages.html"><span class="material-symbols-outlined">chat</span> <span class="sidebar-text">Messages</span> <span class="nav-badge unread">3</span></a></li>
+            <li class="nav-item"><a href="notifications.html"><span class="material-symbols-outlined">notifications</span> <span class="sidebar-text">Notifications</span></a></li>
+            <li class="nav-item"><a href="saved.html"><span class="material-symbols-outlined">bookmark</span> <span class="sidebar-text">Saved Items</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="profile.html" class="user-profile-summary">
+          <div class="avatar avatar-sm">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Alex Chen">
+            <span class="status-dot status-online"></span>
+          </div>
+          <div class="sidebar-text" style="flex: 1; overflow: hidden;">
+            <div style="font-weight: 600; font-size: 0.82rem; color: #fff;">Alex Chen</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);">@alexchen • Senior Eng</div>
+          </div>
+          <span class="material-symbols-outlined sidebar-text" style="font-size: 18px; color: var(--text-dim);">settings</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <div class="search-bar" style="width: 100%; max-width: 480px;">
+            <span class="material-symbols-outlined" style="color: var(--text-muted); font-size: 18px;">search</span>
+            <input type="text" placeholder="Search open source projects, tools, frameworks... (Press ⌘K)" data-trigger="cmd-palette" readonly style="cursor: pointer;">
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-outline btn-sm" onclick="toggleAIAssistant(true)">
+            <span class="material-symbols-outlined" style="color: var(--accent-purple); font-size: 18px;">auto_awesome</span>
+            <span>Match Projects</span>
+          </button>
+          <button class="btn btn-primary btn-sm" data-open-modal="modal-create-project">
+            <span class="material-symbols-outlined">add</span>
+            <span>New Project</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- Projects Section Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #fff;">Projects Hub & Collaboration</h2>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Discover high-signal open-source repositories, startup MVPs, and apply for active collaboration roles.</p>
+          </div>
+          <button class="btn btn-primary btn-sm btn-glow" data-open-modal="modal-create-project">
+            <span class="material-symbols-outlined">rocket_launch</span> Launch a Project
+          </button>
+        </div>
+
+        <!-- Project Categories Filter Tabs -->
+        <div class="tab-nav" style="margin-bottom: 24px;">
+          <button class="tab-btn active"><span class="material-symbols-outlined">apps</span> All Projects (420)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">handshake</span> Open for Collaborators (84)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">star</span> Trending & Starred</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">code</span> AI / ML Tooling</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">dns</span> Infrastructure & Systems</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">laptop</span> Web Apps & SaaS</button>
+        </div>
+
+        <!-- Collaboration Spotlight Banner -->
+        <div class="card card-glass" style="margin-bottom: 28px; border: 1px solid var(--border-highlight); padding: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="badge badge-primary">Featured Collaboration Requirement</span>
+              <span class="badge badge-emerald">Sprint Active</span>
+            </div>
+            <span style="font-size: 0.82rem; color: var(--accent-amber); font-weight: 700;">★ $2,500 Open Source Grant</span>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div style="max-width: 680px;">
+              <h3 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 6px;">
+                Looking for: Senior Rust & WebAssembly Lead @ MediGraph AI
+              </h3>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+                We are building real-time client-side vector search for on-device medical records. We need an engineer experienced with SIMD vector intrinsics in WASM and React bindings.
+              </p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-outline btn-sm" onclick="openModal('modal-project-detail')">View Project Roadmap</button>
+              <button class="btn btn-primary btn-sm btn-glow" data-collab-apply data-project-title="MediGraph AI" data-role="WASM & Rust Lead">
+                Apply to Collaborate
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+          <!-- Project Card 1 -->
+          <div class="card card-interactive" onclick="openModal('modal-project-detail')">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #fff; font-size: 1.1rem;">raft-ebpf-consensus</strong>
+                  <span class="badge badge-emerald" style="font-size: 0.7rem;">v1.4</span>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Owner: @alexchen • Acme Labs</div>
+              </div>
+              <button class="btn btn-ghost btn-sm btn-star-project" onclick="event.stopPropagation();"><span class="material-symbols-outlined">star</span> <span class="star-count">842</span></button>
+            </div>
+
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              Lockless eBPF socket communication pipeline designed for high-availability Raft state replication across data centers.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px;">
+              <span class="badge badge-primary">Rust</span>
+              <span class="badge">eBPF</span>
+              <span class="badge">Distributed Systems</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 12px; font-size: 0.78rem;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="display: flex; margin-left: 8px;">
+                  <div class="avatar avatar-xs" style="margin-left: -8px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"></div>
+                  <div class="avatar avatar-xs" style="margin-left: -8px;"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"></div>
+                  <div class="avatar avatar-xs" style="margin-left: -8px;"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100"></div>
+                </div>
+                <span style="color: var(--text-muted);">8 Contributors</span>
+              </div>
+              <span style="color: var(--accent-cyan); font-weight: 600;">2 Open Tasks →</span>
+            </div>
+          </div>
+
+          <!-- Project Card 2 -->
+          <div class="card card-interactive" onclick="openModal('modal-project-detail')">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #fff; font-size: 1.1rem;">cloudnative-operator</strong>
+                  <span class="badge badge-blue" style="font-size: 0.7rem;">Active</span>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Owner: @marcusv • Stanford DevGuild</div>
+              </div>
+              <button class="btn btn-ghost btn-sm btn-star-project" onclick="event.stopPropagation();"><span class="material-symbols-outlined">star</span> <span class="star-count">519</span></button>
+            </div>
+
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              Autonomous Kubernetes CRD controller for multi-tenant database isolation, live failover, and automated volume rebalancing.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px;">
+              <span class="badge badge-blue">Go</span>
+              <span class="badge">Kubernetes</span>
+              <span class="badge">CRDs</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 12px; font-size: 0.78rem;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="color: var(--text-muted);">14 Contributors</span>
+              </div>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Seeking Go Reviewer →</span>
+            </div>
+          </div>
+
+          <!-- Project Card 3 -->
+          <div class="card card-interactive" onclick="openModal('modal-project-detail')">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <strong style="color: #fff; font-size: 1.1rem;">quantum-ui-engine</strong>
+                  <span class="badge badge-purple" style="font-size: 0.7rem;">Beta</span>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Owner: @chloez • Toronto</div>
+              </div>
+              <button class="btn btn-ghost btn-sm btn-star-project" onclick="event.stopPropagation();"><span class="material-symbols-outlined">star</span> <span class="star-count">930</span></button>
+            </div>
+
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              GPU-accelerated WebGPU component library designed for complex node graphs, high-frequency charts, and 3D UI states.
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px;">
+              <span class="badge badge-purple">TypeScript</span>
+              <span class="badge">WebGPU</span>
+              <span class="badge">React</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-subtle); padding-top: 12px; font-size: 0.78rem;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="color: var(--text-muted);">6 Contributors</span>
+              </div>
+              <span style="color: var(--accent-cyan); font-weight: 600;">5 Open Issues →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-nav-bar">
+    <a href="feed.html" class="mobile-nav-item"><span class="material-symbols-outlined">dynamic_feed</span><span>Feed</span></a>
+    <a href="discover.html" class="mobile-nav-item"><span class="material-symbols-outlined">explore</span><span>Discover</span></a>
+    <a href="projects.html" class="mobile-nav-item active"><span class="material-symbols-outlined">folder_code</span><span>Projects</span></a>
+    <a href="messages.html" class="mobile-nav-item"><span class="material-symbols-outlined">chat</span><span>Chat</span></a>
+    <a href="profile.html" class="mobile-nav-item"><span class="material-symbols-outlined">person</span><span>Profile</span></a>
+  </nav>
+
+  <!-- Detailed Project Modal with Interactive Kanban & Tabs -->
+  <div id="modal-project-detail" class="modal-backdrop">
+    <div class="modal-dialog" style="max-width: 840px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="brand-icon" style="width: 28px; height: 28px;"><span class="material-symbols-outlined" style="font-size: 16px;">folder_code</span></div>
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff;">raft-ebpf-consensus</h3>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Maintained by @alexchen • MIT License</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-close-modal><span class="material-symbols-outlined">close</span></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Project Tabs -->
+        <div class="tab-nav" style="margin-bottom: 18px;">
+          <button class="tab-btn active"><span class="material-symbols-outlined">overview</span> Overview & Tasks</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">bug_report</span> Issues (4)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">group</span> Contributors (8)</button>
+          <button class="tab-btn"><span class="material-symbols-outlined">menu_book</span> Architecture RFC</button>
+        </div>
+
+        <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6; margin-bottom: 16px;">
+          A distributed zero-copy Raft consensus state machine engineered for ultra-low latency snapshot compaction across asynchronous network boundaries.
+        </p>
+
+        <!-- Interactive Sprint Kanban Board -->
+        <div style="margin-bottom: 20px;">
+          <div style="font-weight: 700; color: #fff; font-size: 0.9rem; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <span class="material-symbols-outlined" style="color: var(--accent-primary);">view_kanban</span>
+            Sprint Kanban (Interactive Tasks)
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+            <!-- To Do Column -->
+            <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px;">
+              <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px;">To Do (2)</div>
+              <div class="card kanban-task-card" style="padding: 10px; margin-bottom: 8px; cursor: pointer;">
+                <div style="font-size: 0.82rem; font-weight: 600; color: #fff;">Implement SIMD CRC32 verification</div>
+                <span class="badge badge-primary" style="font-size: 0.65rem; margin-top: 6px;">Help Wanted</span>
+              </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px;">
+              <div style="font-size: 0.72rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; margin-bottom: 8px;">In Progress (1)</div>
+              <div class="card kanban-task-card" style="padding: 10px; margin-bottom: 8px; cursor: pointer;">
+                <div style="font-size: 0.82rem; font-weight: 600; color: #fff;">eBPF XDP socket buffer pin</div>
+                <span class="badge badge-emerald" style="font-size: 0.65rem; margin-top: 6px;">@devinliu</span>
+              </div>
+            </div>
+
+            <!-- Done Column -->
+            <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 10px;">
+              <div style="font-size: 0.72rem; font-weight: 700; color: var(--accent-emerald); text-transform: uppercase; margin-bottom: 8px;">Done (5)</div>
+              <div class="card kanban-task-card" style="padding: 10px; margin-bottom: 8px; cursor: pointer;">
+                <div style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); text-decoration: line-through;">Log compaction zero-copy hook</div>
+                <span class="badge" style="font-size: 0.65rem; margin-top: 6px;">Merged PR #42</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" data-close-modal>Close</button>
+        <button class="btn btn-secondary btn-sm" onclick="showToast('Forked repository to your workspace!')">
+          <span class="material-symbols-outlined">fork_right</span> Fork
+        </button>
+        <button class="btn btn-primary btn-sm btn-glow" data-collab-apply data-project-title="raft-ebpf-consensus" data-role="Core Contributor">
+          <span class="material-symbols-outlined">handshake</span> Join as Contributor
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create New Project Modal -->
+  <div id="modal-create-project" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: #fff;">Launch New Project</h3>
+        <button class="btn btn-ghost btn-sm" data-close-modal><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label class="input-label">Project Name</label>
+          <input type="text" class="input-control" placeholder="e.g. quantum-cache-engine">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Project Description</label>
+          <textarea class="textarea-control" rows="3" placeholder="Explain the architecture, problem being solved, and target milestones..."></textarea>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Primary Tech Stacks (comma separated)</label>
+          <input type="text" class="input-control" placeholder="Rust, eBPF, Tokio, Docker">
+        </div>
+        <div class="input-group">
+          <label style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #fff; cursor: pointer;">
+            <input type="checkbox" checked> Publish open collaboration requirement for this project
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" data-close-modal>Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="closeModal('modal-create-project'); showToast('🚀 Project launched and published to Commun Hub!');">
+          Create & Launch Project
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apply to Collaborate Modal -->
+  <div id="modal-apply-collab" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="collab-modal-title" style="font-size: 1.1rem; font-weight: 700; color: #fff;">Apply to Collaborate</h3>
+        <button class="btn btn-ghost btn-sm" data-close-modal><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label class="input-label">Why are you interested in this project?</label>
+          <textarea class="textarea-control" rows="4" placeholder="Briefly describe your relevant background, GitHub repo examples, or architecture experience..."></textarea>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Weekly Time Commitment</label>
+          <select class="select-control">
+            <option>5 - 10 hours / week</option>
+            <option>10 - 20 hours / week</option>
+            <option>Full-time sprint</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Link to relevant GitHub PR / Repo</label>
+          <input type="text" class="input-control" placeholder="https://github.com/yourusername/project">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" data-close-modal>Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="closeModal('modal-apply-collab'); showToast('🎉 Collaboration application sent to project maintainer!');">
+          Submit Application
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Command Palette Modal (Cmd + K) -->
+  <div id="cmd-palette-modal" class="modal-backdrop">
+    <div class="cmd-palette" style="width: 100%;">
+      <div class="cmd-input-wrap">
+        <span class="material-symbols-outlined" style="color: var(--accent-primary);">search</span>
+        <input type="text" id="cmd-search-input" placeholder="Search developers, projects, jobs, discussions, commands...">
+        <kbd style="font-family: var(--font-mono); font-size: 0.72rem; background: var(--bg-card-subtle); border: 1px solid var(--border-muted); padding: 2px 6px; border-radius: 4px; color: var(--text-muted);">ESC</kbd>
+      </div>
+      <div id="cmd-results-list" class="cmd-results"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
