@@ -71,8 +71,9 @@ export default function Auth() {
             <span className="logo-icon">◆</span>
             <span>Commun</span>
           </div>
-          <h1>{isSignUp ? 'Create Account' : 'Welcome Back'}</h1>
-          <p>{isSignUp ? 'Join Commun to build, connect, and grow together' : 'Sign in to your Commun account'}</p>
+          <span className="auth-eyebrow">The developer network</span>
+          <h1>{isSignUp ? 'Create your account' : 'Welcome back'}</h1>
+          <p>{isSignUp ? 'Build your profile, find your people, and grow with Commun.' : 'Sign in to continue to your workspace.'}</p>
         </div>
 
         <form onSubmit={handleAuth} className="auth-form">
@@ -133,7 +134,10 @@ export default function Auth() {
               <small className="auth-helper">Enter the code sent to {email}.</small>
             </div>
           ) : (
-            <p className="auth-helper auth-otp-intro">We&apos;ll email you a secure 6-digit code to sign in.</p>
+            <div className="auth-otp-intro">
+              <span className="auth-step">01</span>
+              <p className="auth-helper">We&apos;ll send a secure 6-digit code to your email. No password required.</p>
+            </div>
           )}
 
           {error && <div className="auth-error" role="alert">{error}</div>}
