@@ -250,39 +250,6 @@ input, textarea, select {
   color: var(--text-muted);
 }
 
-.auth-helper {
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  line-height: 1.45;
-}
-
-.auth-otp-intro {
-  margin: 4px 0 16px;
-  text-align: center;
-}
-
-.auth-resend {
-  display: block;
-  width: 100%;
-  margin-top: 12px;
-  border: 0;
-  background: transparent;
-  color: var(--accent-primary);
-  font-size: 0.82rem;
-}
-
-.auth-resend:hover:not(:disabled) {
-  color: var(--accent-primary-hover);
-  text-decoration: underline;
-}
-
-#otp {
-  letter-spacing: 0.32em;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 1.15rem;
-}
-
 .form-error {
   background: var(--accent-rose-subtle);
   color: var(--accent-rose);
