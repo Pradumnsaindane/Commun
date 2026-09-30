@@ -125,7 +125,7 @@ export default function Auth() {
                 autoComplete="one-time-code"
                 placeholder="000000"
                 value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\\D/g, '').slice(0, 6))}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                 pattern="[0-9]{6}"
                 maxLength={6}
                 required
