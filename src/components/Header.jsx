@@ -1,4 +1,4 @@
-export default function Header({ user, profile, onViewChange, onLogout }) {
+export default function Header({ user, profile, onViewChange, onLogout, onRequireAuth }) {
   return (
     <header className="app-header">
       <div className="header-content">
@@ -26,10 +26,12 @@ export default function Header({ user, profile, onViewChange, onLogout }) {
 
         <div className="header-actions">
           <div className="user-menu">
-            <span className="user-name">{profile?.display_name || user?.email}</span>
-            <button className="btn btn-sm btn-outline" onClick={onLogout}>
-              Sign Out
-            </button>
+            <span className="user-name">{profile?.display_name || user?.email || 'Guest'}</span>
+            {user ? (
+              <button className="btn btn-sm btn-outline" onClick={onLogout}>Sign Out</button>
+            ) : (
+              <button className="btn btn-sm btn-primary" onClick={onRequireAuth}>Sign In</button>
+            )}
           </div>
         </div>
       </div>

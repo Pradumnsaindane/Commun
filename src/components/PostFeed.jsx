@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase'
 import PostCard from './PostCard'
 import CreatePost from './CreatePost'
 
-export default function PostFeed({ userId, profile }) {
+export default function PostFeed({ userId, profile, onRequireAuth }) {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -66,7 +66,14 @@ export default function PostFeed({ userId, profile }) {
   return (
     <div className="feed-container">
       <div className="feed-card">
-        <CreatePost userId={userId} userProfile={profile} onPostCreated={handlePostCreated} />
+        {userId ? (
+          <CreatePost userId={userId} userProfile={profile} onPostCreated={handlePostCreated} />
+        ) : (
+          <div className="guest-composer">
+            <p>Join the conversation and share what you&apos;re building.</p>
+            <button className="btn btn-primary" onClick={onRequireAuth}>Sign in to post</button>
+          </div>
+        )}
       </div>
 
       <div className="posts-list">
