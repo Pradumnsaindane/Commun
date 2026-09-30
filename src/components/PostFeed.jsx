@@ -21,13 +21,13 @@ export default function PostFeed({ userId, profile }) {
         if (payload.eventType === 'INSERT') {
           loadPosts()
         } else if (payload.eventType === 'DELETE') {
-          setPosts(posts.filter(p => p.id !== payload.old.id))
+          setPosts((currentPosts) => currentPosts.filter((post) => post.id !== payload.old.id))
         }
       })
       .subscribe()
 
     return () => {
-      subscription.unsubscribe()
+      supabase.removeChannel(subscription)
     }
   }, [])
 
