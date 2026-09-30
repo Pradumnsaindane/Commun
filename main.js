@@ -21,8 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 1. Theme Manager
 // --------------------------------------------------------------------------
 function initTheme() {
-  // Commun uses a consistent light theme across every public and app page.
-  const savedTheme = 'light';
+  const savedTheme = localStorage.getItem('commun-theme') || 'obsidian';
   setTheme(savedTheme);
 
   document.querySelectorAll('[data-set-theme]').forEach(btn => {
@@ -160,10 +159,10 @@ function initCanvasNetwork() {
 
       // Draw label for primary nodes
       if (node.isPrimary) {
-        ctx.fillStyle = '#1e293b';
+        ctx.fillStyle = '#ffffff';
         ctx.font = '600 11px Plus Jakarta Sans, sans-serif';
         ctx.fillText(node.meta.label, node.x + 10, node.y + 3);
-        ctx.fillStyle = '#64748b';
+        ctx.fillStyle = '#94a3b8';
         ctx.font = '400 9px JetBrains Mono, monospace';
         ctx.fillText(node.meta.role, node.x + 10, node.y + 14);
       }
