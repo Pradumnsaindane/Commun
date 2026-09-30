@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import PostFeed from '../components/PostFeed'
 import Profile from '../components/Profile'
 
-export default function Dashboard({ session, onRequireAuth }) {
+export default function Dashboard({ session }) {
   const [user, setUser] = useState(null)
   const [currentView, setCurrentView] = useState('feed')
   const [profile, setProfile] = useState(null)
@@ -37,10 +37,10 @@ export default function Dashboard({ session, onRequireAuth }) {
 
   return (
     <div className="dashboard">
-      <Header user={user} profile={profile} onViewChange={setCurrentView} onLogout={handleLogout} onRequireAuth={onRequireAuth} />
+      <Header user={user} profile={profile} onViewChange={setCurrentView} onLogout={handleLogout} />
 
       <main className="dashboard-main">
-        {currentView === 'feed' && <PostFeed userId={user?.id} profile={profile} onRequireAuth={onRequireAuth} />}
+        {currentView === 'feed' && <PostFeed userId={user?.id} profile={profile} />}
         {currentView === 'profile' && <Profile userId={user?.id} profile={profile} onProfileUpdate={setProfile} />}
       </main>
     </div>

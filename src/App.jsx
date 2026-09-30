@@ -7,12 +7,8 @@ import './App.css'
 export default function App() {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [showAuth, setShowAuth] = useState(false)
 
   useEffect(() => {
-    const openAuth = () => setShowAuth(true)
-    window.addEventListener('commun:open-auth', openAuth)
-
     // Check current session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
@@ -26,10 +22,7 @@ export default function App() {
       setSession(session)
     })
 
-    return () => {
-      subscription?.unsubscribe()
-      window.removeEventListener('commun:open-auth', openAuth)
-    }
+    return () => subscription?.unsubscribe()
   }, [])
 
   if (loading) {
@@ -41,15 +34,5 @@ export default function App() {
     )
   }
 
-  return (
-    <>
-      <Dashboard session={session} onRequireAuth={() => setShowAuth(true)} />
-      {showAuth && !session && (
-        <div className="auth-modal" role="dialog" aria-modal="true" aria-label="Sign in to Commun">
-          <button className="auth-modal-close" onClick={() => setShowAuth(false)} aria-label="Close sign in">×</button>
-          <Auth />
-        </div>
-      )}
-    </>
-  )
+  return session ? <Dashboard session={session} /> : <Auth />
 }

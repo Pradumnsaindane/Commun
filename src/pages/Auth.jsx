@@ -1,92 +1,174 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { getRedirectUrl } from '../lib/supabase'
 
 export default function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [displayName, setDisplayName] = useState('')
-  const [isSignUp, setIsSignUp] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const [otp, setOtp] = useState('')
+  const [otpSent, setOtpSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const [isSignUp, setIsSignUp] = useState(false)
+  const [displayName, setDisplayName] = useState('')
 
-  const handleAuth = async (event) => {
-    event.preventDefault()
+  const handleAuth = async (e) => {
+    e.preventDefault()
     setError('')
-    setSuccess('')
     setLoading(true)
+
     try {
       if (isSignUp) {
         const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { display_name: displayName } },
+          options: {
+            emailRedirectTo: getRedirectUrl(),
+            data: { display_name: displayName },
+          },
         })
         if (signUpError) throw signUpError
-        setSuccess('Account created. Check your email to confirm your account.')
+        alert('Check your email for the confirmation link!')
+      } else if (!otpSent) {
+        const { error: otpError } = await supabase.auth.signInWithOtp({
+          email,
+          options: {
+            shouldCreateUser: false,
+            emailRedirectTo: getRedirectUrl(),
+          },
+        })
+        if (otpError) throw otpError
+        setOtpSent(true)
       } else {
-        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
-        if (signInError) throw signInError
+        const { error: verifyError } = await supabase.auth.verifyOtp({
+          email,
+          token: otp,
+          type: 'email',
+        })
+        if (verifyError) throw verifyError
       }
     } catch (err) {
-      const message = err?.message?.toLowerCase() || ''
-      setError(message.includes('invalid login credentials') ? 'Invalid email or password.' : message.includes('email not confirmed') ? 'Please confirm your email before signing in.' : message.includes('already registered') ? 'An account already exists for this email.' : 'Unable to continue right now. Please check your details and try again.')
+      const message = err?.message || ''
+      setError(message.toLowerCase().includes('invalid login credentials')
+        ? 'Invalid email or verification code.'
+        : message || 'Authentication failed. Please try again.')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleGoogle = async () => {
+  const resetOtpFlow = () => {
+    setOtpSent(false)
+    setOtp('')
     setError('')
-    const { error: oauthError } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${window.location.origin}` },
-    })
-    if (oauthError) setError('Google sign-in is not enabled for this project yet.')
   }
 
   return (
-    <main className="auth-page">
+    <div className="auth-container">
       <div className="auth-card">
-        <section className="auth-showcase" aria-label="Commun introduction">
-          <div className="auth-showcase-grid" aria-hidden="true" />
-          <div className="auth-network" aria-hidden="true">
-            <span className="network-line line-one" /><span className="network-line line-two" />
-            <i /><i /><i /><i />
+        <div className="auth-header">
+          <div className="auth-logo">
+            <span className="logo-icon">◆</span>
+            <span>Commun</span>
           </div>
-          <div className="auth-showcase-copy">
-            <span className="auth-arrow" aria-hidden="true">→</span>
-            <h2>Commun</h2>
-            <p>Build your developer identity, connect with your people, and create what&apos;s next.</p>
-          </div>
-        </section>
+          <h1>{isSignUp ? 'Create Account' : 'Welcome Back'}</h1>
+          <p>{isSignUp ? 'Join Commun to build, connect, and grow together' : 'Sign in to your Commun account'}</p>
+        </div>
 
-        <section className="auth-panel">
-          <div className="auth-header auth-header-left">
-            <div className="auth-logo"><span className="logo-icon">◆</span><span>Commun</span></div>
-            <h1>{isSignUp ? 'Create your account' : 'Welcome back'}</h1>
-            <p>{isSignUp ? 'Join the developer network.' : 'Sign in to your account'}</p>
+        <form onSubmit={handleAuth} className="auth-form">
+          {isSignUp && (
+            <div className="form-group">
+              <label htmlFor="displayName">Display Name</label>
+              <input
+                id="displayName"
+                type="text"
+                placeholder="Your name"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                required
+              />
+            </div>
+          )}
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
 
-          <button type="button" className="google-button" onClick={handleGoogle} disabled={loading}>
-            <span className="google-mark" aria-hidden="true">G</span> Continue with Google
+          {isSignUp ? (
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                minLength={8}
+                required
+              />
+            </div>
+          ) : otpSent ? (
+            <div className="form-group">
+              <label htmlFor="otp">6-digit verification code</label>
+              <input
+                id="otp"
+                type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                placeholder="000000"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                pattern="[0-9]{6}"
+                maxLength={6}
+                required
+              />
+              <small className="auth-helper">Enter the code sent to {email}.</small>
+            </div>
+          ) : (
+            <p className="auth-helper auth-otp-intro">We&apos;ll email you a secure 6-digit code to sign in.</p>
+          )}
+
+          {error && <div className="auth-error" role="alert">{error}</div>}
+
+          <button type="submit" className="btn btn-primary btn-block" disabled={loading || (!isSignUp && otpSent && otp.length !== 6)}>
+            {loading ? 'Loading...' : isSignUp ? 'Create Account' : otpSent ? 'Verify Code' : 'Send Verification Code'}
           </button>
-          <div className="auth-divider"><span>or</span></div>
 
-          <form onSubmit={handleAuth} className="auth-form">
-            {isSignUp && <div className="form-group"><label htmlFor="displayName">Display name</label><input id="displayName" type="text" placeholder="Your name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} required /></div>}
-            <div className="form-group"><label htmlFor="email">Email <span>*</span></label><input id="email" type="email" autoComplete="email" placeholder="Enter your email address" value={email} onChange={(event) => setEmail(event.target.value)} required /></div>
-            <div className="form-group"><label htmlFor="password">Password <span>*</span></label><div className="password-field"><input id="password" type={showPassword ? 'text' : 'password'} autoComplete={isSignUp ? 'new-password' : 'current-password'} placeholder="Enter your password" value={password} onChange={(event) => setPassword(event.target.value)} minLength={8} required /><button type="button" className="password-toggle" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? 'Hide' : 'Show'}</button></div></div>
-            {error && <div className="auth-error" role="alert">{error}</div>}
-            {success && <div className="auth-success" role="status">{success}</div>}
-            <button type="submit" className="btn btn-primary btn-block auth-submit" disabled={loading}>{loading ? 'Please wait…' : isSignUp ? 'Create account  →' : 'Sign in  →'}</button>
-          </form>
+          {!isSignUp && otpSent && (
+            <button type="button" className="toggle-link auth-resend" onClick={resetOtpFlow} disabled={loading}>
+              Use a different email or request a new code
+            </button>
+          )}
+        </form>
 
-          {!isSignUp && <button type="button" className="forgot-link" onClick={() => setError('Password reset is available after email authentication is configured.')}>Forgot password?</button>}
-          <div className="auth-toggle"><p>{isSignUp ? 'Already have an account?' : "Don't have an account?"} <button type="button" className="toggle-link" onClick={() => { setIsSignUp((value) => !value); setError(''); setSuccess('') }}>{isSignUp ? 'Sign in' : 'Sign up'}</button></p></div>
-        </section>
+        <div className="auth-toggle">
+          <p>
+            {isSignUp ? 'Already have an account?' : "Don't have an account?"}
+            <button
+              type="button"
+              className="toggle-link"
+              onClick={() => {
+                setIsSignUp(!isSignUp)
+                setError('')
+              }}
+            >
+              {isSignUp ? 'Sign In' : 'Sign Up'}
+            </button>
+          </p>
+        </div>
       </div>
-    </main>
+
+      <div className="auth-background">
+        <div className="auth-gradient"></div>
+      </div>
+    </div>
   )
 }
