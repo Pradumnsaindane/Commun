@@ -1,21 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 
-                    import.meta.env.NEXT_PUBLIC_SUPABASE_URL ||
-                    import.meta.env.VITE_PUBLIC_SUPABASE_URL
-
-const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 
-                    import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || 
-                    import.meta.env.VITE_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-                    import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-                    import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 
 if (!supabaseUrl || !supabaseKey) {
-  console.warn('[v0] Missing Supabase environment variables')
+  throw new Error('Supabase configuration is missing. Set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY.')
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseKey || '')
+export const supabase = createClient(supabaseUrl, supabaseKey)
 
 export function getRedirectUrl() {
-  return import.meta.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/auth/callback`
+  return import.meta.env.VITE_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/auth/callback`
 }
