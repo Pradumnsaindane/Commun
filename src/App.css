@@ -13,7 +13,16 @@
   backdrop-filter: blur(10px);
 }
 
-.auth-modal .auth-container { min-height: 100%; background: transparent; }
+.auth-modal .auth-container {
+  min-height: 100%;
+  padding: 48px 24px;
+  background: transparent;
+}
+.auth-modal .auth-card {
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+}
+
 .auth-modal-close {
   position: fixed;
   top: 20px;
