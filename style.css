@@ -1136,6 +1136,49 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
+  footer > div:first-child {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px 18px !important;
+  }
+  footer > div:first-child > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .app-sidebar {
+    display: none;
+  }
+  .landing-hero {
+    padding: 56px 16px 72px;
+  }
+  .hero-pill {
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
+  }
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
+  .interactive-canvas-container {
+    height: 360px;
+    border-radius: var(--radius-lg);
+  }
+  .canvas-overlay-badges {
+    padding: 12px;
+  }
+  .canvas-overlay-badges > div:first-child {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .canvas-overlay-badges .badge {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .app-sidebar {
     display: none;
   }
