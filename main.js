@@ -874,3 +874,7 @@ function showToast(message) {
     toast.classList.remove('show');
   }, 2800);
 }
+
+// Static HTML pages use inline handlers, so expose the module helper globally.
+window.showToast = showToast;
+
