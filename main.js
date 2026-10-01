@@ -875,6 +875,8 @@ function showToast(message) {
   }, 2800);
 }
 
-// Static HTML pages use inline handlers, so expose the module helper globally.
+// Static HTML pages use inline handlers, so expose page actions globally.
 window.showToast = showToast;
+window.openModal = openModal;
+window.closeModal = closeModal;
 
