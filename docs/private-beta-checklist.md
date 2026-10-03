@@ -80,4 +80,13 @@ Primary: signup-to-onboarding completion. Engagement: article reads, follows, co
 | Accessibility/Performance |  |  |  |
 | SEO |  |  |  |
 | Analytics/Observability |  |  |  |
-| Mobile/Empty state |  |  |  |
+| Mobile/Empty state | PARTIAL | Responsive shell, route empty states, and mobile screenshots verified | Full 390/375/768 route matrix remains |
+| Publishing | PARTIAL | Existing editor and article flows build; rendering preserved | Authenticated staging publish flow |
+| Social interactions | PARTIAL | API routes and RLS exist | USER_A/USER_B live matrix |
+| Discussions | PARTIAL | Routes and reply constraints exist | End-to-end staging workflow |
+| Notifications | PARTIAL | Notification route/component exist | Live mark-read and delivery test |
+| Observability | PARTIAL | Structured safe logger and error boundary exist | Production log sink/alerting |
+| Feedback | PARTIAL | Authenticated validated form, separate table, admin RLS, and 5/min limiter | Apply migration and review as admin |
+| Staging deployment | BLOCKED | No separate staging URL/project available in this context | Deploy isolated Vercel/Supabase/KV environment |
+
+A `PASS` requires recorded evidence from isolated staging; localhost build success is not sufficient.
