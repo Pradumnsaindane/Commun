@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { safeNextPath as safeNextPathValue } from './auth/validation'
 
 export const ROLES = ['USER', 'MODERATOR', 'ADMIN'] as const
 export const STATUSES = ['PENDING_VERIFICATION', 'ACTIVE', 'SUSPENDED', 'DEACTIVATED', 'DELETED'] as const
@@ -27,10 +28,7 @@ export function canModerate(context: AuthContext) { return context.role === 'MOD
 export function canAdminister(context: AuthContext) { return context.role === 'ADMIN' }
 export function canModifyResource(context: AuthContext, ownerId: string) { return context.user.id === ownerId && !['SUSPENDED', 'DEACTIVATED', 'DELETED'].includes(context.status) }
 
-export function safeNextPath(value: string | null | undefined) {
-  if (!value || !value.startsWith('/') || value.startsWith('//') || value.includes('\\')) return '/feed'
-  return value
-}
+export const safeNextPath = safeNextPathValue
 
 export function authError(status: 401 | 403 | 404 | 422 | 500, message: string) {
   return Response.json({ error: message }, { status })

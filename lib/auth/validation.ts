@@ -5,7 +5,8 @@ export const registerSchema = z.object({ name: z.string().trim().min(2, 'Enter y
 export const loginSchema = z.object({ email: z.string().trim().email('Enter a valid email.'), password: z.string().min(1, 'Enter your password.') })
 export const emailSchema = z.object({ email: z.string().trim().email('Enter a valid email.') })
 export const resetSchema = z.object({ password: passwordSchema, confirmPassword: z.string() }).refine((data) => data.password === data.confirmPassword, { path: ['confirmPassword'], message: 'Passwords do not match.' })
-export function safeNext(value: string | null) { return value?.startsWith('/') && !value.startsWith('//') ? value : '/dashboard' }
+export function safeNext(value: string | null) { return value?.startsWith('/') && !value.startsWith('//') && !value.includes('\\') ? value : '/dashboard' }
+export function safeNextPath(value: string | null | undefined) { return !value || !value.startsWith('/') || value.startsWith('//') || value.includes('\\') ? '/feed' : value }
 export function authMessage(message?: string | null) { const text = message?.toLowerCase() ?? ''; if (text.includes('invalid login') || text.includes('invalid')) return 'Invalid email or password.'; if (text.includes('already registered') || text.includes('duplicate')) return 'That email or username is already in use.'; if (text.includes('password')) return message ?? 'Please choose a stronger password.'; return 'Something went wrong. Please try again.' }
 export type AuthForm = 'login' | 'register' | 'forgot' | 'reset'
 

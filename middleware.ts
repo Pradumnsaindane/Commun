@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
-const protectedPaths = ['/dashboard', '/feed', '/write', '/saved', '/notifications', '/settings', '/community']
+const protectedPaths = ['/dashboard', '/feed', '/write', '/saved', '/notifications', '/settings', '/community', '/moderation', '/admin']
 const authPaths = ['/login', '/register']
 
 export async function middleware(request: NextRequest) {
