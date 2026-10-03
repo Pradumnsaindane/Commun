@@ -1,3 +1,2 @@
-import Link from 'next/link'
-import { PageContainer, Card } from '@/components/ui/primitives'
-export default function RegisterPage() { return <PageContainer eyebrow="Join the network" title="Create your account" description="Start with a focused profile and add your voice when the content model lands."><Card className="max-w-lg"><p className="text-sm text-muted">Sign-up is reserved for the authenticated foundation phase so we can protect user data with RLS from day one.</p><Link href="/login" className="mt-6 inline-block text-sm font-semibold text-accent">Already have an account? Log in →</Link></Card></PageContainer> }
+import { AuthPages } from '@/components/auth/auth-forms'
+export default function RegisterPage() { return <AuthPages type="register" /> }

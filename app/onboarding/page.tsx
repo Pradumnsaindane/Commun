@@ -1,0 +1,3 @@
+import Link from 'next/link'
+import { PageContainer, Card } from '@/components/ui/primitives'
+export default function OnboardingPage() { return <PageContainer eyebrow="You are in" title="Set up your Commun profile" description="The full onboarding flow is next. Your account is ready for the community foundation."><Card className="max-w-xl"><p className="text-sm leading-6 text-muted">Your email is verified. Continue to the dashboard while we prepare the next step.</p><Link href="/dashboard" className="mt-6 inline-block rounded-md bg-accent px-4 py-3 text-sm font-semibold text-background">Go to dashboard</Link></Card></PageContainer> }
