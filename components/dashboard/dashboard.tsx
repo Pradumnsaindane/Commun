@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase/client'
 export type DashboardProfile = { display_name: string; username: string | null; bio: string | null; avatar_url: string | null }
 export type DashboardPost = { id: string; body: string; created_at: string; author_id: string }
 
-const navItems = [['Dashboard', '/dashboard'], ['Discover', '/explore'], ['Feed', '/feed'], ['Discussions', '/community'], ['Saved', '/saved'], ['Notifications', '/notifications']] as const
+const navItems = [['Dashboard', '/dashboard'], ['Discover', '/discover'], ['Feed', '/feed'], ['Discussions', '/community'], ['Saved', '/saved'], ['Notifications', '/notifications']] as const
 
 function EmptyCard({ title, description, href, action }: { title: string; description: string; href?: string; action?: string }) {
   return <div className="rounded-xl border border-border bg-surface/70 p-5"><p className="font-mono text-xs uppercase tracking-[0.16em] text-accent">{title}</p><p className="mt-3 text-sm leading-6 text-muted">{description}</p>{href && action && <Link href={href} className="mt-4 inline-flex text-sm font-semibold text-accent hover:underline">{action} <span aria-hidden="true" className="ml-1">→</span></Link>}</div>
