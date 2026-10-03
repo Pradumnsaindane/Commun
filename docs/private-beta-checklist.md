@@ -2,7 +2,7 @@
 
 ## Release gate
 
-- Branch: `v0/private-beta-readiness`
+- Branch: `v0/private-beta-launch-validation`
 - Target: 20–50 invited developers
 - Staging must use a separate Supabase project. If unavailable, do not run destructive tests against the current project; use a clearly labeled staging deployment, separate test accounts, and a written rollback window.
 - Never commit `.env*`, credentials, access tokens, cookies, or service-role values.
@@ -69,17 +69,17 @@ Primary: signup-to-onboarding completion. Engagement: article reads, follows, co
 
 | Area | Status | Evidence | Blocker |
 |---|---|---|---|
-| Build |  |  |  |
-| Deployment |  |  |  |
-| Authentication |  |  |  |
-| Authorization/RLS |  |  |  |
-| Moderation/Admin |  |  |  |
-| Rate limiting |  |  |  |
-| CSP/XSS |  |  |  |
-| Database |  |  |  |
-| Accessibility/Performance |  |  |  |
-| SEO |  |  |  |
-| Analytics/Observability |  |  |  |
+| Build | PASS | Tests, typecheck, lint, production build, and diff check passed locally | None for local validation |
+| Deployment | BLOCKED | No staging URL or isolated deployment present; `VERCEL_URL` unavailable | Create isolated Vercel preview/staging |
+| Authentication | PARTIAL | Protected routes redirect and feedback endpoint returns 401 unauthenticated | Real verified account matrix unavailable |
+| Authorization/RLS | PARTIAL | Live public-table RLS coverage was previously verified; server role guards present | USER_A/USER_B adversarial tests unavailable |
+| Moderation/Admin | NOT VERIFIED | Protected route surfaces exist | Moderator/admin accounts and deployed workflow unavailable |
+| Rate limiting | PARTIAL | Feedback endpoint is authenticated and returns `Retry-After` on limit path; no session available to exercise threshold | Authenticated 5/min normal/429/recovery test |
+| CSP/XSS | PARTIAL | Security headers present; CSP remains report-only; legacy `innerHTML` review outstanding | Staging violation review and legacy page audit |
+| Database | PARTIAL | Supabase public-table RLS coverage previously verified; beta migration is present in repo | Migration/application/index evidence on isolated staging |
+| Accessibility/Performance | PARTIAL | Accessibility snapshots completed for public/auth routes; no automated axe or staging performance run | Full route axe scan and realistic data/performance test |
+| SEO | PASS | `/robots.txt` and `/sitemap.xml` returned 200; public metadata rendered | Deployed staging verification |
+| Analytics/Observability | PARTIAL | Structured logger, allowlisted analytics endpoint, and safe error boundary present | Production sink and event delivery review |
 | Mobile/Empty state | PARTIAL | Responsive shell, route empty states, and mobile screenshots verified | Full 390/375/768 route matrix remains |
 | Publishing | PARTIAL | Existing editor and article flows build; rendering preserved | Authenticated staging publish flow |
 | Social interactions | PARTIAL | API routes and RLS exist | USER_A/USER_B live matrix |
@@ -90,3 +90,11 @@ Primary: signup-to-onboarding completion. Engagement: article reads, follows, co
 | Staging deployment | BLOCKED | No separate staging URL/project available in this context | Deploy isolated Vercel/Supabase/KV environment |
 
 A `PASS` requires recorded evidence from isolated staging; localhost build success is not sufficient.
+
+## Remaining beta blockers
+
+- No isolated staging deployment, separate Supabase project, or deployed staging URL is available in the current environment.
+- No real verified USER_A, USER_B, MODERATOR, or ADMIN accounts are available for cross-account IDOR, RLS, moderation, admin, logout, and realtime tests.
+- Feedback rate-limit threshold and recovery cannot be exercised without an authenticated session; only the unauthenticated 401 boundary was verified.
+- Automated accessibility scanning, realistic staging-data performance checks, CSP violation review, and production analytics/log sink review remain outstanding.
+- The beta observability migration must be applied and verified on the intended isolated staging project before inviting users.
