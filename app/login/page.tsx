@@ -1,0 +1,3 @@
+import Link from 'next/link'
+import { PageContainer, Card } from '@/components/ui/primitives'
+export default function LoginPage() { return <PageContainer eyebrow="Welcome back" title="Log in" description="Authentication wiring is intentionally staged after the Phase 1 shell."><Card className="max-w-lg"><p className="text-sm text-muted">Supabase email and password auth will be enabled with the canonical profile model in the next implementation phase.</p><Link href="/register" className="mt-6 inline-block rounded-md bg-accent px-4 py-2 text-sm font-semibold text-background">Create an account</Link></Card></PageContainer> }

@@ -1,0 +1,2 @@
+import { PageContainer, EmptyState } from '@/components/ui/primitives'
+export default function CommunityPage() { return <PageContainer eyebrow="Build with others" title="Community" description="Meet the people shaping thoughtful software and open projects."><EmptyState title="The community directory is empty for now." description="Profiles, roles, and collaboration signals will be backed by Supabase after the data model is finalized." /></PageContainer> }

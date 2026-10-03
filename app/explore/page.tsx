@@ -1,0 +1,2 @@
+import { PageContainer, EmptyState } from '@/components/ui/primitives'
+export default function ExplorePage() { return <PageContainer eyebrow="Find your next thread" title="Explore" description="Browse writing, projects, and people across Commun."><EmptyState title="The index is being prepared." description="Content discovery will connect to the canonical content model in Phase 2. No demo posts are shown in this foundation." /></PageContainer> }

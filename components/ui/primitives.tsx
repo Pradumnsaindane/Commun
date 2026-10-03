@@ -1,0 +1,5 @@
+import { cn } from '@/lib/utils'
+
+export function Card({ className, children }: { className?: string; children: React.ReactNode }) { return <section className={cn('rounded-xl border bg-surface p-6 shadow-sm', className)}>{children}</section> }
+export function EmptyState({ title, description }: { title: string; description: string }) { return <Card className="border-dashed text-center"><h2 className="text-base font-semibold">{title}</h2><p className="mt-2 text-sm text-muted">{description}</p></Card> }
+export function PageContainer({ eyebrow, title, description, children }: { eyebrow?: string; title: string; description?: string; children?: React.ReactNode }) { return <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-10 sm:px-8"><header>{eyebrow && <p className="mb-3 font-mono text-xs uppercase tracking-widest text-accent">{eyebrow}</p>}<h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>{description && <p className="mt-3 max-w-2xl text-muted">{description}</p>}</header>{children}</div> }

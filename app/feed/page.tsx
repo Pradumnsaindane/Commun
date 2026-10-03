@@ -1,0 +1,2 @@
+import { PageContainer, EmptyState } from '@/components/ui/primitives'
+export default function FeedPage() { return <PageContainer eyebrow="Your workspace" title="Feed" description="A calm stream of updates from people and projects you follow."><EmptyState title="Your feed is ready for its first signal." description="Follow people and topics to see focused updates here. Feed ranking and filters arrive in Phase 2." /></PageContainer> }

@@ -1,0 +1,2 @@
+import { PageContainer, EmptyState } from '@/components/ui/primitives'
+export default function SettingsPage() { return <PageContainer eyebrow="Your account" title="Settings" description="Manage your profile, preferences, and connected workspace settings."><EmptyState title="Settings will appear after auth is connected." description="Nothing is persisted from this shell yet. That is intentional: no localStorage or fake account state is used." /></PageContainer> }

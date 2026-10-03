@@ -1,0 +1,2 @@
+import { PageContainer, EmptyState } from '@/components/ui/primitives'
+export default function NotificationsPage() { return <PageContainer eyebrow="Stay in the loop" title="Notifications" description="Replies, mentions, and meaningful updates from your network."><EmptyState title="You are all caught up." description="Notifications will be generated from real activity after the social graph and content model are connected." /></PageContainer> }
