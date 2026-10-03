@@ -2,7 +2,7 @@
 
 ## Release gate
 
-- Branch: `v0/private-beta-launch-validation`
+- Branch: `v0/private-beta-final-validation`
 - Target: 20–50 invited developers
 - Staging must use a separate Supabase project. If unavailable, do not run destructive tests against the current project; use a clearly labeled staging deployment, separate test accounts, and a written rollback window.
 - Never commit `.env*`, credentials, access tokens, cookies, or service-role values.
@@ -93,8 +93,9 @@ A `PASS` requires recorded evidence from isolated staging; localhost build succe
 
 ## Remaining beta blockers
 
-- No isolated staging deployment, separate Supabase project, or deployed staging URL is available in the current environment.
+- Staging deployment was intentionally not attempted: the available Supabase and KV variables are the existing project configuration, and no separate staging Supabase/KV project or staging-only credentials are available. Deploying this branch would risk validating against production resources, which is prohibited by this checklist.
 - No real verified USER_A, USER_B, MODERATOR, or ADMIN accounts are available for cross-account IDOR, RLS, moderation, admin, logout, and realtime tests.
 - Feedback rate-limit threshold and recovery cannot be exercised without an authenticated session; only the unauthenticated 401 boundary was verified.
 - Automated accessibility scanning, realistic staging-data performance checks, CSP violation review, and production analytics/log sink review remain outstanding.
 - The beta observability migration must be applied and verified on the intended isolated staging project before inviting users.
+- Exact unblock action: provision a separate Supabase project/database, Supabase Auth tenant, and Upstash database; add their staging-only variables to a Vercel Preview/Staging environment; deploy this branch there; then create verified test accounts through the normal auth flow.
