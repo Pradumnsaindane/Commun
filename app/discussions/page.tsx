@@ -1,0 +1,8 @@
+import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
+
+export default async function DiscussionsPage() {
+  const supabase = await createClient()
+  const { data } = await supabase.from('discussions').select('id,title,content,is_pinned,is_closed,created_at').eq('is_removed', false).order('is_pinned', { ascending: false }).order('created_at', { ascending: false })
+  return <main className="mx-auto max-w-5xl px-6 py-12"><div className="mb-10 flex items-end justify-between gap-4"><div><p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-orange-400">Community</p><h1 className="text-4xl font-semibold tracking-tight">Discussions</h1><p className="mt-3 text-slate-400">Ask questions, share ideas, and learn together.</p></div><Link href="/discussions/new" className="rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-400">Start discussion</Link></div><div className="space-y-3">{(data ?? []).map((discussion) => <Link key={discussion.id} href={`/discussions/${discussion.id}`} className="block rounded-xl border border-white/10 bg-white/[.03] p-5 transition hover:border-orange-400/50"><div className="flex items-start justify-between gap-4"><div><h2 className="text-lg font-semibold">{discussion.title}</h2><p className="mt-2 line-clamp-2 text-sm text-slate-400">{discussion.content}</p></div><span className="shrink-0 text-xs text-slate-500">{discussion.is_closed ? 'Closed' : 'Open'}</span></div><p className="mt-4 text-xs text-slate-500">{new Date(discussion.created_at).toLocaleDateString()}</p></Link>)}{!data?.length && <div className="rounded-xl border border-dashed border-white/10 p-12 text-center text-slate-400">No discussions yet.</div>}</div></main>
+}
