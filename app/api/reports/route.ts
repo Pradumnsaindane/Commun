@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { authError } from '@/lib/auth'
+import { enforceRateLimit, requestKey } from '@/lib/rate-limit'
 
 const schema = z.object({ targetType: z.enum(['POST','COMMENT','DISCUSSION','REPLY','PROFILE']), targetId: z.string().uuid(), reason: z.enum(['SPAM','HARASSMENT','ABUSE','MISINFORMATION','COPYRIGHT','MALICIOUS_CONTENT','OTHER']), description: z.string().trim().max(2000).optional() })
 
@@ -8,6 +9,8 @@ export async function POST(request: Request) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return authError(401, 'Authentication required.')
+  const rate = await enforceRateLimit(requestKey(request, user.id), 'reports', 5, '10 m')
+  if (!rate.success) return new Response(JSON.stringify({ error: 'Too many reports. Try again later.' }), { status: 429, headers: { 'content-type': 'application/json', 'retry-after': String(rate.retryAfter) } })
   let body: unknown
   try { body = await request.json() } catch { return authError(422, 'Invalid request.') }
   const parsed = schema.safeParse(body)

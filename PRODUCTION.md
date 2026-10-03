@@ -22,4 +22,4 @@ Use `npm test`, `npm run typecheck`, `npm run lint`, and `npm run build` before 
 
 ## Known limitations
 
-Rate limiting is not currently backed by a distributed limiter, so abuse-sensitive endpoints should be placed behind platform/WAF limits before high-volume launch. Full multi-account moderator/admin smoke testing requires provisioned accounts for each role. CSP is report-only until deployed traffic has been observed and all legitimate script/connect origins are confirmed; this avoids breaking Supabase auth and preview tooling during rollout.
+Abuse-sensitive report submissions use Upstash Redis sliding-window limits keyed by authenticated user and request IP. Keep platform/WAF limits enabled as a second layer for traffic spikes and unavailable-integration fallback. Full multi-account moderator/admin smoke testing requires provisioned accounts for each role. CSP is report-only until deployed traffic has been observed and all legitimate script/connect origins are confirmed; this avoids breaking Supabase auth and preview tooling during rollout.
