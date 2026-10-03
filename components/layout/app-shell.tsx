@@ -8,9 +8,10 @@ import { cn } from '@/lib/utils'
 const primaryLinks = [
   { label: 'Feed', href: '/feed', icon: '↗' },
   { label: 'Explore', href: '/explore', icon: '⌕' },
-  { label: 'Community', href: '/community', icon: '◌' },
+  { label: 'Discussions', href: '/discussions', icon: '◌' },
   { label: 'Saved', href: '/saved', icon: '▱' },
   { label: 'Notifications', href: '/notifications', icon: '◍' },
+  { label: 'Profile', href: '/profile/me', icon: '◎' },
 ]
 
 function Brand() {
@@ -48,5 +49,5 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   if (pathname === '/') return <PublicShell>{children}</PublicShell>
   const isAuthRoute = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email'].includes(pathname)
   if (pathname === '/dashboard' || pathname === '/onboarding' || pathname.startsWith('/auth/') || isAuthRoute) return <>{children}</>
-  return <div className="min-h-screen bg-background"><AppHeader /><div className="mx-auto flex max-w-[1500px]"><DesktopSidebar pathname={pathname} /><main className="min-w-0 flex-1 pb-24">{children}</main></div><nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-elevated/95 p-2 backdrop-blur-xl lg:hidden">{[...primaryLinks.slice(0, 3), primaryLinks[4], { label: 'Profile', href: '/profile/me', icon: '◎' }].map((link) => <Link key={link.href} href={link.href} className={cn('flex flex-col items-center gap-1 rounded-lg py-2 text-[10px] text-muted', pathname.startsWith(link.href) && 'bg-accent/10 text-accent')}><span className="text-base">{link.icon}</span>{link.label}</Link>)}</nav></div>
+  return <div className="min-h-screen bg-background"><AppHeader /><div className="mx-auto flex max-w-[1500px]"><DesktopSidebar pathname={pathname} /><main className="min-w-0 flex-1 pb-24">{children}</main></div><nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-elevated/95 p-2 backdrop-blur-xl lg:hidden">{[primaryLinks[0], primaryLinks[1], primaryLinks[2], primaryLinks[4], primaryLinks[5]].map((link) => <Link key={link.href} href={link.href} className={cn('flex flex-col items-center gap-1 rounded-lg py-2 text-[10px] text-muted', pathname.startsWith(link.href) && 'bg-accent/10 text-accent')}><span className="text-base">{link.icon}</span>{link.label}</Link>)}</nav></div>
 }
