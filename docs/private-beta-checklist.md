@@ -57,7 +57,7 @@ Confirm Supabase backups/PITR and a named rollback owner before inviting beta us
 ## Known issues
 
 - Existing lint warnings: editor hook dependency, image optimization, and config/deprecation warnings; non-blocking pending review.
-- `middleware.ts` uses the deprecated Next.js convention; migrate to `proxy.ts` before a future Next.js upgrade.
+- Next.js middleware convention migration is complete: `middleware.ts` was renamed to `proxy.ts` and exports `proxy`; route matching and Supabase cookie refresh behavior are unchanged.
 - Legacy static HTML/JS contains `innerHTML`; review before exposing those pages to untrusted content.
 - Full multi-account, deployed staging, accessibility, performance, and rate-limit threshold evidence must be collected before a READY decision.
 
