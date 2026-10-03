@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
+import { createNotification } from '@/lib/notifications'
 
 const bodySchema = z.object({ followingId: z.string().uuid() })
 
@@ -16,6 +17,7 @@ export async function POST(request: Request) {
   const { error } = await supabase.from('follows').insert({ follower_id: user.id, following_id: parsed.data.followingId })
   if (error?.code === '23505') return NextResponse.json({ error: 'Already following' }, { status: 409 })
   if (error) return NextResponse.json({ error: 'Could not follow developer' }, { status: 500 })
+  await createNotification(supabase, { recipientId: parsed.data.followingId, actorId: user.id, type: 'FOLLOW', entityId: user.id })
   return NextResponse.json({ following: true })
 }
 

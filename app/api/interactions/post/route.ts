@@ -3,6 +3,7 @@
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { isActiveProfile, jsonError } from '@/lib/posts'
+import { createNotification } from '@/lib/notifications'
 
 const schema = z.object({
   postId: z.string().uuid(),
@@ -24,6 +25,7 @@ export async function POST(request: Request) {
     ? await supabase.from(table).delete().eq('post_id', postId).eq('user_id', user.id)
     : await supabase.from(table).insert({ post_id: postId, user_id: user.id })
   if (result.error && result.error.code !== '23505') return jsonError('Unable to update this interaction.', 400)
+  if (!removing && action === 'like') { const { data: post } = await supabase.from('posts').select('author_id,slug,title').eq('id', postId).maybeSingle(); if (post) await createNotification(supabase, { recipientId: post.author_id, actorId: user.id, type: 'LIKE', entityId: postId, targetSlug: post.slug, targetTitle: post.title }) }
   return Response.json({ ok: true, active: !removing })
 }
 
