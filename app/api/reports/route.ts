@@ -12,6 +12,10 @@ export async function POST(request: Request) {
   try { body = await request.json() } catch { return authError(422, 'Invalid request.') }
   const parsed = schema.safeParse(body)
   if (!parsed.success) return authError(422, 'Please provide a valid report.')
+  const targetTables: Record<string, string> = { POST: 'posts', COMMENT: 'comments', DISCUSSION: 'discussions', REPLY: 'replies', PROFILE: 'profiles' }
+  const table = targetTables[parsed.data.targetType]
+  const { data: target } = await supabase.from(table).select('id').eq('id', parsed.data.targetId).maybeSingle()
+  if (!target) return authError(404, 'Report target not found.')
   const { error } = await supabase.from('reports').insert({ reporter_id: user.id, target_type: parsed.data.targetType, target_id: parsed.data.targetId, reason: parsed.data.reason, description: parsed.data.description || null })
   if (error?.code === '23505') return Response.json({ ok: true, duplicate: true })
   if (error) return Response.json({ error: 'Unable to submit report.' }, { status: 400 })
