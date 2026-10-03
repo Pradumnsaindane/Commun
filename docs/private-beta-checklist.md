@@ -70,7 +70,7 @@ Primary: signup-to-onboarding completion. Engagement: article reads, follows, co
 | Area | Status | Evidence | Blocker |
 |---|---|---|---|
 | Build | PASS | Tests, typecheck, lint, production build, and diff check passed locally | None for local validation |
-| Deployment | BLOCKED | No staging URL or isolated deployment present; `VERCEL_URL` unavailable | Create isolated Vercel preview/staging |
+| Deployment | BLOCKED | Existing Vercel project is configured with the Vite preset, causing Preview build `edbf57b` to fail after successful Next build with `No Output Directory named "dist"`; added `vercel.json` with `framework: nextjs` as a release-blocking fix | Redeploy and verify a successful isolated staging deployment; separate staging resources remain required |
 | Authentication | PARTIAL | Protected routes redirect and feedback endpoint returns 401 unauthenticated | Real verified account matrix unavailable |
 | Authorization/RLS | PARTIAL | Live public-table RLS coverage was previously verified; server role guards present | USER_A/USER_B adversarial tests unavailable |
 | Moderation/Admin | NOT VERIFIED | Protected route surfaces exist | Moderator/admin accounts and deployed workflow unavailable |
@@ -93,7 +93,8 @@ A `PASS` requires recorded evidence from isolated staging; localhost build succe
 
 ## Remaining beta blockers
 
-- Staging deployment was intentionally not attempted: the available Supabase and KV variables are the existing project configuration, and no separate staging Supabase/KV project or staging-only credentials are available. Deploying this branch would risk validating against production resources, which is prohibited by this checklist.
+- The existing Vercel project has Preview and Production environment variables pointing at the same connected Supabase/KV resources; no separate staging Supabase/KV project or staging-only credentials are available. Destructive staging validation remains intentionally blocked to avoid production-resource use.
+- The first Preview deployment of the frozen baseline failed at the Vercel output handoff, not at the Next build: the project was detected as Vite and expected `dist` after `next build`. The release-blocking fix is committed in `vercel.json`; redeploy is still required to verify the project setting is honored.
 - No real verified USER_A, USER_B, MODERATOR, or ADMIN accounts are available for cross-account IDOR, RLS, moderation, admin, logout, and realtime tests.
 - Feedback rate-limit threshold and recovery cannot be exercised without an authenticated session; only the unauthenticated 401 boundary was verified.
 - Automated accessibility scanning, realistic staging-data performance checks, CSP violation review, and production analytics/log sink review remain outstanding.
