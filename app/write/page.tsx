@@ -1,2 +1,5 @@
-import { PageContainer, EmptyState } from '@/components/ui/primitives'
-export default function WritePage() { return <PageContainer eyebrow="Make something useful" title="Write" description="Draft a post, field note, or project update for the community."><EmptyState title="The editor opens in Phase 2." description="The first writing surface will use the canonical content tables, validation, and ownership policies rather than placeholder submission state." /></PageContainer> }
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import { Editor } from '@/components/publishing/editor'
+export default async function WritePage() { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) redirect('/login?next=/write'); return <Editor /> }
+
