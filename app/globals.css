@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --background: 228 27% 5%; --foreground: 220 20% 94%; --surface: 226 22% 10%; --elevated: 226 21% 13%; --border: 225 19% 17%; --accent: 24 94% 53%; --muted: 220 10% 62%; --subtle: 220 10% 42%; }
+* { border-color: hsl(var(--border)); }
+html { color-scheme: dark; scroll-behavior: smooth; }
+body { min-height: 100vh; background: hsl(var(--background)); color: hsl(var(--foreground)); font-family: Inter, ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: 3px; }
+::selection { background: hsl(var(--accent) / .25); }
+button, a, input, textarea, select { transition-duration: 160ms; transition-property: color, background-color, border-color, opacity, transform, box-shadow; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+.article-body { color: hsl(var(--muted)); font-size: 1.0625rem; line-height: 1.9; }
+.article-body h1, .article-body h2, .article-body h3 { color: hsl(var(--foreground)); margin: 2.25rem 0 .75rem; font-weight: 650; letter-spacing: -.02em; }
+.article-body h1 { font-size: 2rem; } .article-body h2 { font-size: 1.5rem; } .article-body h3 { font-size: 1.2rem; }
+.article-body p, .article-body ul, .article-body ol, .article-body blockquote, .article-body pre { margin: 1.25rem 0; }
+.article-body ul, .article-body ol { padding-left: 1.5rem; } .article-body li { margin: .35rem 0; }
+.article-body blockquote { border-left: 3px solid hsl(var(--accent)); padding-left: 1rem; font-style: italic; }
+.article-body code { border-radius: .35rem; background: hsl(var(--surface)); padding: .15rem .35rem; font-family: ui-monospace, monospace; font-size: .9em; color: hsl(var(--accent)); }
+.article-body pre { overflow-x: auto; border: 1px solid hsl(var(--border)); border-radius: .75rem; background: hsl(var(--surface)); padding: 1rem; color: hsl(var(--foreground)); }
+.article-body pre code { background: transparent; padding: 0; color: inherit; } .article-body a { color: hsl(var(--accent)); text-decoration: underline; text-underline-offset: 3px; } .article-body hr { margin: 2rem 0; border: 0; border-top: 1px solid hsl(var(--border)); }

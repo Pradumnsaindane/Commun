@@ -1,0 +1,2 @@
+import type { Config } from 'tailwindcss'
+export default { darkMode: ['class'], content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'], theme: { extend: { colors: { background: 'hsl(var(--background))', foreground: 'hsl(var(--foreground))', surface: 'hsl(var(--surface))', elevated: 'hsl(var(--elevated))', border: 'hsl(var(--border))', accent: 'hsl(var(--accent))', muted: 'hsl(var(--muted))' }, fontFamily: { sans: ['Inter', 'ui-sans-serif'], mono: ['JetBrains Mono', 'monospace'] } } }, plugins: [] } satisfies Config
