@@ -24,18 +24,27 @@ export function ArticleInteractions({ postId }: { postId: string }) {
 
   async function toggle(action: 'like' | 'unlike' | 'save' | 'unsave') {
     setPending(true); setMessage('')
-    const response = await fetch('/api/interactions/post', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ postId, action }) })
-    if (response.ok) await load()
-    else setMessage((await response.json()).error ?? 'Please sign in first.')
-    setPending(false)
+    const previous = stats
+    const liking = action === 'like' || action === 'unlike'
+    const active = action === 'like' || action === 'save'
+    setStats({ ...stats, liked: liking ? active : stats.liked, saved: liking ? stats.saved : active, likes: action === 'like' ? stats.likes + 1 : action === 'unlike' ? Math.max(0, stats.likes - 1) : stats.likes, saves: action === 'save' ? stats.saves + 1 : action === 'unsave' ? Math.max(0, stats.saves - 1) : stats.saves })
+    try {
+      const response = await fetch('/api/interactions/post', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ postId, action }) })
+      if (!response.ok) throw new Error((await response.json().catch(() => null))?.error ?? 'Please sign in first.')
+      await load()
+    } catch (error) { setStats(previous); setMessage(error instanceof Error ? error.message : 'Unable to update this interaction.') }
+    finally { setPending(false) }
   }
 
   async function submit(event: FormEvent) {
     event.preventDefault(); if (!content.trim()) return
     setPending(true); setMessage('')
-    const response = await fetch('/api/comments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ postId, content }) })
-    if (response.ok) { setContent(''); await load() } else setMessage((await response.json()).error ?? 'Unable to comment.')
-    setPending(false)
+    try {
+      const response = await fetch('/api/comments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ postId, content }) })
+      if (!response.ok) throw new Error((await response.json().catch(() => null))?.error ?? 'Unable to comment.')
+      setContent(''); await load()
+    } catch (error) { setMessage(error instanceof Error ? error.message : 'Unable to comment.') }
+    finally { setPending(false) }
   }
 
   return <section className="mt-14 border-t border-border pt-8" aria-label="Article interactions">
