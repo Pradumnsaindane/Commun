@@ -1,3 +1,13 @@
-import Link from 'next/link'
-import { PageContainer, Card } from '@/components/ui/primitives'
-export default function OnboardingPage() { return <PageContainer eyebrow="You are in" title="Set up your Commun profile" description="The full onboarding flow is next. Your account is ready for the community foundation."><Card className="max-w-xl"><p className="text-sm leading-6 text-muted">Your email is verified. Continue to the dashboard while we prepare the next step.</p><Link href="/dashboard" className="mt-6 inline-block rounded-md bg-accent px-4 py-3 text-sm font-semibold text-background">Go to dashboard</Link></Card></PageContainer> }
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import { OnboardingError, OnboardingForm } from '@/components/onboarding/onboarding-form'
+
+export default async function OnboardingPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login?next=/onboarding')
+  const { data: profile } = await supabase.from('profiles').select('display_name,username,bio,github,website,interests,onboarding_completed').eq('id', user.id).maybeSingle()
+  if (!profile) return <OnboardingError />
+  if (profile.onboarding_completed) redirect('/dashboard')
+  return <OnboardingForm initialName={profile.display_name === 'Commun member' ? '' : profile.display_name} initialUsername={profile.username ?? ''} initialBio={profile.bio ?? ''} initialGithub={profile.github ?? ''} initialWebsite={profile.website ?? ''} initialInterests={profile.interests ?? []} />
+}
