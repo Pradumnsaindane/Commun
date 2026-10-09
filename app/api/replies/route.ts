@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
+import { nextReplyDepth } from '@/lib/security-validation'
 
 const schema = z.object({ discussionId: z.string().uuid(), content: z.string().trim().min(1).max(5000), parentId: z.string().uuid().optional().nullable() })
 
@@ -19,7 +20,21 @@ export async function POST(request: Request) {
   if (!user) return NextResponse.json({ error: 'Sign in required.' }, { status: 401 })
   const parsed = schema.safeParse(await request.json().catch(() => null))
   if (!parsed.success) return NextResponse.json({ error: 'Enter a valid reply.' }, { status: 400 })
-  const depth = parsed.data.parentId ? 1 : 0
+  const [{ data: profile }, { data: discussion }] = await Promise.all([
+    supabase.from('profiles').select('id,status').eq('id', user.id).maybeSingle(),
+    supabase.from('discussions').select('id,is_closed,is_removed').eq('id', parsed.data.discussionId).maybeSingle(),
+  ])
+  if (profile?.status !== 'ACTIVE') return NextResponse.json({ error: 'Only active, verified members can reply.' }, { status: 403 })
+  if (!discussion || discussion.is_removed) return NextResponse.json({ error: 'Discussion not found.' }, { status: 404 })
+  if (discussion.is_closed) return NextResponse.json({ error: 'This discussion is closed.' }, { status: 409 })
+
+  let depth = nextReplyDepth(null)
+  if (parsed.data.parentId) {
+    const { data: parent } = await supabase.from('replies').select('discussion_id,depth,is_removed').eq('id', parsed.data.parentId).maybeSingle()
+    if (!parent || parent.is_removed || parent.discussion_id !== parsed.data.discussionId) return NextResponse.json({ error: 'Invalid parent reply.' }, { status: 422 })
+    depth = nextReplyDepth(parent.depth)
+    if (depth === null) return NextResponse.json({ error: 'Reply nesting limit reached.' }, { status: 422 })
+  }
   const { data, error } = await supabase.from('replies').insert({ discussion_id: parsed.data.discussionId, author_id: user.id, parent_id: parsed.data.parentId ?? null, depth, content: parsed.data.content }).select('id,discussion_id,author_id,parent_id,depth,content,is_solution,created_at').single()
   if (error) return NextResponse.json({ error: 'Unable to add reply.' }, { status: 400 })
   return NextResponse.json({ reply: data }, { status: 201 })

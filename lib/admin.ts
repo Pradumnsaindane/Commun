@@ -23,7 +23,7 @@ export async function writeAudit(actor: AuthContext, action: string, targetType:
   await createAdminClient().from('audit_logs').insert({ actor_id: actor.user.id, action, target_type: targetType, target_id: targetId, metadata })
 }
 
-export async function notifyUser(recipientId: string, actorId: string, type: string, entityId: string | null, targetTitle?: string | null) {
+export async function notifyUser(recipientId: string, actorId: string, type: 'MODERATION', entityId: string | null, targetTitle?: string | null) {
   if (recipientId === actorId) return
   await createAdminClient().from('notifications').insert({ recipient_id: recipientId, actor_id: actorId, type, entity_id: entityId, target_title: targetTitle ?? null })
 }
