@@ -87,6 +87,7 @@ async function main() {
   });
 
   const publicRoutes = [
+    { path: '/news', expected: 200 },
     { path: '/explore', expected: 200 },
     { path: '/discussions', expected: 200 },
     { path: '/login', expected: 200 },

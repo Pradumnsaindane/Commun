@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 
 const primaryLinks = [
   { label: 'Feed', href: '/feed', icon: '↗' },
+  { label: 'News', href: '/news', icon: '⚡' },
   { label: 'Explore', href: '/explore', icon: '⌕' },
   { label: 'Discussions', href: '/discussions', icon: '◌' },
   { label: 'Saved', href: '/saved', icon: '▱' },
@@ -25,7 +26,10 @@ function PublicShell({ children }: { children: React.ReactNode }) {
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
         <Brand />
         <nav aria-label="Public navigation" className="hidden items-center gap-8 text-[13px] text-muted md:flex">
-          <Link href="/explore" className="transition-colors hover:text-foreground">Discover</Link><Link href="/community" className="transition-colors hover:text-foreground">Discussions</Link><Link href="/discover" className="transition-colors hover:text-foreground">Developers</Link>
+          <Link href="/news" className="transition-colors hover:text-foreground">News</Link>
+          <Link href="/explore" className="transition-colors hover:text-foreground">Discover</Link>
+          <Link href="/community" className="transition-colors hover:text-foreground">Discussions</Link>
+          <Link href="/discover" className="transition-colors hover:text-foreground">Developers</Link>
         </nav>
         <div className="hidden items-center gap-2 sm:flex"><Link href="/login" className="rounded-lg px-3 py-2 text-[13px] text-muted hover:text-foreground">Log in</Link><Link href="/register" className="rounded-lg bg-accent px-4 py-2.5 text-[13px] font-semibold text-background transition hover:brightness-110">Join Commun</Link></div>
         <button type="button" aria-expanded={menuOpen} aria-controls="mobile-public-nav" className="rounded-lg border border-border px-3 py-2 text-xs text-muted sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Close' : 'Menu'}</button>

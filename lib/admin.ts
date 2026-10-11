@@ -20,7 +20,22 @@ export async function requireAdmin() {
 }
 
 export async function writeAudit(actor: AuthContext, action: string, targetType: string, targetId: string | null, metadata: Record<string, unknown> = {}) {
-  await createAdminClient().from('audit_logs').insert({ actor_id: actor.user.id, action, target_type: targetType, target_id: targetId, metadata })
+  const { error } = await createAdminClient()
+    .from('audit_logs')
+    .insert({
+      actor_id: actor.user.id,
+      action,
+      target_type: targetType,
+      target_id: targetId,
+      metadata,
+    })
+
+  if (error) {
+    console.error('Audit log write failed', {
+      action,
+      code: error.code ?? null,
+    })
+  }
 }
 
 export async function notifyUser(recipientId: string, actorId: string, type: 'MODERATION', entityId: string | null, targetTitle?: string | null) {

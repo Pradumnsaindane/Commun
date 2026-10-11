@@ -11,8 +11,8 @@ export async function GET() {
   const { data, error } = await supabase.from('notifications').select('id,actor_id,type,entity_id,target_slug,target_title,read,created_at').eq('recipient_id', user.id).order('created_at', { ascending: false }).limit(40)
   if (error) return NextResponse.json({ error: 'Unable to load notifications' }, { status: 500 })
   const actorIds = [...new Set((data ?? []).map((item) => item.actor_id).filter(Boolean))]
-  const { data: actors } = actorIds.length ? await supabase.from('profiles').select('id,username,name').in('id', actorIds) : { data: [] }
-  const actorMap = new Map((actors ?? []).map((actor) => [actor.id, actor]))
+  const { data: actors } = actorIds.length ? await supabase.from('profiles').select('id,username,display_name').in('id', actorIds) : { data: [] }
+  const actorMap = new Map((actors ?? []).map((actor: any) => [actor.id, { username: actor.username ?? null, name: actor.display_name ?? actor.username ?? 'Someone' }]))
   return NextResponse.json({ notifications: (data ?? []).map((item) => ({ ...item, actor: item.actor_id ? actorMap.get(item.actor_id) ?? null : null })) })
 }
 
