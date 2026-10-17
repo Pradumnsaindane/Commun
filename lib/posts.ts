@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ACCESS_LEVELS } from './monetization'
 
 export const postInputSchema = z.object({
   title: z.string().trim().min(1, 'Title is required').max(140),
@@ -7,6 +8,7 @@ export const postInputSchema = z.object({
   topicIds: z.array(z.string().uuid()).max(8).default([]),
   coverImagePath: z.string().max(500).optional().nullable(),
   status: z.enum(['DRAFT', 'PUBLISHED']).default('DRAFT'),
+  accessLevel: z.enum(ACCESS_LEVELS).default('FREE'),
 })
 
 export function slugify(value: string) {
@@ -48,4 +50,4 @@ export async function uniqueSlug(supabase: any, title: string, excludeId?: strin
 
 export function isActiveProfile(profile: { status?: string } | null) { return profile?.status === 'ACTIVE' }
 export function jsonError(message: string, status: number) { return Response.json({ error: message }, { status }) }
-export type PostRecord = { id: string; author_id: string; title: string; slug: string; excerpt: string | null; body: string; cover_image_path: string | null; status: string; reading_time_minutes: number; published_at: string | null; created_at: string; updated_at: string }
+export type PostRecord = { id: string; author_id: string; title: string; slug: string; excerpt: string | null; body: string; cover_image_path: string | null; status: string; access_level: string; reading_time_minutes: number; published_at: string | null; created_at: string; updated_at: string }

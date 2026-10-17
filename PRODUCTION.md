@@ -20,6 +20,17 @@ Public browser variables are limited to `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC
 
 Use `npm test`, `npm run typecheck`, `npm run lint`, and `npm run build` before deployment. Verify Supabase Auth redirect configuration, email confirmation, RLS policies, Realtime publication membership, and production HTTPS. Protected route and public route smoke checks should be run against the deployed preview with at least one real account per role.
 
+## Creator monetization
+
+Commun uses Stripe for memberships, paid publications, and creator payouts:
+
+- **Memberships** are recurring Stripe subscriptions created in Checkout (`POST /api/billing/checkout`). The platform account is the merchant; each creator's share is sent with a destination charge (`transfer_data.destination`) and a platform fee (`STRIPE_PLATFORM_FEE_PERCENT`, default 10%), set at `application_fee_percent` on the subscription.
+- **Payouts** run through Stripe Connect Express accounts created in `POST /api/billing/connect`. Readers never see account IDs; onboarding state is exposed only as booleans.
+- **Paid publications** are posts with `access_level = 'MEMBERS'`. Entitlement is always decided server-side (`canViewPost` in `lib/monetization.ts`) and the API returns `gated: true` with an empty body for non-members. The author always reads their own gated posts.
+- **Fulfillment is webhook-only** (`POST /api/webhooks/stripe`): signature-verified raw body, idempotent via `stripe_webhook_events`, syncing `memberships`, `billing_customers`, `earnings`, and `creator_accounts`. Never grant access from a Checkout success redirect.
+- **Graceful degradation**: without `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, and `STRIPE_PRICE_MEMBERSHIP_MONTHLY`, all billing routes return 503 and the UI hides purchase actions; the rest of the app is unaffected.
+- The membership price must live on the **platform** Stripe account; creators only receive transfers. Test with `stripe listen --forward-to localhost:3000/api/webhooks/stripe` locally.
+
 ## Known limitations
 
 Abuse-sensitive report submissions use Upstash Redis sliding-window limits keyed by authenticated user and request IP. The app accepts the integration's injected `KV_REST_API_URL`/`KV_REST_API_TOKEN` names as well as canonical `UPSTASH_REDIS_REST_*` names. Keep platform/WAF limits enabled as a second layer for traffic spikes and unavailable-integration fallback. Full multi-account moderator/admin smoke testing requires provisioned accounts for each role. CSP is report-only until deployed traffic has been observed and all legitimate script/connect origins are confirmed; this avoids breaking Supabase auth and preview tooling during rollout.
