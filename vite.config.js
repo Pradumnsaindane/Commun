@@ -5,6 +5,11 @@ import { resolve } from 'path';
 export default defineConfig({
   root: '.',
   base: './',
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, '.'),
+    },
+  },
   server: {
     port: 5173,
     open: true,

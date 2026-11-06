@@ -1,57 +1,490 @@
 'use client'
 
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { createClient } from '@/lib/supabase/client'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { WorkspaceSwitcher } from '@/components/workspace/workspace-switcher'
+import { NotificationDropdown } from '@/components/workspace/notification-dropdown'
+import { QuickActionsModal } from '@/components/workspace/quick-actions-modal'
 
-const primaryLinks = [
-  { label: 'Feed', href: '/feed', icon: '↗' },
-  { label: 'News', href: '/news', icon: '⚡' },
-  { label: 'Explore', href: '/explore', icon: '⌕' },
-  { label: 'Discussions', href: '/discussions', icon: '◌' },
-  { label: 'Saved', href: '/saved', icon: '▱' },
-  { label: 'Notifications', href: '/notifications', icon: '◍' },
-  { label: 'Profile', href: '/profile/me', icon: '◎' },
+interface NavLinkItem {
+  label: string
+  href: string
+  icon: string
+  badge?: string
+}
+
+const workspaceLinks: NavLinkItem[] = [
+  { label: 'Dashboard', href: '/dashboard', icon: '📊' },
+  { label: 'Projects', href: '/projects', icon: '📁' },
+  { label: 'My Tasks', href: '/tasks', icon: '📋' },
+  { label: 'Meetings', href: '/meetings', icon: '🗓️' },
+  { label: 'Notes', href: '/notes', icon: '📝' },
+  { label: 'Knowledge', href: '/knowledge', icon: '📚' },
+  { label: 'Learning', href: '/learning', icon: '🎯' },
+  { label: 'Analytics', href: '/analytics', icon: '📈' },
 ]
 
-function Brand() {
-  return <Link href="/" className="inline-flex items-baseline font-mono text-[1.15rem] font-bold tracking-[-0.05em]" aria-label="Commun home">commun<span className="text-accent">.</span></Link>
-}
+const personalLinks: NavLinkItem[] = [
+  { label: 'My Profile', href: '/profile/me', icon: '👤' },
+  { label: 'Saved Items', href: '/saved', icon: '🔖' },
+  { label: 'Settings', href: '/settings', icon: '⚙️' },
+]
 
-function PublicShell({ children }: { children: React.ReactNode }) {
-  const [menuOpen, setMenuOpen] = useState(false)
-  return <div className="min-h-screen bg-background">
-    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Brand />
-        <nav aria-label="Public navigation" className="hidden items-center gap-8 text-[13px] text-muted md:flex">
-          <Link href="/news" className="transition-colors hover:text-foreground">News</Link>
-          <Link href="/explore" className="transition-colors hover:text-foreground">Discover</Link>
-          <Link href="/community" className="transition-colors hover:text-foreground">Discussions</Link>
-          <Link href="/discover" className="transition-colors hover:text-foreground">Developers</Link>
-        </nav>
-        <div className="hidden items-center gap-2 sm:flex"><Link href="/login" className="rounded-lg px-3 py-2 text-[13px] text-muted hover:text-foreground">Log in</Link><Link href="/register" className="rounded-lg bg-accent px-4 py-2.5 text-[13px] font-semibold text-background transition hover:brightness-110">Join Commun</Link></div>
-        <button type="button" aria-expanded={menuOpen} aria-controls="mobile-public-nav" className="rounded-lg border border-border px-3 py-2 text-xs text-muted sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Close' : 'Menu'}</button>
-      </div>
-      {menuOpen && <nav id="mobile-public-nav" aria-label="Mobile public navigation" className="flex flex-col gap-1 border-t border-border/80 px-5 py-4 text-sm sm:hidden"><Link href="/explore" className="rounded-lg px-3 py-2.5 text-muted hover:bg-surface hover:text-foreground">Discover</Link><Link href="/community" className="rounded-lg px-3 py-2.5 text-muted hover:bg-surface hover:text-foreground">Discussions</Link><Link href="/login" className="rounded-lg px-3 py-2.5 text-muted hover:bg-surface hover:text-foreground">Log in</Link><Link href="/register" className="mt-2 rounded-lg bg-accent px-3 py-2.5 text-center font-semibold text-background">Join Commun</Link></nav>}
-    </header>{children}
-  </div>
-}
-
-function DesktopSidebar({ pathname }: { pathname: string }) {
-  return <aside className="hidden w-[232px] shrink-0 border-r border-border/80 px-4 py-7 lg:block"><div className="sticky top-24"><Brand /><p className="mb-3 mt-12 px-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Workspace</p><nav aria-label="Primary navigation" className="flex flex-col gap-1">{primaryLinks.map((link) => { const active = pathname === link.href || pathname.startsWith(`${link.href}/`); return <Link key={link.href} href={link.href} className={cn('group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] transition-colors', active ? 'bg-accent/10 font-medium text-foreground' : 'text-muted hover:bg-surface hover:text-foreground')}><span className={cn('w-5 text-center text-sm', active ? 'text-accent' : 'text-muted group-hover:text-accent')} aria-hidden="true">{link.icon}</span>{link.label}{active && <span className="ml-auto size-1.5 rounded-full bg-accent" />}</Link>})}</nav><div className="my-6 border-t border-border/80" /><Link href="/write" className="flex items-center justify-center gap-2 rounded-lg bg-accent px-3 py-2.5 text-[13px] font-semibold text-background transition hover:brightness-110"><span className="text-lg leading-none">+</span> Create</Link><Link href="/settings" className={cn('mt-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] text-muted hover:bg-surface hover:text-foreground', pathname.startsWith('/settings') && 'bg-surface text-foreground')}><span className="w-5 text-center">◎</span> Settings</Link></div></aside>
-}
-
-function AppHeader() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  return <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur-xl"><div className="flex h-[72px] items-center gap-4 px-5 sm:px-7"><div className="lg:hidden"><Brand /></div><form action="/search" className="hidden h-10 max-w-[420px] flex-1 items-center gap-3 rounded-lg border border-border bg-surface/70 px-3 text-[13px] text-muted sm:flex"><span className="text-base">⌕</span><label className="sr-only" htmlFor="global-search-header">Search Commun</label><input id="global-search-header" name="q" aria-label="Search Commun" placeholder="Search Commun..." className="min-w-0 flex-1 bg-transparent outline-none placeholder:text-muted" /><kbd className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted">⌘ K</kbd></form><div className="ml-auto flex items-center gap-2"><Link href="/search" aria-label="Open search" className="grid size-10 place-items-center rounded-lg text-muted hover:bg-surface hover:text-foreground sm:hidden">⌕</Link><Link href="/write" className="hidden rounded-lg bg-accent px-3.5 py-2.5 text-[13px] font-semibold text-background sm:inline-flex">Create</Link><Link href="/notifications" aria-label="Notifications" className="grid size-10 place-items-center rounded-lg text-muted transition hover:bg-surface hover:text-foreground">◍</Link><button type="button" aria-expanded={menuOpen} aria-haspopup="menu" onClick={() => setMenuOpen(!menuOpen)} className="grid size-10 place-items-center rounded-full border border-accent/30 bg-accent/10 text-sm font-semibold text-accent">C</button>{menuOpen && <div role="menu" className="absolute right-5 top-[64px] w-48 rounded-xl border border-border bg-elevated p-1.5 shadow-2xl"><Link role="menuitem" href="/profile/me" className="block rounded-lg px-3 py-2.5 text-[13px] hover:bg-surface">Profile</Link><Link role="menuitem" href="/settings" className="block rounded-lg px-3 py-2.5 text-[13px] hover:bg-surface">Settings</Link><Link role="menuitem" href="/login" className="block rounded-lg px-3 py-2.5 text-[13px] text-muted hover:bg-surface hover:text-foreground">Log out</Link></div>}</div></div></header>
+function BrandLogo() {
+  return (
+    <Link
+      href="/dashboard"
+      className="inline-flex items-baseline font-mono text-xl font-bold tracking-tight text-foreground transition-opacity hover:opacity-90"
+      aria-label="Commun Workspace"
+    >
+      commun<span className="text-accent animate-pulse-subtle">.</span>
+    </Link>
+  )
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  if (pathname === '/') return <PublicShell>{children}</PublicShell>
-  const isAuthRoute = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email'].includes(pathname)
-  if (pathname === '/dashboard' || pathname === '/onboarding' || pathname.startsWith('/auth/') || isAuthRoute) return <>{children}</>
-  return <div className="min-h-screen bg-background"><AppHeader /><div className="mx-auto flex max-w-[1500px]"><DesktopSidebar pathname={pathname} /><main className="min-w-0 flex-1 pb-24">{children}</main></div><nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-elevated/95 p-2 backdrop-blur-xl lg:hidden">{[primaryLinks[0], primaryLinks[1], primaryLinks[2], primaryLinks[4], primaryLinks[5]].map((link) => <Link key={link.href} href={link.href} className={cn('flex flex-col items-center gap-1 rounded-lg py-2 text-[10px] text-muted', pathname.startsWith(link.href) && 'bg-accent/10 text-accent')}><span className="text-base">{link.icon}</span>{link.label}</Link>)}</nav></div>
+  const router = useRouter()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [quickActionOpen, setQuickActionOpen] = useState(false)
+  const [userProfile, setUserProfile] = useState<{
+    email: string | null
+    name: string | null
+    avatar_url: string | null
+  } | null>(null)
+
+  // Public website and auth pages don't render the authenticated application shell
+  const isPublicLanding = pathname === '/'
+  const isAuthRoute = [
+    '/login',
+    '/register',
+    '/signup',
+    '/forgot-password',
+    '/reset-password',
+    '/verify-email',
+  ].includes(pathname)
+  const isAuthCallback = pathname.startsWith('/auth/')
+
+  useEffect(() => {
+    if (isPublicLanding || isAuthRoute || isAuthCallback) return
+
+    const client = createClient()
+    void client.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setUserProfile({
+          email: user.email ?? null,
+          name: user.user_metadata?.name || user.user_metadata?.display_name || user.email?.split('@')[0] || 'Member',
+          avatar_url: user.user_metadata?.avatar_url ?? null,
+        })
+      }
+    })
+  }, [pathname, isPublicLanding, isAuthRoute, isAuthCallback])
+
+  // Handle logout
+  const handleLogout = async () => {
+    setUserMenuOpen(false)
+    const client = createClient()
+    await client.auth.signOut()
+    router.push('/login')
+  }
+
+  // Keyboard shortcut ⌘K for search focus
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        const searchInput = document.getElementById('workspace-global-search')
+        searchInput?.focus()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  if (isPublicLanding) {
+    return <div className="min-h-screen bg-background">{children}</div>
+  }
+
+  if (isAuthRoute || isAuthCallback) {
+    return <>{children}</>
+  }
+
+  return (
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      {/* Top Application Header */}
+      <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
+        <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
+          {/* Mobile Menu Trigger & Logo */}
+          <div className="flex items-center gap-3 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open navigation menu"
+              className="flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-muted hover:text-foreground"
+            >
+              ☰
+            </button>
+            <BrandLogo />
+          </div>
+
+          {/* Desktop Search Interface */}
+          <div className="hidden lg:flex items-center flex-1 max-w-md">
+            <form action="/search" className="relative w-full">
+              <label htmlFor="workspace-global-search" className="sr-only">
+                Search workspace
+              </label>
+              <div className="relative flex items-center">
+                <span className="absolute left-3.5 text-xs text-muted" aria-hidden="true">
+                  ⌕
+                </span>
+                <input
+                  id="workspace-global-search"
+                  name="q"
+                  type="search"
+                  placeholder="Search tasks, projects, notes, knowledge..."
+                  className="w-full rounded-xl border border-border bg-surface/70 py-2 pl-9 pr-14 text-xs text-foreground placeholder:text-muted outline-none transition-colors focus:border-accent focus:bg-surface focus:ring-1 focus:ring-accent"
+                />
+                <kbd className="absolute right-3 rounded border border-border bg-card px-1.5 py-0.5 font-mono text-[10px] text-muted pointer-events-none">
+                  ⌘ K
+                </kbd>
+              </div>
+            </form>
+          </div>
+
+          {/* Actions & Utilities */}
+          <div className="flex items-center gap-2.5 ml-auto">
+            <button
+              type="button"
+              onClick={() => setQuickActionOpen(true)}
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-xs font-bold text-background shadow-sm shadow-accent/20 hover:brightness-110 active:scale-95 transition-all"
+            >
+              <span className="text-sm font-black">+</span> Quick Action
+            </button>
+
+            <Link
+              href="/search"
+              aria-label="Search"
+              className="flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-muted hover:text-foreground lg:hidden"
+            >
+              ⌕
+            </Link>
+
+            <NotificationDropdown />
+            <ThemeToggle />
+
+            {/* User Profile Menu */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                aria-expanded={userMenuOpen}
+                aria-haspopup="menu"
+                className="flex size-10 items-center justify-center rounded-full border border-accent/40 bg-accent/15 font-mono text-xs font-bold text-accent transition-all hover:ring-2 hover:ring-accent/30"
+              >
+                {userProfile?.name?.slice(0, 1).toUpperCase() || 'U'}
+              </button>
+
+              {userMenuOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setUserMenuOpen(false)}
+                    aria-hidden="true"
+                  />
+                  <div
+                    role="menu"
+                    className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-border bg-card p-2 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95"
+                  >
+                    <div className="px-3 py-2 border-b border-border/80">
+                      <p className="text-xs font-semibold text-foreground truncate">
+                        {userProfile?.name || 'Workspace Member'}
+                      </p>
+                      <p className="text-[11px] text-muted truncate">
+                        {userProfile?.email || 'Logged in'}
+                      </p>
+                    </div>
+
+                    <div className="py-1">
+                      <Link
+                        role="menuitem"
+                        href="/profile/me"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-muted hover:bg-surface hover:text-foreground"
+                      >
+                        <span>👤</span> My Profile
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        href="/settings"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-muted hover:bg-surface hover:text-foreground"
+                      >
+                        <span>⚙️</span> Workspace Settings
+                      </Link>
+                    </div>
+
+                    <div className="pt-1 border-t border-border/80">
+                      <button
+                        role="menuitem"
+                        type="button"
+                        onClick={() => void handleLogout()}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs text-red-400 hover:bg-surface hover:text-red-300 text-left font-medium"
+                      >
+                        <span>🚪</span> Log out
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Layout Container */}
+      <div className="flex-1 flex mx-auto w-full max-w-[1600px]">
+        {/* Desktop Left Sidebar */}
+        <aside className="hidden lg:flex w-64 shrink-0 flex-col border-r border-border bg-card/60 p-4">
+          <div className="sticky top-20 flex flex-col h-[calc(100vh-6rem)] justify-between">
+            <div className="space-y-6 overflow-y-auto pr-1">
+              {/* Workspace Switcher */}
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-1 mb-2">
+                  Workspace
+                </p>
+                <WorkspaceSwitcher />
+              </div>
+
+              {/* Workspace Links */}
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-2 mb-2">
+                  Workspace Navigation
+                </p>
+                <nav className="space-y-1" aria-label="Workspace Navigation">
+                  {workspaceLinks.map((item) => {
+                    const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(`${item.href}/`))
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={cn(
+                          'flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold transition-all',
+                          isActive
+                            ? 'bg-accent/15 text-accent border border-accent/25 shadow-sm'
+                            : 'text-muted hover:bg-surface hover:text-foreground'
+                        )}
+                      >
+                        <span className="text-sm shrink-0" aria-hidden="true">
+                          {item.icon}
+                        </span>
+                        <span className="truncate">{item.label}</span>
+                        {isActive && <span className="ml-auto size-1.5 rounded-full bg-accent" />}
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
+
+              {/* Personal Links */}
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-2 mb-2">
+                  Personal
+                </p>
+                <nav className="space-y-1" aria-label="Personal Navigation">
+                  {personalLinks.map((item) => {
+                    const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={cn(
+                          'flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold transition-all',
+                          isActive
+                            ? 'bg-accent/15 text-accent border border-accent/25 shadow-sm'
+                            : 'text-muted hover:bg-surface hover:text-foreground'
+                        )}
+                      >
+                        <span className="text-sm shrink-0" aria-hidden="true">
+                          {item.icon}
+                        </span>
+                        <span className="truncate">{item.label}</span>
+                        {isActive && <span className="ml-auto size-1.5 rounded-full bg-accent" />}
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
+            </div>
+
+            {/* Bottom User Card */}
+            <div className="pt-4 border-t border-border/80">
+              <div className="rounded-xl border border-border bg-surface p-2.5 flex items-center justify-between">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="size-7 rounded-lg bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold shrink-0">
+                    {userProfile?.name?.slice(0, 1).toUpperCase() || 'U'}
+                  </div>
+                  <div className="min-w-0 truncate">
+                    <p className="text-xs font-semibold text-foreground truncate">
+                      {userProfile?.name || 'Member'}
+                    </p>
+                    <p className="font-mono text-[10px] text-muted truncate">
+                      Active Session
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => void handleLogout()}
+                  title="Log out"
+                  className="rounded-lg p-1.5 text-muted hover:text-red-400 hover:bg-surface-hover text-xs"
+                >
+                  🚪
+                </button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Content Area */}
+        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8 pb-24 lg:pb-12">
+          {children}
+        </main>
+      </div>
+
+      {/* Mobile Slide-Out Drawer */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="relative w-80 max-w-[85%] bg-card border-r border-border p-5 flex flex-col justify-between overflow-y-auto z-10 animate-in slide-in-from-left duration-200">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between pb-3 border-b border-border/80">
+                <BrandLogo />
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="size-8 rounded-lg border border-border flex items-center justify-center text-muted hover:text-foreground"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-muted mb-2">
+                  Current Workspace
+                </p>
+                <WorkspaceSwitcher />
+              </div>
+
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-muted mb-2">
+                  Workspace
+                </p>
+                <nav className="space-y-1">
+                  {workspaceLinks.map((item) => {
+                    const isActive = pathname === item.href
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(
+                          'flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold min-h-[44px]',
+                          isActive
+                            ? 'bg-accent/15 text-accent border border-accent/30'
+                            : 'text-muted hover:bg-surface hover:text-foreground'
+                        )}
+                      >
+                        <span className="text-base">{item.icon}</span>
+                        {item.label}
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-muted mb-2">
+                  Personal
+                </p>
+                <nav className="space-y-1">
+                  {personalLinks.map((item) => {
+                    const isActive = pathname === item.href
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(
+                          'flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold min-h-[44px]',
+                          isActive
+                            ? 'bg-accent/15 text-accent border border-accent/30'
+                            : 'text-muted hover:bg-surface hover:text-foreground'
+                        )}
+                      >
+                        <span className="text-base">{item.icon}</span>
+                        {item.label}
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-border">
+              <button
+                type="button"
+                onClick={() => void handleLogout()}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 py-3 text-xs font-bold text-red-300"
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Sticky Bottom Navigation for top 4 frequently accessed items */}
+      <nav
+        aria-label="Mobile Bottom Navigation"
+        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-border bg-card/95 p-1.5 backdrop-blur-xl lg:hidden"
+      >
+        {[
+          { label: 'Dashboard', href: '/dashboard', icon: '📊' },
+          { label: 'Projects', href: '/projects', icon: '📁' },
+          { label: 'Tasks', href: '/tasks', icon: '📋' },
+          { label: 'Notes', href: '/notes', icon: '📝' },
+        ].map((item) => {
+          const isActive = pathname === item.href
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                'flex flex-col items-center justify-center py-1.5 text-[10px] font-semibold transition-colors min-h-[44px]',
+                isActive ? 'text-accent' : 'text-muted hover:text-foreground'
+              )}
+            >
+              <span className="text-base">{item.icon}</span>
+              <span>{item.label}</span>
+            </Link>
+          )
+        })}
+      </nav>
+
+      {/* Quick Action Modal Dialog */}
+      <QuickActionsModal
+        isOpen={quickActionOpen}
+        onClose={() => setQuickActionOpen(false)}
+      />
+    </div>
+  )
 }
