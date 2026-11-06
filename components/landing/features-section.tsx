@@ -71,7 +71,7 @@ const featureBlocks = [
       <div className="space-y-2.5">
         <div className="flex justify-between text-xs">
           <span className="text-foreground font-medium">Cloud Architecture Certification</span>
-          <span className="text-accent font-mono">80%</span>
+          <span className="text-accent font-mono">Example</span>
         </div>
         <div className="h-2 w-full bg-border rounded-full overflow-hidden">
           <div className="h-full bg-accent w-4/5" />

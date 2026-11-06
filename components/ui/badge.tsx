@@ -16,8 +16,8 @@ export function Badge({
   const variantClasses = {
     default: 'bg-surface text-foreground border-border',
     accent: 'bg-accent/10 text-accent border-accent/25',
-    emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-    indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+    emerald: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-600/25',
+    indigo: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-600/25',
     outline: 'bg-transparent text-muted border-border',
     muted: 'bg-surface/50 text-subtle border-border/50',
   }[variant]
@@ -25,8 +25,8 @@ export function Badge({
   const dotClasses = {
     default: 'bg-muted',
     accent: 'bg-accent',
-    emerald: 'bg-emerald-400',
-    indigo: 'bg-indigo-400',
+    emerald: 'bg-emerald-700 dark:bg-emerald-300',
+    indigo: 'bg-indigo-700 dark:bg-indigo-300',
     outline: 'bg-muted',
     muted: 'bg-subtle',
   }[variant]

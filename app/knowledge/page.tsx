@@ -1,73 +1,39 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+
+const collections = [
+  { title: 'Architecture records', description: 'Decisions, trade-offs, and system context', icon: '⌘' },
+  { title: 'Runbooks', description: 'Operational guidance and response steps', icon: '▤' },
+  { title: 'Team playbooks', description: 'Standards, onboarding, and shared practice', icon: '◇' },
+]
 
 export default async function KnowledgePage() {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login?next=/knowledge')
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-border/80 gap-4">
+    <div className="workspace-enter mx-auto w-full max-w-7xl space-y-7">
+      <header className="flex flex-col gap-5 border-b border-border/80 pb-7 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-xs text-accent uppercase tracking-wider font-semibold">
-              Workspace
-            </span>
-            <span className="text-muted text-xs">/</span>
-            <span className="text-xs text-muted">Knowledge</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-foreground">
-            Knowledge Base & SOPs
-          </h1>
-          <p className="mt-1 text-xs sm:text-sm text-muted">
-            Searchable institutional memory: architecture decision records, runbooks, and guidelines.
-          </p>
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[.2em] text-accent">Workspace / Knowledge</p>
+          <div className="flex flex-wrap items-center gap-3"><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Knowledge</h1><Badge variant="outline">Preview</Badge></div>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">A searchable home for the documents and decisions your team relies on.</p>
         </div>
+        <Button variant="primary" size="sm" disabled title="Knowledge document persistence is not connected yet">New document unavailable</Button>
+      </header>
 
-        <div className="flex items-center gap-3">
-          <Badge variant="outline">Phase 2 Preview</Badge>
-          <Button variant="primary" size="sm">
-            + New Document
-          </Button>
-        </div>
-      </div>
+      <Card className="glass-surface flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6"><div><h2 className="text-base font-semibold">The document library isn’t connected</h2><p className="mt-1 max-w-2xl text-sm leading-6 text-muted">No knowledge documents are loaded here. Document creation and search are unavailable until storage is connected.</p></div><Badge variant="muted">Data unavailable</Badge></Card>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="rounded-xl border border-border bg-card p-4">
-          <span className="text-xl">🏛️</span>
-          <h3 className="mt-2 text-sm font-semibold text-foreground">Architecture Records</h3>
-          <p className="mt-1 text-xs text-muted">Formal ADRs documenting design choices</p>
-          <span className="mt-3 inline-block font-mono text-[10px] text-muted">0 documents</span>
+      <section aria-labelledby="knowledge-collections-title">
+        <div className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">Library structure</p><h2 id="knowledge-collections-title" className="mt-1 text-lg font-semibold">Collections</h2></div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {collections.map((item) => <Card key={item.title} className="interactive-surface bg-surface p-5"><div className="flex items-start justify-between"><span className="grid size-10 place-items-center rounded-xl border border-border bg-background text-base text-accent" aria-hidden="true">{item.icon}</span><Badge variant="muted">Unavailable</Badge></div><h3 className="mt-5 text-sm font-semibold">{item.title}</h3><p className="mt-1 text-xs leading-5 text-muted">{item.description}</p><p className="mt-5 border-t border-border/80 pt-4 text-xs text-muted">No documents loaded</p></Card>)}
         </div>
-        <div className="rounded-xl border border-border bg-card p-4">
-          <span className="text-xl">📖</span>
-          <h3 className="mt-2 text-sm font-semibold text-foreground">Operational Runbooks</h3>
-          <p className="mt-1 text-xs text-muted">Standard incident response protocols</p>
-          <span className="mt-3 inline-block font-mono text-[10px] text-muted">0 documents</span>
-        </div>
-        <div className="rounded-xl border border-border bg-card p-4">
-          <span className="text-xl">📜</span>
-          <h3 className="mt-2 text-sm font-semibold text-foreground">Team Playbooks</h3>
-          <p className="mt-1 text-xs text-muted">Onboarding, standards, and workflow guides</p>
-          <span className="mt-3 inline-block font-mono text-[10px] text-muted">0 documents</span>
-        </div>
-      </div>
-
-      <Card className="p-8 text-center border-dashed border-border/90 bg-card/60">
-        <h4 className="text-sm font-semibold text-foreground">
-          Knowledge Base Engine Staged for Phase 3
-        </h4>
-        <p className="mt-1 text-xs text-muted max-w-md mx-auto">
-          Schema: <code className="font-mono text-accent text-xs">public.knowledge_documents</code> with versioning, markdown formatting, and full-text workspace search.
-        </p>
-      </Card>
+      </section>
     </div>
   )
 }
-

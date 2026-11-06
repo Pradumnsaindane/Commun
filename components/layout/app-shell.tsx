@@ -21,6 +21,7 @@ const workspaceLinks: NavLinkItem[] = [
   { label: 'Dashboard', href: '/dashboard', icon: '📊' },
   { label: 'Projects', href: '/projects', icon: '📁' },
   { label: 'My Tasks', href: '/tasks', icon: '📋' },
+  { label: 'Calendar', href: '/calendar', icon: '🗓️' },
   { label: 'Meetings', href: '/meetings', icon: '🗓️' },
   { label: 'Notes', href: '/notes', icon: '📝' },
   { label: 'Knowledge', href: '/knowledge', icon: '📚' },
@@ -50,6 +51,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [quickActionOpen, setQuickActionOpen] = useState(false)
   const [userProfile, setUserProfile] = useState<{
@@ -106,6 +108,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
+  useEffect(() => {
+    if (!mobileMenuOpen && !userMenuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false)
+        setUserMenuOpen(false)
+      }
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [mobileMenuOpen, userMenuOpen])
+
   if (isPublicLanding) {
     return <div className="min-h-screen bg-background">{children}</div>
   }
@@ -117,7 +131,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Top Application Header */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-xl">
+      <header className="glass-surface sticky top-0 z-40 border-b border-border/70">
         <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
           {/* Mobile Menu Trigger & Logo */}
           <div className="flex items-center gap-3 lg:hidden">
@@ -125,6 +139,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open navigation menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-workspace-navigation"
               className="flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-muted hover:text-foreground"
             >
               ☰
@@ -198,7 +214,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   />
                   <div
                     role="menu"
-                    className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-border bg-card p-2 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95"
+                    className="glass-surface glass-floating dropdown-enter absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl p-2"
                   >
                     <div className="px-3 py-2 border-b border-border/80">
                       <p className="text-xs font-semibold text-foreground truncate">
@@ -249,22 +265,25 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Main Layout Container */}
       <div className="flex-1 flex mx-auto w-full max-w-[1600px]">
         {/* Desktop Left Sidebar */}
-        <aside className="hidden lg:flex w-64 shrink-0 flex-col border-r border-border bg-card/60 p-4">
+        <aside className={cn('glass-surface hidden shrink-0 flex-col border-y-0 border-l-0 border-r border-border/70 bg-white/55 p-3 transition-[width] duration-300 ease-out dark:bg-card/55 lg:flex', sidebarCollapsed ? 'w-20' : 'w-64')}>
           <div className="sticky top-20 flex flex-col h-[calc(100vh-6rem)] justify-between">
             <div className="space-y-6 overflow-y-auto pr-1">
+              <div className={cn('flex', sidebarCollapsed ? 'justify-center' : 'justify-end')}>
+                <button type="button" onClick={() => setSidebarCollapsed((value) => !value)} aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} aria-expanded={!sidebarCollapsed} title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} className="grid size-9 place-items-center rounded-xl border border-border bg-surface text-sm text-muted transition-colors hover:border-accent/40 hover:text-foreground">
+                  <span aria-hidden="true" className="transition-transform duration-300">{sidebarCollapsed ? '›' : '‹'}</span>
+                </button>
+              </div>
               {/* Workspace Switcher */}
-              <div>
+              {!sidebarCollapsed && <div className="workspace-enter">
                 <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-1 mb-2">
                   Workspace
                 </p>
                 <WorkspaceSwitcher />
-              </div>
+              </div>}
 
               {/* Workspace Links */}
               <div>
-                <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-2 mb-2">
-                  Workspace Navigation
-                </p>
+                {!sidebarCollapsed && <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-2 mb-2">Workspace Navigation</p>}
                 <nav className="space-y-1" aria-label="Workspace Navigation">
                   {workspaceLinks.map((item) => {
                     const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(`${item.href}/`))
@@ -272,18 +291,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       <Link
                         key={item.href}
                         href={item.href}
+                        aria-current={isActive ? 'page' : undefined}
                         className={cn(
-                          'flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold transition-all',
+                          'group relative flex items-center rounded-xl py-2 text-xs font-semibold transition-all duration-200',
+                          sidebarCollapsed ? 'justify-center px-2' : 'gap-2.5 px-3',
                           isActive
-                            ? 'bg-accent/15 text-accent border border-accent/25 shadow-sm'
+                            ? 'border border-accent/20 bg-accent/10 text-accent shadow-sm'
                             : 'text-muted hover:bg-surface hover:text-foreground'
                         )}
+                        aria-label={sidebarCollapsed ? item.label : undefined}
+                        title={sidebarCollapsed ? item.label : undefined}
                       >
-                        <span className="text-sm shrink-0" aria-hidden="true">
+                        <span className="shrink-0 text-sm transition-transform group-hover:-translate-y-0.5" aria-hidden="true">
                           {item.icon}
                         </span>
-                        <span className="truncate">{item.label}</span>
-                        {isActive && <span className="ml-auto size-1.5 rounded-full bg-accent" />}
+                        {!sidebarCollapsed && <span className="truncate">{item.label}</span>}
+                        {isActive && !sidebarCollapsed && <span className="ml-auto size-1.5 rounded-full bg-accent" />}
                       </Link>
                     )
                   })}
@@ -292,9 +315,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
               {/* Personal Links */}
               <div>
-                <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-2 mb-2">
+                {!sidebarCollapsed && <p className="text-[10px] font-mono uppercase tracking-wider text-muted px-2 mb-2">
                   Personal
-                </p>
+                </p>}
                 <nav className="space-y-1" aria-label="Personal Navigation">
                   {personalLinks.map((item) => {
                     const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
@@ -302,18 +325,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       <Link
                         key={item.href}
                         href={item.href}
+                        aria-current={isActive ? 'page' : undefined}
                         className={cn(
-                          'flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold transition-all',
+                          'group flex items-center rounded-xl py-2 text-xs font-semibold transition-all',
+                          sidebarCollapsed ? 'justify-center px-2' : 'gap-2.5 px-3',
                           isActive
                             ? 'bg-accent/15 text-accent border border-accent/25 shadow-sm'
                             : 'text-muted hover:bg-surface hover:text-foreground'
                         )}
+                        title={sidebarCollapsed ? item.label : undefined}
                       >
-                        <span className="text-sm shrink-0" aria-hidden="true">
+                        <span className="shrink-0 text-sm transition-transform group-hover:-translate-y-0.5" aria-hidden="true">
                           {item.icon}
                         </span>
-                        <span className="truncate">{item.label}</span>
-                        {isActive && <span className="ml-auto size-1.5 rounded-full bg-accent" />}
+                        {!sidebarCollapsed && <span className="truncate">{item.label}</span>}
+                        {isActive && !sidebarCollapsed && <span className="ml-auto size-1.5 rounded-full bg-accent" />}
                       </Link>
                     )
                   })}
@@ -323,19 +349,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
             {/* Bottom User Card */}
             <div className="pt-4 border-t border-border/80">
-              <div className="rounded-xl border border-border bg-surface p-2.5 flex items-center justify-between">
+              <div className={cn('rounded-xl border border-border bg-surface p-2.5 flex items-center', sidebarCollapsed ? 'flex-col gap-2' : 'justify-between')}>
                 <div className="flex items-center gap-2 min-w-0">
                   <div className="size-7 rounded-lg bg-accent/20 text-accent font-mono text-xs flex items-center justify-center font-bold shrink-0">
                     {userProfile?.name?.slice(0, 1).toUpperCase() || 'U'}
                   </div>
-                  <div className="min-w-0 truncate">
+                  {!sidebarCollapsed && <div className="min-w-0 truncate">
                     <p className="text-xs font-semibold text-foreground truncate">
                       {userProfile?.name || 'Member'}
                     </p>
                     <p className="font-mono text-[10px] text-muted truncate">
                       Active Session
                     </p>
-                  </div>
+                  </div>}
                 </div>
                 <button
                   type="button"
@@ -343,7 +369,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   title="Log out"
                   className="rounded-lg p-1.5 text-muted hover:text-red-400 hover:bg-surface-hover text-xs"
                 >
-                  🚪
+                  {sidebarCollapsed ? '↗' : '🚪'}
                 </button>
               </div>
             </div>
@@ -351,26 +377,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         {/* Main Content Area */}
-        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8 pb-24 lg:pb-12">
+        <main className="workspace-enter min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8 pb-24 lg:pb-12">
           {children}
         </main>
       </div>
 
       {/* Mobile Slide-Out Drawer */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex">
+        <div className="fixed inset-0 z-50 flex lg:hidden" role="dialog" aria-modal="true" aria-label="Workspace navigation">
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 bg-slate-950/35 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
-          <div className="relative w-80 max-w-[85%] bg-card border-r border-border p-5 flex flex-col justify-between overflow-y-auto z-10 animate-in slide-in-from-left duration-200">
+          <div id="mobile-workspace-navigation" className="glass-surface glass-floating drawer-enter relative z-10 flex w-80 max-w-[85%] flex-col justify-between overflow-y-auto border-r border-border p-5">
             <div className="space-y-6">
               <div className="flex items-center justify-between pb-3 border-b border-border/80">
                 <BrandLogo />
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Close navigation menu"
                   className="size-8 rounded-lg border border-border flex items-center justify-center text-muted hover:text-foreground"
                 >
                   ✕
@@ -395,6 +422,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       <Link
                         key={item.href}
                         href={item.href}
+                        aria-current={isActive ? 'page' : undefined}
                         onClick={() => setMobileMenuOpen(false)}
                         className={cn(
                           'flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold min-h-[44px]',
@@ -422,6 +450,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       <Link
                         key={item.href}
                         href={item.href}
+                        aria-current={isActive ? 'page' : undefined}
                         onClick={() => setMobileMenuOpen(false)}
                         className={cn(
                           'flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold min-h-[44px]',
@@ -452,15 +481,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      {/* Mobile Sticky Bottom Navigation for top 4 frequently accessed items */}
+      {/* Mobile quick navigation */}
       <nav
         aria-label="Mobile Bottom Navigation"
-        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-border bg-card/95 p-1.5 backdrop-blur-xl lg:hidden"
+        className="glass-surface fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-x-0 border-b-0 border-t border-border/70 p-1.5 lg:hidden"
       >
         {[
           { label: 'Dashboard', href: '/dashboard', icon: '📊' },
           { label: 'Projects', href: '/projects', icon: '📁' },
           { label: 'Tasks', href: '/tasks', icon: '📋' },
+          { label: 'Calendar', href: '/calendar', icon: '🗓️' },
           { label: 'Notes', href: '/notes', icon: '📝' },
         ].map((item) => {
           const isActive = pathname === item.href

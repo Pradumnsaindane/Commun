@@ -55,24 +55,24 @@ export function ProductivityDashboard({
   })
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
+    <div className="workspace-enter space-y-8">
       {/* 1. Header Section */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between pb-6 border-b border-border/80">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
             <span className="font-mono text-xs text-accent uppercase tracking-wider font-semibold">
-              Workspace Overview
+              One workspace. Better work. More time.
             </span>
             <span className="text-muted text-xs">·</span>
             <Badge variant="emerald" dot>
-              Primary Workspace
+              Personal workspace
             </Badge>
           </div>
           <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-foreground">
             {greeting}, {profile.display_name || userEmail.split('@')[0]}
           </h1>
-          <p className="mt-1 text-xs sm:text-sm text-muted">
-            {formattedDate} · All workspace systems operational
+            <p className="mt-1 text-xs sm:text-sm text-muted">
+            {formattedDate} · Work smarter. Learn faster. Make time for what matters.
           </p>
         </div>
 
@@ -94,9 +94,9 @@ export function ProductivityDashboard({
       </div>
 
       {/* 2. Overview Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="dashboard-stagger grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Active Projects */}
-        <Card className="p-5 flex flex-col justify-between border-border bg-card">
+        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
           <div className="flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
               Active Projects
@@ -106,21 +106,21 @@ export function ProductivityDashboard({
             </span>
           </div>
           <div className="mt-4">
-            <div className="text-3xl font-bold text-foreground">0</div>
+            <div className="text-lg font-semibold text-foreground">Not connected</div>
             <p className="mt-1 text-xs text-muted">
-              No active projects · Phase 3 schema staged
+              Project records are not available in this workspace yet.
             </p>
           </div>
           <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
             <Link href="/projects" className="text-accent hover:underline font-medium">
               View projects →
             </Link>
-            <Badge variant="outline">Staged</Badge>
+            <Badge variant="outline">Unavailable</Badge>
           </div>
         </Card>
 
         {/* Pending Tasks */}
-        <Card className="p-5 flex flex-col justify-between border-border bg-card">
+        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
           <div className="flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
               Pending Tasks
@@ -130,62 +130,62 @@ export function ProductivityDashboard({
             </span>
           </div>
           <div className="mt-4">
-            <div className="text-3xl font-bold text-foreground">0</div>
+            <div className="text-lg font-semibold text-foreground">Not connected</div>
             <p className="mt-1 text-xs text-muted">
-              No pending tasks · Assignable in Phase 3
+              Task records are not available in this workspace yet.
             </p>
           </div>
           <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
             <Link href="/tasks" className="text-accent hover:underline font-medium">
               View task board →
             </Link>
-            <Badge variant="outline">Staged</Badge>
+            <Badge variant="outline">Unavailable</Badge>
           </div>
         </Card>
 
-        {/* Completed Tasks */}
-        <Card className="p-5 flex flex-col justify-between border-border bg-card">
+        {/* Profile-linked articles */}
+        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
           <div className="flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
-              Completed Tasks
+              Your Articles
             </span>
             <span className="text-lg" aria-hidden="true">
               ✓
             </span>
           </div>
           <div className="mt-4">
-            <div className="text-3xl font-bold text-foreground">0</div>
+            <div className="text-3xl font-bold text-foreground">{myArticlesCount}</div>
             <p className="mt-1 text-xs text-muted">
-              Zero completed tasks recorded
+              {myArticlesCount === 1 ? 'Article in your workspace' : 'Articles in your workspace'}
             </p>
           </div>
           <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
-            <span className="font-mono text-muted">0% Sprint velocity</span>
-            <Badge variant="outline">Verified</Badge>
+            <Link href="/write" className="font-mono text-accent hover:underline">Write an article →</Link>
+            <Badge variant="outline">Live</Badge>
           </div>
         </Card>
 
-        {/* Upcoming Meetings */}
-        <Card className="p-5 flex flex-col justify-between border-border bg-card">
+        {/* Unread notifications */}
+        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
           <div className="flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
-              Upcoming Meetings
+              Unread Notifications
             </span>
             <span className="text-lg" aria-hidden="true">
               🗓️
             </span>
           </div>
           <div className="mt-4">
-            <div className="text-3xl font-bold text-foreground">0</div>
+            <div className="text-3xl font-bold text-foreground">{unreadNotificationsCount}</div>
             <p className="mt-1 text-xs text-muted">
-              No meetings scheduled today
+              {unreadNotificationsCount === 1 ? 'Update needs your attention' : 'Updates that need your attention'}
             </p>
           </div>
           <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
             <Link href="/meetings" className="text-accent hover:underline font-medium">
-              Schedule sync →
+              Open notifications →
             </Link>
-            <Badge variant="outline">Staged</Badge>
+            <Badge variant="outline">Live</Badge>
           </div>
         </Card>
       </div>
@@ -232,7 +232,7 @@ export function ProductivityDashboard({
                   size="sm"
                   onClick={() => setQuickActionOpen(true)}
                 >
-                  Create Mock Task
+                  Why can&apos;t I create tasks?
                 </Button>
                 <Link href="/tasks">
                   <Button variant="secondary" size="sm">
@@ -385,7 +385,7 @@ export function ProductivityDashboard({
           <Card className="p-6">
             <div className="flex items-center justify-between pb-4 border-b border-border/80">
               <CardTitle>Recent Activity</CardTitle>
-              <Badge variant="outline">Live Log</Badge>
+              <Badge variant="outline">Recent</Badge>
             </div>
 
             <div className="mt-4">

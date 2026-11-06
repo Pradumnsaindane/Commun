@@ -131,18 +131,18 @@ const capabilities = [
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
         <div className="rounded-lg border border-border bg-background p-2.5">
           <span className="font-mono text-[10px] text-muted uppercase">Milestones Reached</span>
-          <p className="text-lg font-bold text-foreground">18 / 20</p>
-          <span className="text-[10px] text-emerald-400">90% completion rate</span>
+          <p className="text-lg font-bold text-foreground">Milestones</p>
+          <span className="text-[10px] text-muted">Example progress view</span>
         </div>
         <div className="rounded-lg border border-border bg-background p-2.5">
           <span className="font-mono text-[10px] text-muted uppercase">Context Continuity</span>
-          <p className="text-lg font-bold text-foreground">99.4%</p>
-          <span className="text-[10px] text-accent">Zero lost meeting action items</span>
+          <p className="text-lg font-bold text-foreground">Meeting context</p>
+          <span className="text-[10px] text-muted">Decisions stay with the work</span>
         </div>
         <div className="rounded-lg border border-border bg-background p-2.5">
           <span className="font-mono text-[10px] text-muted uppercase">Knowledge Reuse</span>
-          <p className="text-lg font-bold text-foreground">340+</p>
-          <span className="text-[10px] text-brand-indigo">Runbook queries resolved</span>
+          <p className="text-lg font-bold text-foreground">Knowledge library</p>
+          <span className="text-[10px] text-muted">Keep useful references together</span>
         </div>
       </div>
     ),

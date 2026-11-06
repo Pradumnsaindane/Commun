@@ -19,21 +19,21 @@ export function NotificationDropdown({ className }: { className?: string }) {
   const [open, setOpen] = useState(false)
   const [items, setItems] = useState<NotificationItem[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [refreshVersion, setRefreshVersion] = useState(0)
 
   useEffect(() => {
     let ignore = false
     const fetchNotifications = async () => {
       try {
         setLoading(true)
+        setError('')
         const res = await fetch('/api/notifications')
-        if (res.ok) {
-          const data = await res.json()
-          if (!ignore) {
-            setItems(data?.notifications ?? [])
-          }
-        }
+        if (!res.ok) throw new Error('Unable to load notifications')
+        const data = await res.json()
+        if (!ignore) setItems(data?.notifications ?? [])
       } catch {
-        // Silently catch in dropdown
+        if (!ignore) setError('Notifications are unavailable right now.')
       } finally {
         if (!ignore) setLoading(false)
       }
@@ -49,6 +49,15 @@ export function NotificationDropdown({ className }: { className?: string }) {
     return () => {
       ignore = true
     }
+  }, [open, refreshVersion])
+
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
   }, [open])
 
   const unreadCount = items.filter((i) => !i.read).length
@@ -59,6 +68,8 @@ export function NotificationDropdown({ className }: { className?: string }) {
         type="button"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
+        aria-controls="workspace-notification-panel"
+        aria-haspopup="dialog"
         aria-label={`Notifications ${unreadCount > 0 ? `(${unreadCount} unread)` : ''}`}
         className="relative flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
       >
@@ -79,7 +90,7 @@ export function NotificationDropdown({ className }: { className?: string }) {
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
-          <div className="absolute right-0 top-full z-50 mt-2 w-80 sm:w-96 rounded-2xl border border-border bg-card p-4 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95">
+          <div id="workspace-notification-panel" role="dialog" aria-label="Recent notifications" className="glass-surface glass-floating dropdown-enter absolute right-0 top-full z-50 mt-2 w-[min(24rem,calc(100vw-1rem))] rounded-2xl p-4">
             <div className="flex items-center justify-between pb-3 border-b border-border/80">
               <span className="text-sm font-semibold text-foreground">Notifications</span>
               {unreadCount > 0 ? (
@@ -91,8 +102,14 @@ export function NotificationDropdown({ className }: { className?: string }) {
 
             <div className="mt-3 max-h-72 overflow-y-auto divide-y divide-border/60">
               {loading ? (
-                <div className="py-8 text-center text-xs text-muted">
-                  Loading notifications...
+                <div className="space-y-3 py-3" role="status" aria-label="Loading notifications">
+                  <div className="skeleton h-12" />
+                  <div className="skeleton h-12" />
+                </div>
+              ) : error ? (
+                <div role="alert" className="py-6 text-center text-xs text-muted">
+                  <p>{error}</p>
+                  <button type="button" onClick={() => setRefreshVersion((value) => value + 1)} className="mt-3 rounded-lg border border-border bg-surface px-3 py-2 font-medium text-foreground hover:border-accent/40">Try again</button>
                 </div>
               ) : items.length === 0 ? (
                 <div className="py-8 text-center">

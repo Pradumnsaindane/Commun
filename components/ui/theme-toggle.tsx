@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useSyncExternalStore } from 'react'
+import React, { useEffect, useSyncExternalStore } from 'react'
 import { cn } from '@/lib/utils'
 
 function subscribe(callback: () => void) {
@@ -9,24 +9,24 @@ function subscribe(callback: () => void) {
 }
 
 function getSnapshot() {
-  return localStorage.getItem('commun-theme') || 'dark'
+  return localStorage.getItem('commun-theme') || 'light'
 }
 
 function getServerSnapshot() {
-  return 'dark'
+  return 'light'
 }
 
 export function ThemeToggle({ className }: { className?: string }) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+  }, [theme])
+
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
     localStorage.setItem('commun-theme', next)
-    if (next === 'light') {
-      document.documentElement.classList.add('light')
-    } else {
-      document.documentElement.classList.remove('light')
-    }
+    document.documentElement.classList.toggle('dark', next === 'dark')
     window.dispatchEvent(new Event('storage'))
   }
 

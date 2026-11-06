@@ -1,65 +1,40 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+
+const sections = [
+  { title: 'Agenda', description: 'Topics and discussion order', icon: '≡' },
+  { title: 'Participants', description: 'Attendees and ownership', icon: '◎' },
+  { title: 'Notes & decisions', description: 'Meeting context and outcomes', icon: '▤' },
+  { title: 'Action items & follow-up', description: 'Next steps and review dates', icon: '↗' },
+]
 
 export default async function MeetingsPage() {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login?next=/meetings')
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-border/80 gap-4">
+    <div className="workspace-enter mx-auto w-full max-w-7xl space-y-7">
+      <header className="flex flex-col gap-5 border-b border-border/80 pb-7 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-xs text-accent uppercase tracking-wider font-semibold">
-              Workspace
-            </span>
-            <span className="text-muted text-xs">/</span>
-            <span className="text-xs text-muted">Meetings</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-foreground">
-            Meetings & Work Syncs
-          </h1>
-          <p className="mt-1 text-xs sm:text-sm text-muted">
-            Coordinate team agendas, record decisions, and bind action items directly to tasks.
-          </p>
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[.2em] text-accent">Workspace / Meetings</p>
+          <div className="flex flex-wrap items-center gap-3"><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Meetings</h1><Badge variant="outline">Preview</Badge></div>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">Keep agendas, participants, decisions, and follow-up work together.</p>
         </div>
+        <Button variant="primary" size="sm" disabled title="Meeting persistence is not connected yet">Schedule meeting unavailable</Button>
+      </header>
 
-        <div className="flex items-center gap-3">
-          <Badge variant="outline">Phase 2 Preview</Badge>
-          <Button variant="primary" size="sm">
-            + Schedule Meeting
-          </Button>
-        </div>
-      </div>
-
-      <Card className="p-12 text-center border-dashed border-border/90 bg-card/60">
-        <div className="mx-auto size-14 rounded-2xl border border-border bg-surface flex items-center justify-center text-2xl text-muted">
-          🗓️
-        </div>
-        <h3 className="mt-5 text-base font-semibold text-foreground">
-          No meetings scheduled in this workspace
-        </h3>
-        <p className="mt-2 text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed">
-          The meetings and action items tables (<code className="font-mono text-accent text-xs">public.meetings</code> and <code className="font-mono text-accent text-xs">public.meeting_action_items</code>)
-          are specified in the proposed schema.
-        </p>
-
-        <div className="mt-8 rounded-xl border border-border/80 bg-surface/70 p-4 max-w-lg mx-auto text-left text-xs space-y-2">
-          <p className="font-semibold text-foreground">Key Meeting Features Scheduled for Phase 3:</p>
-          <ul className="list-disc pl-4 text-muted space-y-1">
-            <li>Direct inline conversion of meeting discussion points into assigned workspace tasks.</li>
-            <li>Collaborative agenda drafting with attendee RSVP status.</li>
-            <li>Searchable archive of past decisions to prevent duplicate debates.</li>
-          </ul>
-        </div>
+      <Card className="glass-surface flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <div><h2 className="text-base font-semibold">Meeting records aren’t connected</h2><p className="mt-1 max-w-2xl text-sm leading-6 text-muted">No calendar or meeting data is available here. Scheduling and editing remain unavailable until persistence is implemented.</p></div>
+        <Badge variant="muted">No synchronized events</Badge>
       </Card>
+
+      <section aria-label="Meeting record sections" className="grid gap-4 sm:grid-cols-2">
+        {sections.map((section) => <Card key={section.title} className="bg-surface p-5 sm:p-6"><div className="flex items-center justify-between"><span className="grid size-10 place-items-center rounded-xl border border-border bg-background text-base text-accent" aria-hidden="true">{section.icon}</span><Badge variant="muted">Unavailable</Badge></div><h2 className="mt-5 text-sm font-semibold">{section.title}</h2><p className="mt-1 text-xs leading-5 text-muted">{section.description}</p><p className="mt-5 border-t border-border/80 pt-4 text-xs text-muted">Nothing to display until meeting data is connected.</p></Card>)}
+      </section>
     </div>
   )
 }
-

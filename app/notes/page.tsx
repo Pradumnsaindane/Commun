@@ -1,61 +1,40 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 
 export default async function NotesPage() {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login?next=/notes')
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-border/80 gap-4">
+    <div className="workspace-enter mx-auto w-full max-w-7xl space-y-7">
+      <header className="flex flex-col gap-5 border-b border-border/80 pb-7 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-xs text-accent uppercase tracking-wider font-semibold">
-              Workspace
-            </span>
-            <span className="text-muted text-xs">/</span>
-            <span className="text-xs text-muted">Notes</span>
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[.2em] text-accent">Workspace / Notes</p>
+          <div className="flex flex-wrap items-center gap-3"><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Notes</h1><Badge variant="outline">Preview</Badge></div>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">Keep useful context, decisions, and working notes close to your projects.</p>
+        </div>
+        <Button variant="primary" size="sm" disabled title="Note persistence is not connected yet">New note unavailable</Button>
+      </header>
+
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(260px,.6fr)]">
+        <Card className="glass-surface flex min-h-72 flex-col items-center justify-center border-dashed p-8 text-center">
+          <span className="grid size-12 place-items-center rounded-xl border border-border bg-background text-xl text-muted" aria-hidden="true">▤</span>
+          <h2 className="mt-4 text-sm font-semibold">Notes aren’t connected yet</h2>
+          <p className="mt-2 max-w-md text-xs leading-5 text-muted">There are no saved note records to show. Creation and autosave stay unavailable until durable storage is connected.</p>
+        </Card>
+        <Card className="bg-surface p-5 sm:p-6">
+          <p className="font-mono text-[10px] uppercase tracking-[.18em] text-accent">Workspace library</p>
+          <h2 className="mt-3 text-sm font-semibold">Organize notes by context</h2>
+          <p className="mt-2 text-xs leading-5 text-muted">A connected notes workspace can bring meeting notes, decisions, and personal references into searchable collections.</p>
+          <div className="mt-5 space-y-2 border-t border-border/80 pt-4">
+            {['Meeting notes', 'Decisions', 'Personal references'].map((label) => <div key={label} className="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5 text-xs"><span>{label}</span><span className="text-[10px] text-muted">Unavailable</span></div>)}
           </div>
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-foreground">
-            Meeting & Work Notes
-          </h1>
-          <p className="mt-1 text-xs sm:text-sm text-muted">
-            Fast, markdown-native scratchpads, team notes, and executive summaries.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Badge variant="outline">Phase 2 Preview</Badge>
-          <Button variant="primary" size="sm">
-            + New Note
-          </Button>
-        </div>
+        </Card>
       </div>
-
-      <Card className="p-12 text-center border-dashed border-border/90 bg-card/60">
-        <div className="mx-auto size-14 rounded-2xl border border-border bg-surface flex items-center justify-center text-2xl text-muted">
-          📝
-        </div>
-        <h3 className="mt-5 text-base font-semibold text-foreground">
-          No work notes recorded yet
-        </h3>
-        <p className="mt-2 text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed">
-          Create rich meeting notes and work logs. Notes can be kept personal or shared across workspace members.
-        </p>
-
-        <div className="mt-6">
-          <Button variant="secondary" size="sm">
-            Explore Note Templates (Phase 3)
-          </Button>
-        </div>
-      </Card>
     </div>
   )
 }
-

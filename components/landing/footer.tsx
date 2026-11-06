@@ -25,7 +25,7 @@ export function Footer() {
             <div className="pt-2 flex items-center gap-3">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 font-mono text-[11px] text-emerald-400">
                 <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse-subtle" />
-                Systems Operational
+                One workspace for better work
               </span>
             </div>
           </div>

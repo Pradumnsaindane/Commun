@@ -251,7 +251,7 @@ export function ProductIllustrations() {
                   Platform Reliability
                 </span>
                 <Badge variant="emerald" dot>
-                  99.98% Operational
+                  Resilient architecture
                 </Badge>
               </div>
               <h3 className="mt-2 text-lg font-bold text-foreground">Secure & Available Enterprise Backbone</h3>

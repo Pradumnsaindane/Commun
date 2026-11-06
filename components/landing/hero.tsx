@@ -95,7 +95,7 @@ export function Hero() {
           </a>
         </div>
 
-        {/* Live Workspace UI Preview Frame (MacBook & Desktop Inspiration) */}
+        {/* Illustrative workspace preview */}
         <div className="mt-16 sm:mt-20 mx-auto max-w-5xl">
           <div className="relative rounded-2xl sm:rounded-3xl border border-border bg-card/90 p-2 sm:p-4 shadow-2xl backdrop-blur-xl">
             {/* Window title bar */}
@@ -105,12 +105,12 @@ export function Hero() {
                 <span className="size-3 rounded-full bg-yellow-500/80" />
                 <span className="size-3 rounded-full bg-emerald-500/80" />
                 <span className="ml-3 hidden sm:inline font-mono text-[11px] text-muted">
-                  Commun Workspace / Enterprise Engineering & Operations
+                  Example Commun workspace
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Badge variant="emerald" dot>
-                  Live Workspace
+                  Product preview
                 </Badge>
               </div>
             </div>
@@ -168,7 +168,7 @@ export function Hero() {
                 </button>
               </div>
               <span className="font-mono text-[10px] text-muted hidden md:inline">
-                Synced in real-time
+                Interactive preview
               </span>
             </div>
 
@@ -179,13 +179,13 @@ export function Hero() {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-base font-semibold text-foreground">
-                        Q4 Infrastructure & Reliability Initiative
+                        Example project workspace
                       </h3>
                       <p className="text-xs text-muted">
-                        3 teams collaborating · 14 tasks in progress · 8 completed
+                        Illustrative project and task workflow
                       </p>
                     </div>
-                    <Badge variant="indigo">Sprint 42</Badge>
+                    <Badge variant="indigo">Preview</Badge>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -314,7 +314,7 @@ export function Hero() {
                       </h3>
                       <p className="text-xs text-muted">Structured internal learning tracks with measurable milestones</p>
                     </div>
-                    <Badge variant="emerald">75% Completed</Badge>
+                    <Badge variant="emerald">Example progress</Badge>
                   </div>
                   <div className="rounded-xl border border-border bg-surface p-4 space-y-3">
                     <div className="flex items-center justify-between">

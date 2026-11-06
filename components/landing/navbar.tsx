@@ -43,7 +43,7 @@ export function Navbar() {
         {/* Desktop Navigation Links */}
         <nav
           aria-label="Primary Navigation"
-          className="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-muted"
+          className="hidden xl:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-muted"
         >
           <a href="#product" className="transition-colors hover:text-foreground">
             Product
@@ -69,7 +69,7 @@ export function Navbar() {
         </nav>
 
         {/* Actions & Theme */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden xl:flex items-center gap-3">
           <ThemeToggle />
           <Link
             href="/login"
@@ -86,7 +86,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile menu button */}
-        <div className="flex sm:hidden items-center gap-2">
+        <div className="flex xl:hidden items-center gap-2">
           <ThemeToggle />
           <button
             type="button"
@@ -102,7 +102,7 @@ export function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="mt-2 mx-auto max-w-7xl rounded-2xl border border-border bg-background/95 p-5 shadow-2xl backdrop-blur-xl sm:hidden">
+        <div className="glass-surface glass-floating drawer-enter mt-2 mx-auto max-w-7xl rounded-2xl p-5 xl:hidden">
           <nav aria-label="Mobile Navigation" className="flex flex-col gap-3 text-sm font-medium">
             <a
               href="#product"

@@ -2,67 +2,40 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 
 export default async function AnalyticsPage() {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login?next=/analytics')
 
+  const [{ data: events, error: eventsError }, { count: eventCount, error: countError }] = await Promise.all([
+    supabase.from('product_events').select('id,event_name,path,created_at').eq('user_id', user.id).order('created_at', { ascending: false }).limit(12),
+    supabase.from('product_events').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+  ])
+  const activityUnavailable = Boolean(eventsError || countError)
+
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-border/80 gap-4">
+    <div className="workspace-enter mx-auto w-full max-w-7xl space-y-7">
+      <header className="flex flex-col gap-5 border-b border-border/80 pb-7 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-xs text-accent uppercase tracking-wider font-semibold">
-              Workspace
-            </span>
-            <span className="text-muted text-xs">/</span>
-            <span className="text-xs text-muted">Analytics</span>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-foreground">
-            Productivity & Delivery Analytics
-          </h1>
-          <p className="mt-1 text-xs sm:text-sm text-muted">
-            High-signal focus, completion velocity, and bottleneck detection free of vanity metrics.
-          </p>
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-[.2em] text-accent">Workspace / Analytics</p>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Activity analytics</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">A record of your workspace events. Delivery and task metrics aren’t available without task data.</p>
         </div>
+        <Badge variant={activityUnavailable ? 'muted' : 'outline'}>{activityUnavailable ? 'Activity unavailable' : 'From your event log'}</Badge>
+      </header>
 
-        <div className="flex items-center gap-3">
-          <Badge variant="outline">Verified Zero-Data</Badge>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="p-5">
-          <span className="font-mono text-xs uppercase text-muted">Cycle Time</span>
-          <div className="mt-2 text-2xl font-bold text-foreground">—</div>
-          <p className="mt-1 text-xs text-muted">Awaiting Phase 3 task completions</p>
-        </Card>
-        <Card className="p-5">
-          <span className="font-mono text-xs uppercase text-muted">Sprint Velocity</span>
-          <div className="mt-2 text-2xl font-bold text-foreground">0%</div>
-          <p className="mt-1 text-xs text-muted">No active sprint deliverables</p>
-        </Card>
-        <Card className="p-5">
-          <span className="font-mono text-xs uppercase text-muted">Context Continuity</span>
-          <div className="mt-2 text-2xl font-bold text-foreground">—</div>
-          <p className="mt-1 text-xs text-muted">Awaiting meeting notes tracking</p>
-        </Card>
-      </div>
-
-      <Card className="p-8 text-center border-dashed border-border/90 bg-card/60">
-        <h3 className="text-sm font-semibold text-foreground">
-          Real Productivity Analytics (Phase 4)
-        </h3>
-        <p className="mt-2 text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed">
-          In alignment with Commun’s integrity requirements, statistics are calculated exclusively
-          from durable event logs and completed tasks. Fake metrics and simulated percentages are never generated.
-        </p>
+      <Card className="glass-surface flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-muted">Recorded activity</p><p className="mt-2 text-2xl font-semibold">{activityUnavailable ? 'Unavailable' : eventCount ?? 'Unavailable'}</p><p className="mt-1 text-xs text-muted">Events recorded for your account</p></div>
+        <div className="max-w-sm text-sm leading-6 text-muted">No cycle-time, sprint, or completion figures are shown because those task records are not connected.</div>
       </Card>
+
+      <section aria-labelledby="activity-title">
+        <div className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">Event log</p><h2 id="activity-title" className="mt-1 text-lg font-semibold">Recent activity</h2></div>
+        <Card className="overflow-hidden bg-surface p-0">
+          {activityUnavailable ? <p role="alert" className="p-6 text-sm text-muted">Activity could not be loaded. Try again later.</p> : events?.length ? <ol className="divide-y divide-border/80">{events.map((event) => <li key={event.id} className="grid gap-2 p-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-5"><div><p className="text-sm font-medium capitalize">{event.event_name.replaceAll('_', ' ')}</p>{event.path && <p className="mt-1 truncate font-mono text-[10px] text-muted">{event.path}</p>}</div><time className="text-xs text-muted" dateTime={event.created_at}>{new Date(event.created_at).toLocaleString()}</time></li>)}</ol> : <div className="p-8 text-center"><p className="text-sm font-semibold">No activity recorded yet</p><p className="mt-2 text-xs text-muted">Events you generate while using Commun will appear here.</p></div>}
+        </Card>
+      </section>
     </div>
   )
 }
-

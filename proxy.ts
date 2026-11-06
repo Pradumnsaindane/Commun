@@ -5,6 +5,7 @@ const protectedPaths = [
   '/dashboard',
   '/projects',
   '/tasks',
+  '/calendar',
   '/meetings',
   '/notes',
   '/knowledge',

@@ -40,13 +40,13 @@ export function Modal({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
     >
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-slate-950/35 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
       <div
         className={cn(
-          'relative w-full max-w-lg rounded-2xl border border-border bg-surface p-6 shadow-2xl z-10 animate-in fade-in zoom-in-95 duration-200',
+          'glass-surface glass-floating modal-enter relative z-10 w-full max-w-lg rounded-2xl p-6',
           className
         )}
       >

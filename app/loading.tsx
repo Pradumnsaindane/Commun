@@ -1,10 +1,18 @@
 export default function Loading() {
   return (
-    <div className="mx-auto flex min-h-[50vh] w-full max-w-6xl items-center justify-center px-5 py-16 sm:px-8" role="status" aria-live="polite">
-      <div className="flex items-center gap-3 rounded-xl border border-border bg-surface/60 px-4 py-3 text-sm text-muted shadow-sm">
-        <span className="size-4 animate-spin rounded-full border-2 border-border border-t-accent" aria-hidden="true" />
-        Loading Commun...
+    <div role="status" aria-live="polite" aria-label="Loading workspace" className="mx-auto w-full max-w-7xl space-y-7 py-2">
+      <span className="sr-only">Loading Commun workspace…</span>
+      <div className="space-y-3 border-b border-border/80 pb-7" aria-hidden="true">
+        <div className="skeleton h-3 w-28" />
+        <div className="skeleton h-9 w-64 max-w-full" />
+        <div className="skeleton h-4 w-96 max-w-full" />
       </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-hidden="true">
+        <div className="skeleton h-36" />
+        <div className="skeleton h-36" />
+        <div className="skeleton h-36 sm:col-span-2 lg:col-span-1" />
+      </div>
+      <div className="skeleton h-56" aria-hidden="true" />
     </div>
   )
 }
