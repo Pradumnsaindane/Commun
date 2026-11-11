@@ -8,6 +8,6 @@ export default async function OnboardingPage() {
   if (!user) redirect('/login?next=/onboarding')
   const { data: profile } = await supabase.from('profiles').select('display_name,username,bio,github,website,interests,onboarding_completed').eq('id', user.id).maybeSingle()
   if (!profile) return <OnboardingError />
-  if (profile.onboarding_completed) redirect('/dashboard')
+  if (profile.onboarding_completed) redirect('/feed')
   return <OnboardingForm initialName={profile.display_name === 'Commun member' ? '' : profile.display_name} initialUsername={profile.username ?? ''} initialBio={profile.bio ?? ''} initialGithub={profile.github ?? ''} initialWebsite={profile.website ?? ''} initialInterests={profile.interests ?? []} />
 }

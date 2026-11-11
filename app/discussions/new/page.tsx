@@ -50,7 +50,7 @@ function DiscussionForm() {
             maxLength={180}
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            className="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3 outline-none focus:border-accent"
+            className="w-full rounded-lg border border-border bg-surface px-4 py-3 outline-none focus:border-accent"
             placeholder="What would you like to discuss?"
           />
         </label>
@@ -61,7 +61,7 @@ function DiscussionForm() {
             maxLength={10000}
             value={content}
             onChange={(event) => setContent(event.target.value)}
-            className="min-h-52 w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3 outline-none focus:border-accent"
+            className="min-h-52 w-full rounded-lg border border-border bg-surface px-4 py-3 outline-none focus:border-accent"
             placeholder="Share context, examples, or your question..."
           />
         </label>

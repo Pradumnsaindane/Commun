@@ -1,11 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import { Card } from '@/components/ui/card'
 import { QuickActionsModal } from '@/components/workspace/quick-actions-modal'
 
 export interface ProductivityDashboardProps {
@@ -24,11 +22,6 @@ export interface ProductivityDashboardProps {
   }>
   unreadNotificationsCount: number
   myArticlesCount: number
-  feedDiagnostic: {
-    tested: boolean
-    status: 'ACTIVE_OBSERVED' | 'RELATION_TRACKED'
-    relationship: string
-  }
 }
 
 export function ProductivityDashboard({
@@ -37,428 +30,80 @@ export function ProductivityDashboard({
   recentActivity,
   unreadNotificationsCount,
   myArticlesCount,
-  feedDiagnostic,
 }: ProductivityDashboardProps) {
   const [quickActionOpen, setQuickActionOpen] = useState(false)
-  const [taskFilter, setTaskFilter] = useState('all')
-
+  const displayName = profile.display_name || userEmail.split('@')[0]
   const now = new Date()
-  const hour = now.getHours()
-  const greeting =
-    hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
-
+  const greeting = now.getHours() < 12 ? 'Good morning' : now.getHours() < 18 ? 'Good afternoon' : 'Good evening'
   const formattedDate = now.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+    weekday: 'long', month: 'long', day: 'numeric',
   })
 
   return (
-    <div className="workspace-enter space-y-8">
-      {/* 1. Header Section */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between pb-6 border-b border-border/80">
+    <div className="workspace-enter mx-auto w-full max-w-7xl space-y-8">
+      <header className="flex flex-col gap-5 border-b border-border/80 pb-7 md:flex-row md:items-end md:justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-xs text-accent uppercase tracking-wider font-semibold">
-              One workspace. Better work. More time.
-            </span>
-            <span className="text-muted text-xs">·</span>
-            <Badge variant="emerald" dot>
-              Personal workspace
-            </Badge>
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-foreground">
-            {greeting}, {profile.display_name || userEmail.split('@')[0]}
-          </h1>
-            <p className="mt-1 text-xs sm:text-sm text-muted">
-            {formattedDate} · Work smarter. Learn faster. Make time for what matters.
-          </p>
+          <p className="mb-2 text-xs font-medium tracking-wide text-muted">PERSONAL WORKSPACE <span className="mx-1.5 text-border-strong">/</span> {formattedDate}</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{greeting}, {displayName}</h1>
+          <p className="mt-2 text-sm text-muted">A clear place to pick up where you left off.</p>
         </div>
-
-        <div className="flex items-center gap-3">
-          <Link href="/analytics">
-            <Button variant="secondary" size="sm">
-              📈 View Analytics
-            </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Link href="/notifications" className="inline-flex h-10 items-center gap-2 rounded-lg border border-border bg-card px-3 text-sm text-foreground transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-accent" aria-label={`${unreadNotificationsCount} unread notifications`}>
+            <span aria-hidden="true">◌</span><span>Notifications</span>
+            {unreadNotificationsCount > 0 && <span className="min-w-5 rounded-full bg-accent/10 px-1.5 py-0.5 text-center text-xs font-medium text-accent">{unreadNotificationsCount}</span>}
           </Link>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => setQuickActionOpen(true)}
-            className="font-bold"
-          >
-            + Quick Action
-          </Button>
+          <Button variant="primary" size="sm" onClick={() => setQuickActionOpen(true)}>Work management status</Button>
         </div>
-      </div>
+      </header>
 
-      {/* 2. Overview Metric Cards */}
-      <div className="dashboard-stagger grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* Active Projects */}
-        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
-              Active Projects
-            </span>
-            <span className="text-lg" aria-hidden="true">
-              📁
-            </span>
-          </div>
-          <div className="mt-4">
-            <div className="text-lg font-semibold text-foreground">Not connected</div>
-            <p className="mt-1 text-xs text-muted">
-              Project records are not available in this workspace yet.
-            </p>
-          </div>
-          <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
-            <Link href="/projects" className="text-accent hover:underline font-medium">
-              View projects →
-            </Link>
-            <Badge variant="outline">Unavailable</Badge>
-          </div>
-        </Card>
-
-        {/* Pending Tasks */}
-        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
-              Pending Tasks
-            </span>
-            <span className="text-lg" aria-hidden="true">
-              📋
-            </span>
-          </div>
-          <div className="mt-4">
-            <div className="text-lg font-semibold text-foreground">Not connected</div>
-            <p className="mt-1 text-xs text-muted">
-              Task records are not available in this workspace yet.
-            </p>
-          </div>
-          <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
-            <Link href="/tasks" className="text-accent hover:underline font-medium">
-              View task board →
-            </Link>
-            <Badge variant="outline">Unavailable</Badge>
-          </div>
-        </Card>
-
-        {/* Profile-linked articles */}
-        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
-              Your Articles
-            </span>
-            <span className="text-lg" aria-hidden="true">
-              ✓
-            </span>
-          </div>
-          <div className="mt-4">
-            <div className="text-3xl font-bold text-foreground">{myArticlesCount}</div>
-            <p className="mt-1 text-xs text-muted">
-              {myArticlesCount === 1 ? 'Article in your workspace' : 'Articles in your workspace'}
-            </p>
-          </div>
-          <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
-            <Link href="/write" className="font-mono text-accent hover:underline">Write an article →</Link>
-            <Badge variant="outline">Live</Badge>
-          </div>
-        </Card>
-
-        {/* Unread notifications */}
-        <Card className="glass-surface interactive-surface p-5 flex flex-col justify-between border-border bg-card">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-wider text-muted font-semibold">
-              Unread Notifications
-            </span>
-            <span className="text-lg" aria-hidden="true">
-              🗓️
-            </span>
-          </div>
-          <div className="mt-4">
-            <div className="text-3xl font-bold text-foreground">{unreadNotificationsCount}</div>
-            <p className="mt-1 text-xs text-muted">
-              {unreadNotificationsCount === 1 ? 'Update needs your attention' : 'Updates that need your attention'}
-            </p>
-          </div>
-          <div className="mt-4 pt-3 border-t border-border/70 flex items-center justify-between text-[11px]">
-            <Link href="/meetings" className="text-accent hover:underline font-medium">
-              Open notifications →
-            </Link>
-            <Badge variant="outline">Live</Badge>
-          </div>
-        </Card>
-      </div>
-
-      {/* 3. Main Operational Sections Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column (2 Cols wide on desktop): Tasks & Projects */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* My Tasks Section */}
-          <Card className="p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-border/80 gap-3">
-              <div>
-                <CardTitle>My Tasks</CardTitle>
-                <p className="text-xs text-muted mt-1">
-                  Assigned deliverables and priority action items
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Tabs value={taskFilter} onValueChange={setTaskFilter}>
-                  <TabsList>
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="today">Due Today</TabsTrigger>
-                    <TabsTrigger value="progress">In Progress</TabsTrigger>
-                  </TabsList>
-                </Tabs>
-              </div>
+      <section aria-labelledby="workspace-status-heading">
+        <div className="mb-3 flex items-baseline justify-between gap-4">
+          <div><h2 id="workspace-status-heading" className="text-base font-semibold">Your workspace</h2><p className="mt-1 text-sm text-muted">Live content available to your account.</p></div>
+          <Link href="/write" className="text-sm font-medium text-accent hover:underline focus-visible:outline-2 focus-visible:outline-accent">Go to writing <span aria-hidden="true">→</span></Link>
+        </div>
+        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <Card className="border-border bg-card p-5 sm:p-6">
+            <div className="flex items-start justify-between gap-3">
+              <div><p className="text-sm font-medium text-muted">Articles you’ve authored</p><p className="mt-3 text-4xl font-semibold tracking-tight tabular-nums">{myArticlesCount}</p></div>
+              <span className="grid size-10 place-items-center rounded-lg border border-border bg-surface text-accent" aria-hidden="true">↗</span>
             </div>
-
-            {/* Honest Empty State for Tasks */}
-            <div className="py-12 px-4 text-center">
-              <div className="mx-auto size-12 rounded-2xl border border-border bg-surface flex items-center justify-center text-xl text-muted">
-                📋
-              </div>
-              <h3 className="mt-4 text-sm font-semibold text-foreground">
-                No tasks assigned yet
-              </h3>
-              <p className="mt-2 text-xs text-muted max-w-sm mx-auto leading-relaxed">
-                Task assignment tables (<code className="font-mono text-[11px] text-accent">public.tasks</code>)
-                are specified in the proposed Phase 3 schema. When enabled, your personal deliverables will synchronize here.
-              </p>
-              <div className="mt-6 flex justify-center gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setQuickActionOpen(true)}
-                >
-                  Why can&apos;t I create tasks?
-                </Button>
-                <Link href="/tasks">
-                  <Button variant="secondary" size="sm">
-                    Open Task Board
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            <div className="mt-5 border-t border-border/80 pt-3"><Link href="/profile/me" className="text-sm text-muted hover:text-foreground">View your profile <span aria-hidden="true">→</span></Link></div>
           </Card>
-
-          {/* Recent Projects Section */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between pb-4 border-b border-border/80">
-              <div>
-                <CardTitle>Recent Projects</CardTitle>
-                <p className="text-xs text-muted mt-1">
-                  Active organizational initiatives and milestone progress
-                </p>
-              </div>
-              <Link href="/projects">
-                <Button variant="ghost" size="sm" className="text-xs">
-                  View All Projects →
-                </Button>
-              </Link>
-            </div>
-
-            {/* Honest Empty State for Projects */}
-            <div className="py-10 px-4 text-center">
-              <div className="mx-auto size-12 rounded-2xl border border-border bg-surface flex items-center justify-center text-xl text-muted">
-                📁
-              </div>
-              <h3 className="mt-4 text-sm font-semibold text-foreground">
-                No active projects in this workspace
-              </h3>
-              <p className="mt-2 text-xs text-muted max-w-sm mx-auto leading-relaxed">
-                Project management infrastructure will be bound to multi-tenant workspace records in Phase 3.
-              </p>
-              <div className="mt-5">
-                <Link href="/projects">
-                  <Button variant="secondary" size="sm">
-                    Inspect Proposed Project Structure
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </Card>
-
-          {/* Upcoming Meetings & Linked Notes Section */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between pb-4 border-b border-border/80">
-              <div>
-                <CardTitle>Upcoming Meetings & Notes</CardTitle>
-                <p className="text-xs text-muted mt-1">
-                  Contextual agendas with bound action items
-                </p>
-              </div>
-              <Link href="/meetings">
-                <Button variant="ghost" size="sm" className="text-xs">
-                  All Meetings →
-                </Button>
-              </Link>
-            </div>
-
-            <div className="py-10 px-4 text-center">
-              <div className="mx-auto size-12 rounded-2xl border border-border bg-surface flex items-center justify-center text-xl text-muted">
-                📝
-              </div>
-              <h3 className="mt-4 text-sm font-semibold text-foreground">
-                No upcoming syncs scheduled
-              </h3>
-              <p className="mt-2 text-xs text-muted max-w-sm mx-auto leading-relaxed">
-                Meeting agendas and action item delegations will be tracked seamlessly starting in Phase 3.
-              </p>
+          <Card className="flex flex-col justify-between border-border bg-card p-5 sm:p-6">
+            <div><p className="text-sm font-medium text-muted">Tasks and projects</p><h3 className="mt-3 text-lg font-semibold">Work management isn’t connected yet</h3><p className="mt-2 max-w-lg text-sm leading-6 text-muted">Task and project records aren’t available to this workspace, so there’s nothing to count or display here.</p></div>
+            <div className="mt-5 flex flex-wrap gap-2 border-t border-border/80 pt-4">
+              <Link href="/tasks" className="inline-flex h-9 items-center rounded-lg border border-border bg-surface px-3 text-sm font-medium hover:border-border-strong hover:bg-surface-hover">Task board</Link>
+              <Link href="/projects" className="inline-flex h-9 items-center rounded-lg border border-border bg-surface px-3 text-sm font-medium hover:border-border-strong hover:bg-surface-hover">Projects</Link>
             </div>
           </Card>
         </div>
+      </section>
 
-        {/* Right Column: Recent Activity & Diagnostics */}
-        <div className="space-y-8">
-          {/* Quick Actions Panel */}
-          <Card className="p-6">
-            <CardTitle>Quick Actions</CardTitle>
-            <p className="text-xs text-muted mt-1 mb-4">
-              Direct access to productivity workflows
-            </p>
-            <div className="space-y-2">
-              <button
-                type="button"
-                onClick={() => setQuickActionOpen(true)}
-                className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-surface hover:border-accent hover:bg-surface-hover transition-all text-left"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">📋</span>
-                  <div>
-                    <p className="text-xs font-semibold text-foreground">Create Task</p>
-                    <p className="text-[10px] text-muted">Define title and priority</p>
-                  </div>
-                </div>
-                <span className="text-accent text-xs">→</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setQuickActionOpen(true)}
-                className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-surface hover:border-accent hover:bg-surface-hover transition-all text-left"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">📁</span>
-                  <div>
-                    <p className="text-xs font-semibold text-foreground">New Project</p>
-                    <p className="text-[10px] text-muted">Initialize sprint roadmap</p>
-                  </div>
-                </div>
-                <span className="text-accent text-xs">→</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setQuickActionOpen(true)}
-                className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-surface hover:border-accent hover:bg-surface-hover transition-all text-left"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">📝</span>
-                  <div>
-                    <p className="text-xs font-semibold text-foreground">Meeting Note</p>
-                    <p className="text-[10px] text-muted">Capture minutes & decisions</p>
-                  </div>
-                </div>
-                <span className="text-accent text-xs">→</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setQuickActionOpen(true)}
-                className="w-full flex items-center justify-between p-3 rounded-xl border border-border bg-surface hover:border-accent hover:bg-surface-hover transition-all text-left"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="text-base">📚</span>
-                  <div>
-                    <p className="text-xs font-semibold text-foreground">Knowledge Doc</p>
-                    <p className="text-[10px] text-muted">Publish team runbook</p>
-                  </div>
-                </div>
-                <span className="text-accent text-xs">→</span>
-              </button>
-            </div>
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(280px,.8fr)]">
+        <section aria-labelledby="activity-heading">
+          <div className="mb-3 flex items-baseline justify-between gap-3"><div><h2 id="activity-heading" className="text-base font-semibold">Recent activity</h2><p className="mt-1 text-sm text-muted">Your latest workspace events.</p></div><span className="text-xs text-muted">Last 5 events</span></div>
+          <Card className="border-border bg-card">
+            {recentActivity.length > 0 ? <ol className="divide-y divide-border/80">
+              {recentActivity.map((event) => <li key={event.id} className="flex gap-3 px-4 py-4 sm:px-5">
+                <span className="mt-1.5 size-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                <div className="min-w-0 flex-1"><p className="text-sm font-medium capitalize text-foreground">{event.event_name.replace(/_/g, ' ')}</p>{event.path && <p className="mt-1 truncate text-xs text-muted">{event.path}</p>}</div>
+                <time className="shrink-0 pt-0.5 text-xs tabular-nums text-muted" dateTime={event.created_at}>{new Date(event.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}</time>
+              </li>)}
+            </ol> : <div className="px-5 py-10"><p className="text-sm font-medium">No recent activity</p><p className="mt-1 text-sm text-muted">Events will appear here as you use Commun.</p></div>}
           </Card>
+        </section>
 
-          {/* Recent Activity Timeline */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between pb-4 border-b border-border/80">
-              <CardTitle>Recent Activity</CardTitle>
-              <Badge variant="outline">Recent</Badge>
-            </div>
-
-            <div className="mt-4">
-              {recentActivity.length > 0 ? (
-                <div className="space-y-3">
-                  {recentActivity.map((ev) => (
-                    <div
-                      key={ev.id}
-                      className="rounded-lg border border-border/70 bg-surface p-2.5 text-xs"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-foreground">
-                          {ev.event_name.replace(/_/g, ' ')}
-                        </span>
-                        <span className="font-mono text-[10px] text-muted">
-                          {new Date(ev.created_at).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </span>
-                      </div>
-                      {ev.path && (
-                        <p className="text-[11px] text-muted truncate mt-0.5">{ev.path}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="py-8 text-center text-xs text-muted">
-                  <p className="font-medium text-foreground">No recent activity</p>
-                  <p className="mt-1 text-[11px]">
-                    Events from your workspace sessions will appear here chronologically.
-                  </p>
-                </div>
-              )}
-            </div>
+        <section aria-labelledby="schedule-heading">
+          <div className="mb-3"><h2 id="schedule-heading" className="text-base font-semibold">Schedule</h2><p className="mt-1 text-sm text-muted">Upcoming time commitments.</p></div>
+          <Card className="flex min-h-48 flex-col justify-between border-border bg-card p-5">
+            <div><div className="flex items-center gap-2 text-sm font-medium"><span className="text-accent" aria-hidden="true">◷</span> Calendar data unavailable</div><p className="mt-2 text-sm leading-6 text-muted">Events aren’t connected to persistent workspace records yet.</p></div>
+            <Link href="/calendar" className="mt-6 inline-flex w-fit items-center text-sm font-medium text-accent hover:underline">Open calendar <span className="ml-1" aria-hidden="true">→</span></Link>
           </Card>
-
-          {/* Section 9: Feed Relationship Audit & Status Tracking Box */}
-          <Card className="p-5 border-dashed border-border/90 bg-surface/40">
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-accent font-semibold">
-                Database Relationship Audit
-              </span>
-              <Badge variant="indigo">Observed</Badge>
-            </div>
-            <h4 className="text-xs font-semibold text-foreground">
-              Feed Relationship Investigation
-            </h4>
-            <p className="mt-1 text-[11px] text-muted leading-relaxed">
-              Tracking foreign key relationships:
-              <br />
-              <code className="text-accent font-mono text-[10px]">
-                posts.author_id → auth.users.id
-              </code>
-              <br />
-              <code className="text-brand-indigo font-mono text-[10px]">
-                posts.author_id → profiles.id
-              </code>
-            </p>
-            <div className="mt-3 rounded-lg border border-border bg-background p-2 text-[10px] text-muted">
-              Status: Intact & preserved. Existing queries in <code className="text-foreground">app/feed/page.tsx</code> remain operational. No mock data introduced.
-            </div>
-          </Card>
-        </div>
+          <div className="mt-4 flex items-center justify-between rounded-lg border border-border/80 bg-surface/70 px-4 py-3 text-sm"><span className="text-muted">Unread notifications</span><strong className="font-semibold tabular-nums">{unreadNotificationsCount}</strong></div>
+        </section>
       </div>
 
-      {/* Quick Action Modal Dialog */}
-      <QuickActionsModal
-        isOpen={quickActionOpen}
-        onClose={() => setQuickActionOpen(false)}
-      />
+      <QuickActionsModal isOpen={quickActionOpen} onClose={() => setQuickActionOpen(false)} />
     </div>
   )
 }
-

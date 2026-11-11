@@ -55,11 +55,6 @@ export default async function DashboardPage() {
       recentActivity={recentEvents ?? []}
       unreadNotificationsCount={unreadCount ?? 0}
       myArticlesCount={myPostsCount ?? 0}
-      feedDiagnostic={{
-        tested: true,
-        status: 'RELATION_TRACKED',
-        relationship: 'posts.author_id -> auth.users.id & profiles.id preserved',
-      }}
     />
   )
 }

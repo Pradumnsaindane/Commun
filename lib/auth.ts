@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { safeNextPath as safeNextPathValue } from './auth/validation'
 
 export const ROLES = ['USER', 'MODERATOR', 'ADMIN'] as const
@@ -59,12 +60,38 @@ export async function assertAuthorized(check: (context: AuthContext) => boolean)
   return { context, response: null }
 }
 
-export async function isEmailAvailable(email: string) {
-  return Boolean(email)
+/**
+ * Real username availability. Usernames are public (they appear in profile
+ * URLs), so this is safe to answer from a normal session. The proposed
+ * migration adds a case-insensitive unique index so a race between this check
+ * and the write resolves to a 23505 conflict instead of a duplicate.
+ */
+export async function isUsernameAvailable(username: string) {
+  const candidate = username.trim().toLowerCase()
+  if (!/^[a-z0-9_]{3,24}$/.test(candidate)) return false
+  const supabase = await createClient()
+  const { data, error } = await supabase.from('profiles').select('id').ilike('username', candidate).limit(1).maybeSingle()
+  if (error) return false
+  return !data
 }
 
-export async function isUsernameAvailable(username: string) {
-  return Boolean(username)
+/**
+ * Email availability is deliberately server-only and never exposed through a
+ * public route: answering it would create an account-existence oracle.
+ *
+ * Returns `true`/`false` when the service-role client and the proposed
+ * `email_available(text)` function are available, and `null` when the answer
+ * cannot be determined safely. Callers must treat `null` as unknown and fall
+ * back to the provider's generic response.
+ */
+export async function isEmailAvailable(email: string): Promise<boolean | null> {
+  const candidate = email.trim().toLowerCase()
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(candidate)) return false
+  const admin = createAdminClient()
+  if (!admin) return null
+  const { data, error } = await admin.rpc('email_available', { candidate })
+  if (error) return null
+  return Boolean(data)
 }
 
 export async function authClient() { return createClient() }

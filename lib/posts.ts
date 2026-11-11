@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { ACCESS_LEVELS } from './monetization'
+import { escapeHtml as escapeHtmlText, tokenizeEscaped } from './highlight'
 
 export const postInputSchema = z.object({
   title: z.string().trim().min(1, 'Title is required').max(140),
@@ -25,7 +26,7 @@ export function renderMarkdown(markdown: string) {
     const lines = block.split('\n')
     if (lines.every((line) => /^[-*] /.test(line))) return `<ul>${lines.map((line) => `<li>${inlineMarkdown(line.slice(2))}</li>`).join('')}</ul>`
     if (lines.every((line) => /^\d+\. /.test(line))) return `<ol>${lines.map((line) => `<li>${inlineMarkdown(line.replace(/^\d+\. /, ''))}</li>`).join('')}</ol>`
-    if (lines[0].startsWith('```')) return `<pre><code>${lines.slice(1, -1).join('\n')}</code></pre>`
+    if (lines[0].startsWith('```')) { const language = lines[0].slice(3).trim(); const code = lines.slice(1, -1).join('\n'); const label = escapeHtmlText(language || 'text'); return `<pre class="code-block" data-language="${label}"><code>${tokenizeEscaped(code, language)}</code></pre>` }
     if (/^#{1,3} /.test(lines[0])) { const level = Math.min(3, lines[0].match(/^#+/)![0].length); return `<h${level}>${inlineMarkdown(lines[0].slice(level + 1))}</h${level}>` }
     if (lines[0].startsWith('> ')) return `<blockquote>${inlineMarkdown(lines.map((line) => line.replace(/^> /, '')).join('\n'))}</blockquote>`
     if (/^---+$/.test(lines[0])) return '<hr />'

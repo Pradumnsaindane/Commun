@@ -5,26 +5,53 @@ import { renderMarkdown, type PostRecord } from '@/lib/posts'
 import { canViewPost, isMembershipActive, membershipFor, type AccessLevel } from '@/lib/monetization'
 import { canBill } from '@/lib/stripe'
 import { ArticleInteractions } from '@/components/publishing/article-interactions'
+import { ArticleCodeCopy } from '@/components/publishing/article-code-copy'
+import { PostOwnerActions } from '@/components/publishing/post-owner-actions'
 import { ReportForm } from '@/components/moderation/report-form'
+import { CodeBlock } from '@/components/ui/code-block'
 import { Surface } from '@/components/ui/product-surfaces'
 import { AnalyticsBeacon } from '@/components/analytics-beacon'
 import { AuthorPresence } from '@/components/publishing/author-presence'
 import { Paywall } from '@/components/billing/paywall'
+import { hostnameOf, isSocialPostType } from '@/lib/social-posts'
+
+type SocialFields = {
+  post_type?: string | null
+  language?: string | null
+  link_url?: string | null
+}
 
 function teaserOf(body: string) {
   const [first = ''] = body.trim().split(/\n{2,}/)
   return first.slice(0, 700)
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const supabase = await createClient(); const { data } = await supabase.from('posts').select('title,excerpt').eq('slug', slug).eq('status', 'PUBLISHED').maybeSingle(); return data ? { title: `${data.title} — Commun`, description: data.excerpt ?? undefined } : { title: 'Article not found — Commun' } }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const supabase = await createClient()
+  const { data } = await supabase.from('posts').select('title,excerpt').eq('slug', slug).eq('status', 'PUBLISHED').maybeSingle()
+  return data ? { title: `${data.title} — Commun`, description: data.excerpt ?? undefined } : { title: 'Article not found — Commun' }
+}
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const supabase = await createClient()
-  const { data: post } = await supabase.from('posts').select('id,author_id,title,slug,excerpt,body,cover_image_path,status,access_level,reading_time_minutes,published_at,created_at,updated_at').eq('slug', slug).eq('status', 'PUBLISHED').maybeSingle() as { data: PostRecord | null }
-  if (!post) notFound()
-  const [{ data: author }, { count: followers }, { data: { user } }] = await Promise.all([supabase.from('profiles').select('display_name,username,bio').eq('id', post.author_id).maybeSingle(), supabase.from('follows').select('*', { count: 'exact', head: true }).eq('following_id', post.author_id), supabase.auth.getUser()])
-  const { data: relationship } = user ? await supabase.from('follows').select('following_id').eq('follower_id', user.id).eq('following_id', post.author_id).maybeSingle() : { data: null }
+  // select('*') keeps the page working before the Phase 1B columns exist.
+  const { data: postData } = await supabase.from('posts').select('*').eq('slug', slug).eq('status', 'PUBLISHED').maybeSingle()
+  if (!postData) notFound()
+  const post = postData as PostRecord & SocialFields
+  const postType = post.post_type ?? 'ARTICLE'
+  const isSnippet = postType === 'SNIPPET'
+  const isLink = postType === 'LINK'
+
+  const [{ data: author }, { count: followers }, { data: { user } }] = await Promise.all([
+    supabase.from('profiles').select('display_name,username,bio').eq('id', post.author_id).maybeSingle(),
+    supabase.from('follows').select('*', { count: 'exact', head: true }).eq('following_id', post.author_id),
+    supabase.auth.getUser(),
+  ])
+  const { data: relationship } = user
+    ? await supabase.from('follows').select('following_id').eq('follower_id', user.id).eq('following_id', post.author_id).maybeSingle()
+    : { data: null }
   const viewerId = user?.id ?? null
   const allowed = await canViewPost(supabase, post, viewerId)
   const membersOnly = post.access_level === ('MEMBERS' as AccessLevel)
@@ -37,44 +64,84 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     <>
       <AnalyticsBeacon event="article_viewed" metadata={{ postId: post.id }} />
       <main className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 lg:px-10">
-        <Link href="/explore" className="font-mono text-xs uppercase tracking-wider text-muted hover:text-accent">← Back to Explore</Link>
+        <Link href="/feed" className="font-mono text-xs uppercase tracking-wider text-muted hover:text-accent">← Back to feed</Link>
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,760px)_240px] lg:items-start">
           <article>
             <header className="border-b border-border pb-8">
-              <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">{membersOnly ? 'Members-only article' : 'Technical article'}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">
+                {membersOnly ? 'Members-only article' : isSnippet ? `Code · ${post.language ?? 'text'}` : isLink ? 'Shared link' : 'Technical article'}
+              </p>
               <h1 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-[-0.05em] sm:text-6xl">{post.title}</h1>
               {post.excerpt && <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">{post.excerpt}</p>}
+              {isLink && post.link_url && (
+                <a href={post.link_url} target="_blank" rel="noopener noreferrer nofollow" className="mt-5 inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm font-medium text-accent hover:border-accent/50">
+                  {hostnameOf(post.link_url)} <span aria-hidden="true">↗</span>
+                </a>
+              )}
               <div className="mt-8 flex items-center gap-3">
                 <span className="grid size-10 place-items-center rounded-full bg-accent/10 font-semibold text-accent">{author?.display_name?.slice(0, 1).toUpperCase() ?? '?'}</span>
                 <div>
                   <Link href={author?.username ? `/profile/${author.username}` : '/explore'} className="text-sm font-semibold hover:text-accent">{authorName}</Link>
-                  <p className="font-mono text-[10px] uppercase tracking-wider text-muted">{post.published_at ? new Date(post.published_at).toLocaleDateString() : 'Draft'} · {post.reading_time_minutes} min read</p>
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
+                    {post.published_at ? new Date(post.published_at).toLocaleDateString() : 'Draft'}
+                    {!isSnippet && <> · {post.reading_time_minutes} min read</>}
+                  </p>
                 </div>
               </div>
               <AuthorPresence authorId={post.author_id} author={authorName} username={author?.username ?? null} bio={author?.bio ?? null} followers={followers ?? 0} following={Boolean(relationship)} authenticated={Boolean(user)} />
             </header>
-            <div className="article-body mt-10" dangerouslySetInnerHTML={{ __html: renderMarkdown(preview) }} />
-            {!allowed && (
-              <Paywall
-                creatorId={post.author_id}
-                authorName={authorName}
-                loginNext={`/post/${post.slug}`}
-                billingReady={canBill()}
-                state={subscribeState === 'guest' ? 'guest' : 'none'}
-              />
+
+            {allowed ? (
+              isSnippet ? (
+                <div className="mt-10">
+                  <CodeBlock code={post.body} language={post.language} />
+                </div>
+              ) : (
+                <>
+                  <div className="article-body mt-10" dangerouslySetInnerHTML={{ __html: renderMarkdown(preview) }} />
+                  <ArticleCodeCopy />
+                </>
+              )
+            ) : (
+              <>
+                <div className="article-body mt-10" dangerouslySetInnerHTML={{ __html: renderMarkdown(preview) }} />
+                <Paywall
+                  creatorId={post.author_id}
+                  authorName={authorName}
+                  loginNext={`/post/${post.slug}`}
+                  billingReady={canBill()}
+                  state={subscribeState === 'guest' ? 'guest' : 'none'}
+                />
+              </>
             )}
+
             {allowed && (
               <>
-                <div className="mt-10 border-y border-border py-4"><ArticleInteractions postId={post.id} /></div>
-                <Surface className="mt-8 p-5"><p className="font-mono text-[10px] uppercase tracking-wider text-accent">About the author</p><p className="mt-2 text-sm leading-6 text-muted">{author?.bio || 'A Commun member sharing what they are learning.'}</p></Surface>
+                <div className="mt-10 border-y border-border py-4">
+                  <ArticleInteractions postId={post.id} postAuthorId={post.author_id} viewerId={viewerId} />
+                </div>
+                <Surface className="mt-8 p-5">
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-accent">About the author</p>
+                  <p className="mt-2 text-sm leading-6 text-muted">{author?.bio || 'A Commun member sharing what they are learning.'}</p>
+                </Surface>
+                {viewerId === post.author_id && isSocialPostType(postType) && (
+                  <PostOwnerActions postId={post.id} initialBody={post.body} initialType={postType} initialLanguage={post.language} initialLinkUrl={post.link_url} />
+                )}
                 <div className="mt-8 border-t border-border pt-5"><ReportForm targetType="POST" targetId={post.id} /></div>
               </>
             )}
           </article>
-          <aside className="hidden lg:block lg:sticky lg:top-24">
+
+          <aside className="hidden lg:sticky lg:top-24 lg:block">
             <Surface className="p-5">
-              <p className="font-mono text-[10px] uppercase tracking-wider text-accent">In this article</p>
-              <p className="mt-3 text-sm leading-6 text-muted">{membersOnly && !allowed ? 'Join to read the full article and unlock every members-only piece from this author.' : 'A focused technical read from the Commun community.'}</p>
+              <p className="font-mono text-[10px] uppercase tracking-wider text-accent">In this post</p>
+              <p className="mt-3 text-sm leading-6 text-muted">
+                {membersOnly && !allowed
+                  ? 'Join to read the full article and unlock every members-only piece from this author.'
+                  : isSnippet
+                    ? 'A code snippet shared by a developer in the community.'
+                    : 'A focused technical read from the Commun community.'}
+              </p>
               <Link href={`/profile/${author?.username ?? ''}`} className="mt-5 block text-sm font-semibold hover:text-accent">View author →</Link>
             </Surface>
           </aside>

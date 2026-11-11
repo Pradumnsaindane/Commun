@@ -19,7 +19,7 @@ export function Surface({ className, children }: { className?: string; children:
 }
 
 export function StatusBadge({ children, tone = 'neutral' }: { children: ReactNode; tone?: 'neutral' | 'accent' | 'danger' }) {
-  return <span className={cn('inline-flex rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider', tone === 'accent' && 'border-accent/30 bg-accent/10 text-accent', tone === 'danger' && 'border-red-500/30 bg-red-50 text-red-700 dark:border-red-400/30 dark:bg-red-400/10 dark:text-red-300', tone === 'neutral' && 'border-border bg-surface text-muted')}>{children}</span>
+  return <span className={cn('inline-flex rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider', tone === 'accent' && 'border-accent/30 bg-accent/10 text-accent', tone === 'danger' && 'border-red-400/30 bg-red-400/10 text-red-300', tone === 'neutral' && 'border-border bg-surface text-muted')}>{children}</span>
 }
 
 export function FilterBar({ children }: { children: ReactNode }) {

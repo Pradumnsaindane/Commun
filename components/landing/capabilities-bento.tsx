@@ -171,6 +171,7 @@ export function CapabilitiesBento() {
           {capabilities.map((item) => (
             <div
               key={item.id}
+              data-scroll-item
               className={`group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card hover:border-border-strong hover:bg-surface transition-all duration-300 flex flex-col justify-between ${item.colSpan}`}
             >
               <div>

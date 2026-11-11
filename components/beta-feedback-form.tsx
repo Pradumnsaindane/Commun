@@ -104,14 +104,14 @@ export function BetaFeedbackForm() {
             {state === 'sending' ? 'Sending…' : 'Send feedback'}
           </button>
           {state === 'sent' && (
-            <span role="status" className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+            <span role="status" className="text-sm font-medium text-emerald-300">
               ✓ Thanks — your feedback has been received.
             </span>
           )}
         </div>
 
         {state === 'error' && (
-          <div role="alert" className="mt-2 rounded-lg border border-red-500/30 bg-red-50 p-3 text-xs text-red-800 dark:bg-red-400/10 dark:text-red-200">
+          <div role="alert" className="mt-2 rounded-lg border border-red-500/30 bg-red-400/10 p-3 text-xs text-red-200">
             <p>{errorMessage}</p>
             {isUnauthenticated ? (
               <Link href="/login?next=/settings" className="mt-2 inline-block font-semibold text-accent underline">

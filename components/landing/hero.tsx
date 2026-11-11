@@ -11,51 +11,6 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-8 pb-20 md:pt-16 md:pb-32" id="product">
-      {/* Background Lighting & Beams */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-
-        {/* Ambient radial glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-accent/15 blur-[140px] rounded-full pointer-events-none" />
-        <div className="absolute top-1/3 left-1/4 w-[450px] h-[350px] bg-brand-indigo/10 blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute top-1/2 right-1/4 w-[400px] h-[300px] bg-brand-emerald/10 blur-[130px] rounded-full pointer-events-none" />
-
-        {/* Subtle glowing collision beam lines */}
-        <svg
-          className="absolute inset-0 h-full w-full opacity-30"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="transparent" />
-              <stop offset="50%" stopColor="hsl(24, 94%, 53%)" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="transparent" />
-            </linearGradient>
-          </defs>
-          <line
-            x1="10%"
-            y1="0"
-            x2="90%"
-            y2="100%"
-            stroke="url(#beamGradient)"
-            strokeWidth="1.5"
-            strokeDasharray="120 400"
-            className="animate-beam-dash"
-          />
-          <line
-            x1="90%"
-            y1="0"
-            x2="20%"
-            y2="100%"
-            stroke="url(#beamGradient)"
-            strokeWidth="1"
-            strokeDasharray="90 350"
-            className="animate-beam-dash"
-          />
-        </svg>
-      </div>
-
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
         {/* Release / Positioning Pill */}
         <div className="inline-flex items-center gap-2 mb-8">
@@ -68,9 +23,9 @@ export function Hero() {
         </div>
 
         {/* Hero Headline */}
-        <h1 className="mx-auto max-w-4xl text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.08]">
+        <h1 data-scroll-heading className="mx-auto max-w-4xl text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.08]">
           Work smarter. Learn faster.{' '}
-          <span className="bg-gradient-to-r from-accent via-orange-400 to-amber-300 bg-clip-text text-transparent">
+          <span className="text-accent-readable">
             Make time for what matters.
           </span>
         </h1>
@@ -84,7 +39,7 @@ export function Hero() {
         {/* CTAs */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link href="/register">
-            <Button size="lg" className="w-full sm:w-auto px-8 font-bold">
+            <Button size="lg" data-magnetic className="w-full sm:w-auto px-8 font-bold">
               Get started free <span className="ml-1 text-base">→</span>
             </Button>
           </Link>
@@ -96,8 +51,8 @@ export function Hero() {
         </div>
 
         {/* Illustrative workspace preview */}
-        <div className="mt-16 sm:mt-20 mx-auto max-w-5xl">
-          <div className="relative rounded-2xl sm:rounded-3xl border border-border bg-card/90 p-2 sm:p-4 shadow-2xl backdrop-blur-xl">
+        <div data-scroll-parallax className="landing-preview-parallax mt-16 sm:mt-20 mx-auto max-w-5xl">
+          <div data-scroll-preview className="relative rounded-2xl sm:rounded-3xl border border-border bg-card p-2 sm:p-4 shadow-xl">
             {/* Window title bar */}
             <div className="flex items-center justify-between border-b border-border/80 px-4 py-3">
               <div className="flex items-center gap-2">
@@ -110,7 +65,7 @@ export function Hero() {
               </div>
               <div className="flex items-center gap-2">
                 <Badge variant="emerald" dot>
-                  Product preview
+                  Illustrative preview
                 </Badge>
               </div>
             </div>
@@ -173,7 +128,7 @@ export function Hero() {
             </div>
 
             {/* Interactive Tab Content Display */}
-            <div className="p-4 sm:p-6 text-left">
+            <div key={activeTab} className="landing-preview-panel-enter p-4 sm:p-6 text-left">
               {activeTab === 'projects' && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">

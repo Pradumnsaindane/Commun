@@ -71,7 +71,7 @@ export function NotificationCenter({ page = false }: { page?: boolean }) {
   const body = loading ? (
     <div className="space-y-3" role="status" aria-label="Loading notifications"><div className="skeleton h-16" /><div className="skeleton h-16" /><div className="skeleton h-16" /></div>
   ) : error ? (
-    <div className="rounded-xl border border-red-500/25 bg-red-50 p-5 text-sm text-red-800 dark:bg-red-400/5 dark:text-red-200" role="alert"><p>{error}</p><Button type="button" variant="outline" size="sm" className="mt-3" onClick={() => { setLoading(true); void load() }}>Try again</Button></div>
+    <div className="rounded-xl border border-red-500/25 bg-red-400/5 p-5 text-sm text-red-200" role="alert"><p>{error}</p><Button type="button" variant="outline" size="sm" className="mt-3" onClick={() => { setLoading(true); void load() }}>Try again</Button></div>
   ) : items.length === 0 ? (
     <div className="rounded-xl border border-dashed border-border bg-background/70 p-8 text-center"><p className="font-medium">No notifications yet</p><p className="mt-2 text-sm text-muted">New account and community activity will appear here.</p></div>
   ) : (

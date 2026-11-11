@@ -1,33 +1,34 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { AppShell } from '@/components/layout/app-shell'
+import { geistMono, geistSans } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://commun.com'),
   title: {
-    default: 'Commun — One workspace. Better work. More time.',
-    template: '%s — Commun',
+    default: 'Commun.dev — Discover. Connect. Create. Collaborate. Earn.',
+    template: '%s — Commun.dev',
   },
   description:
-    'Commun helps professionals and teams organize their work, collaborate effectively, manage knowledge, and make more time for meaningful progress.',
+    'A global developer community to discover developers, share code, publish technical knowledge, showcase projects, and find your next opportunity.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: 'Commun',
-    title: 'Commun — One workspace. Better work. More time.',
+    title: 'Commun.dev — Where developers connect, build, and grow together',
     description:
-      'Unified productivity and work-management SaaS platform for projects, meeting notes, knowledge management, and team learning.',
+      'Discover developers, share code, publish technical articles, showcase projects, and find your community.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Commun — One workspace. Better work. More time.',
+    title: 'Commun.dev — Where developers connect, build, and grow together',
     description:
-      'Organize work, coordinate activities, manage knowledge, and elevate team productivity.',
+      'A global developer community for technical publishing, collaboration, and opportunity.',
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#090a0f',
+  themeColor: '#090B10',
   width: 'device-width',
   initialScale: 1,
 }
@@ -38,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <AppShell>{children}</AppShell>
       </body>

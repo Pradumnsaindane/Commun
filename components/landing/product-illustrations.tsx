@@ -1,271 +1,184 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { type CSSProperties, type KeyboardEvent, useRef, useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
-export function ProductIllustrations() {
-  const [activeTaskIndex, setActiveTaskIndex] = useState(0)
-  const [deviceView, setDeviceView] = useState<'macbook' | 'iphone'>('macbook')
+const productAreas = [
+  {
+    id: 'work',
+    number: '01',
+    category: 'WORK MANAGEMENT',
+    title: 'Projects & tasks',
+    summary: 'Give initiatives, priorities, and next steps a clear place to live.',
+    details: ['Project context', 'Task stages', 'Priority and ownership'],
+  },
+  {
+    id: 'meetings',
+    number: '02',
+    category: 'MEETING CONTEXT',
+    title: 'Meetings & notes',
+    summary: 'Keep agendas, decisions, and follow-up notes together.',
+    details: ['Agenda', 'Decisions', 'Follow-up notes'],
+  },
+  {
+    id: 'knowledge',
+    number: '03',
+    category: 'KNOWLEDGE & LEARNING',
+    title: 'Knowledge & learning',
+    summary: 'Make useful references and learning material easier to return to.',
+    details: ['Knowledge library', 'Learning plans', 'Saved references'],
+  },
+] as const
 
-  const tasks = [
-    { title: 'Define workspace authorization roles', state: 'Done', assignee: 'Alex K.' },
-    { title: 'Draft engineering onboarding playbook', state: 'In Progress', assignee: 'Elena R.' },
-    { title: 'Publish quarterly roadmap review', state: 'Review', assignee: 'Marcus T.' },
-  ]
+export function ProductIllustrations() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [pinnedIndex, setPinnedIndex] = useState<number | null>(null)
+  const cardButtons = useRef<Array<HTMLButtonElement | null>>([])
+  const activeIndex = hoveredIndex ?? pinnedIndex
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (event.key === 'Escape') {
+      setHoveredIndex(null)
+      setPinnedIndex(null)
+      event.currentTarget.blur()
+      return
+    }
+
+    const nextKeys = ['ArrowRight', 'ArrowDown']
+    const previousKeys = ['ArrowLeft', 'ArrowUp']
+    if (nextKeys.includes(event.key) || previousKeys.includes(event.key)) {
+      event.preventDefault()
+      const step = nextKeys.includes(event.key) ? 1 : -1
+      const nextIndex = (index + step + productAreas.length) % productAreas.length
+      cardButtons.current[nextIndex]?.focus()
+      return
+    }
+
+    if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault()
+      const nextIndex = event.key === 'Home' ? 0 : productAreas.length - 1
+      cardButtons.current[nextIndex]?.focus()
+    }
+  }
 
   return (
-    <section className="py-20 md:py-32 relative overflow-hidden" id="illustrations">
+    <section className="relative overflow-hidden py-20 md:py-32" id="illustrations">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <Badge variant="emerald" className="mb-4">
-            Interactive SaaS Mechanics
-          </Badge>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-foreground">
+        <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
+          <Badge variant="emerald" className="mb-4">Interactive workspace</Badge>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
             Crafted for how modern teams actually work.
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-muted">
-            Explore the responsive workflows, collaboration features, and structured documents
-            built into Commun.
+          <p className="mt-4 text-base text-muted sm:text-lg">
+            Explore the connected areas that bring daily work, decisions, and shared knowledge together.
           </p>
         </div>
 
-        {/* Device Showcase Switcher */}
-        <div className="mb-8 flex justify-center">
-          <div className="inline-flex rounded-xl border border-border bg-surface p-1.5 gap-2">
-            <button
-              type="button"
-              onClick={() => setDeviceView('macbook')}
-              className={cn(
-                'rounded-lg px-4 py-2 text-xs font-semibold transition-all',
-                deviceView === 'macbook'
-                  ? 'bg-accent/15 text-accent border border-accent/30 shadow-sm'
-                  : 'text-muted hover:text-foreground'
-              )}
-            >
-              💻 Desktop & MacBook Experience
-            </button>
-            <button
-              type="button"
-              onClick={() => setDeviceView('iphone')}
-              className={cn(
-                'rounded-lg px-4 py-2 text-xs font-semibold transition-all',
-                deviceView === 'iphone'
-                  ? 'bg-accent/15 text-accent border border-accent/30 shadow-sm'
-                  : 'text-muted hover:text-foreground'
-              )}
-            >
-              📱 Mobile & On-the-Go App
-            </button>
+        <div className="fey-card-stack mx-auto max-w-5xl" data-scroll-spring>
+          <p className="mb-5 text-center text-xs text-muted sm:text-sm">Choose an area to see how it fits into the workspace.</p>
+          <div className="fey-card-stack__stage" role="group" aria-label="Commun product areas" data-scroll-item>
+            {productAreas.map((area, index) => {
+              const active = activeIndex === index
+              const relativeIndex = activeIndex === null ? index - 1 : index - activeIndex
+              const xOffset = active ? 0 : relativeIndex < 0 ? -64 : 64
+              const idleOffset = index === 0 ? 46 : index === 1 ? 0 : 68
+              const yOffset = active ? 4 : activeIndex === null ? idleOffset : 48 + Math.max(0, Math.abs(relativeIndex) - 1) * 18
+              const cardStyle = {
+                '--stack-x': `${xOffset}px`,
+                '--stack-y': `${yOffset}px`,
+                zIndex: active ? 10 : 5 - Math.abs(relativeIndex),
+              } as CSSProperties
+
+              return (
+                <button
+                  key={area.id}
+                  ref={(element) => { cardButtons.current[index] = element }}
+                  type="button"
+                  className={cn('fey-card-stack__card', active && 'fey-card-stack__card--active')}
+                  style={cardStyle}
+                  aria-expanded={active}
+                  aria-pressed={pinnedIndex === index}
+                  aria-label={`${area.title}${pinnedIndex === index ? ', pinned' : ''}`}
+                  onClick={() => setPinnedIndex((current) => current === index ? null : index)}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  onFocus={() => setHoveredIndex(index)}
+                  onBlur={(event) => {
+                    const nextTarget = event.relatedTarget
+                    if (!(nextTarget instanceof Node && event.currentTarget.parentElement?.contains(nextTarget))) {
+                      setHoveredIndex(null)
+                    }
+                  }}
+                  onKeyDown={(event) => handleCardKeyDown(event, index)}
+                >
+                  <span className="fey-card-stack__topline">
+                    <span className="fey-card-stack__index">{area.number}</span>
+                    <span className="fey-card-stack__category">{area.category}</span>
+                    <span className="fey-card-stack__indicator" aria-hidden="true" />
+                  </span>
+                  <span className="fey-card-stack__title">{area.title}</span>
+                  <span className="fey-card-stack__summary">{area.summary}</span>
+                  <span className="fey-card-stack__details" aria-hidden={!active}>
+                    <span className="fey-card-stack__details-inner">
+                      <span className="fey-card-stack__detail-label">A connected workspace can bring together</span>
+                      <span className="fey-card-stack__detail-list">
+                        {area.details.map((detail) => <span key={detail}>{detail}</span>)}
+                      </span>
+                    </span>
+                  </span>
+                  <span className="fey-card-stack__hint">
+                    {pinnedIndex === index ? 'Pinned · click to unpin' : active ? 'Click to pin this view' : 'Select to explore'}
+                  </span>
+                </button>
+              )
+            })}
           </div>
+          <p className="mt-4 text-center text-[11px] text-muted">Illustrative interface · no live workspace records shown</p>
         </div>
 
-        {/* Device Illustration Container */}
-        {deviceView === 'macbook' ? (
-          <div className="mx-auto max-w-4xl relative">
-            {/* MacBook Mockup Frame */}
-            <div className="rounded-2xl border-4 border-border/80 bg-surface shadow-2xl p-3 sm:p-5">
-              {/* Laptop Screen Top Camera Notch */}
-              <div className="flex items-center justify-center pb-3">
-                <span className="size-2 rounded-full bg-border" />
-              </div>
-
-              {/* Main Canvas with Collaborative Cursors */}
-              <div className="relative rounded-xl border border-border bg-background p-6 min-h-[380px] overflow-hidden">
-                {/* Collaborative Cursor 1 */}
-                <div
-                  className="absolute top-12 left-16 z-20 flex items-center gap-1.5 pointer-events-none transition-transform duration-700 animate-float-slow"
-                >
-                  <svg
-                    className="size-4 text-accent fill-accent"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M3 3l7 18 3-7 7-3L3 3z" />
-                  </svg>
-                  <span className="rounded bg-accent px-2 py-0.5 text-[10px] font-semibold text-background shadow">
-                    Elena R. (Editing runbook)
-                  </span>
-                </div>
-
-                {/* Collaborative Cursor 2 */}
-                <div
-                  className="absolute bottom-16 right-20 z-20 flex items-center gap-1.5 pointer-events-none transition-transform duration-1000 animate-float-slow"
-                  style={{ animationDelay: '1.5s' }}
-                >
-                  <svg
-                    className="size-4 text-brand-indigo fill-brand-indigo"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M3 3l7 18 3-7 7-3L3 3z" />
-                  </svg>
-                  <span className="rounded bg-brand-indigo px-2 py-0.5 text-[10px] font-semibold text-white shadow">
-                    Marcus T. (Assigning tasks)
-                  </span>
-                </div>
-
-                {/* Header inside screen */}
-                <div className="flex items-center justify-between border-b border-border/80 pb-4">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-sm font-bold text-accent">commun.</span>
-                    <span className="text-xs text-muted">/ Engineering Operations / Sprint Overview</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="size-2 rounded-full bg-emerald-400" />
-                    <span className="font-mono text-[11px] text-emerald-400">Collaborating live</span>
-                  </div>
-                </div>
-
-                {/* Interactive Task Cards Progression */}
-                <div className="mt-6">
-                  <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">
-                    Interactive Task Cards (Click to inspect workflow)
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {tasks.map((t, idx) => (
-                      <button
-                        key={t.title}
-                        type="button"
-                        onClick={() => setActiveTaskIndex(idx)}
-                        className={cn(
-                          'rounded-xl border p-3.5 text-left transition-all',
-                          activeTaskIndex === idx
-                            ? 'border-accent bg-accent/10 shadow-md ring-1 ring-accent'
-                            : 'border-border bg-surface hover:border-border-strong'
-                        )}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-mono text-[10px] text-muted">{t.state}</span>
-                          <span className="size-1.5 rounded-full bg-accent" />
-                        </div>
-                        <p className="mt-2 text-xs font-semibold text-foreground">{t.title}</p>
-                        <p className="mt-3 text-[10px] text-muted">Assigned to: {t.assignee}</p>
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Inspected card detail banner */}
-                  <div className="mt-5 rounded-xl border border-border bg-surface/70 p-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-foreground">
-                        Selected: {tasks[activeTaskIndex].title}
-                      </span>
-                      <Badge variant="accent">{tasks[activeTaskIndex].state}</Badge>
-                    </div>
-                    <p className="mt-1 text-xs text-muted">
-                      Linked to knowledge document & sprint goals. All updates propagate to team members in real-time.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* MacBook Bottom Base */}
-            <div className="mx-auto w-[65%] h-3 rounded-b-xl bg-border/60 border-t border-border" />
-          </div>
-        ) : (
-          <div className="mx-auto max-w-sm relative">
-            {/* iPhone Mockup Frame */}
-            <div className="rounded-[40px] border-[6px] border-border bg-surface p-4 shadow-2xl">
-              {/* Dynamic Island */}
-              <div className="mx-auto h-6 w-28 rounded-full bg-background flex items-center justify-center gap-2 mb-4 border border-border/80">
-                <span className="size-2 rounded-full bg-accent animate-pulse-subtle" />
-                <span className="text-[10px] font-mono text-muted">Task Active</span>
-              </div>
-
-              {/* Mobile Screen Content */}
-              <div className="rounded-3xl border border-border bg-background p-4 min-h-[460px] space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-accent">commun.</span>
-                  <Badge variant="outline">Mobile Workspace</Badge>
-                </div>
-
-                <div className="rounded-2xl border border-border bg-surface p-3.5 space-y-2">
-                  <span className="font-mono text-[10px] text-muted uppercase">Today&apos;s Focus</span>
-                  <p className="text-sm font-semibold text-foreground">Sprint Retrospective</p>
-                  <p className="text-xs text-muted">2:00 PM · Linked meeting notes ready</p>
-                </div>
-
-                <div className="rounded-2xl border border-border bg-surface p-3.5 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-muted uppercase">Assigned Tasks</span>
-                    <span className="text-xs text-accent font-semibold">3 items</span>
-                  </div>
-                  <div className="space-y-1.5">
-                    <div className="rounded-lg bg-background p-2 text-xs font-medium text-foreground">
-                      ✓ System architecture review
-                    </div>
-                    <div className="rounded-lg bg-background p-2 text-xs font-medium text-foreground">
-                      ⏳ Onboarding guide draft
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-border bg-surface p-3.5">
-                  <span className="font-mono text-[10px] text-brand-indigo uppercase">Quick Note</span>
-                  <p className="mt-1 text-xs text-muted">Sync with engineering leads at 4 PM.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Animated Workflow Path & System Uptime Indicator */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Animated Workflow Path */}
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
           <Card className="p-6">
-            <span className="font-mono text-xs text-accent uppercase tracking-wider">Workflow Path</span>
-            <h3 className="mt-2 text-lg font-bold text-foreground">From Meeting to Measurable Output</h3>
-            <p className="mt-1 text-xs text-muted">
-              Commun connects every stage of team delivery into a seamless, trackable stream.
-            </p>
-
-            <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
-              <div className="rounded-xl border border-border bg-surface p-3 w-full sm:w-auto flex-1">
-                <span className="text-base">📝</span>
-                <p className="text-xs font-semibold text-foreground mt-1">1. Meeting Notes</p>
+            <span className="font-mono text-xs uppercase tracking-wider text-accent">Workflow path</span>
+            <h3 className="mt-2 text-lg font-bold text-foreground">From meeting to measurable output</h3>
+            <p className="mt-1 text-xs text-muted">Commun connects stages of team delivery in one workspace.</p>
+            <div className="mt-6 flex flex-col items-center justify-between gap-3 text-center sm:flex-row">
+              <div className="w-full flex-1 rounded-xl border border-border bg-surface p-3 sm:w-auto">
+                <span className="text-base" aria-hidden="true">📝</span>
+                <p className="mt-1 text-xs font-semibold text-foreground">1. Meeting notes</p>
                 <p className="text-[10px] text-muted">Capture key decisions</p>
               </div>
-              <span className="text-accent font-mono text-base rotate-90 sm:rotate-0">→</span>
-              <div className="rounded-xl border border-border bg-surface p-3 w-full sm:w-auto flex-1">
-                <span className="text-base">📋</span>
-                <p className="text-xs font-semibold text-foreground mt-1">2. Assign Tasks</p>
+              <span className="rotate-90 font-mono text-base text-accent sm:rotate-0" aria-hidden="true">→</span>
+              <div className="w-full flex-1 rounded-xl border border-border bg-surface p-3 sm:w-auto">
+                <span className="text-base" aria-hidden="true">📋</span>
+                <p className="mt-1 text-xs font-semibold text-foreground">2. Assign tasks</p>
                 <p className="text-[10px] text-muted">Delegate ownership</p>
               </div>
-              <span className="text-accent font-mono text-base rotate-90 sm:rotate-0">→</span>
-              <div className="rounded-xl border border-border bg-surface p-3 w-full sm:w-auto flex-1">
-                <span className="text-base">📚</span>
-                <p className="text-xs font-semibold text-foreground mt-1">3. Knowledge Base</p>
+              <span className="rotate-90 font-mono text-base text-accent sm:rotate-0" aria-hidden="true">→</span>
+              <div className="w-full flex-1 rounded-xl border border-border bg-surface p-3 sm:w-auto">
+                <span className="text-base" aria-hidden="true">📚</span>
+                <p className="mt-1 text-xs font-semibold text-foreground">3. Knowledge base</p>
                 <p className="text-[10px] text-muted">Archive best practices</p>
               </div>
             </div>
           </Card>
 
-          {/* Folder & Dynamic Status Indicator */}
-          <Card className="p-6 flex flex-col justify-between">
+          <Card className="flex flex-col justify-between p-6">
             <div>
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-emerald-400 uppercase tracking-wider">
-                  Platform Reliability
-                </span>
-                <Badge variant="emerald" dot>
-                  Resilient architecture
-                </Badge>
+                <span className="font-mono text-xs uppercase tracking-wider text-emerald-400">Platform reliability</span>
+                <Badge variant="emerald" dot>Resilient architecture</Badge>
               </div>
-              <h3 className="mt-2 text-lg font-bold text-foreground">Secure & Available Enterprise Backbone</h3>
-              <p className="mt-1 text-xs text-muted">
-                Enterprise data isolation, resilient uptime, and instant replication across team workspaces.
-              </p>
+              <h3 className="mt-2 text-lg font-bold text-foreground">Secure & available enterprise backbone</h3>
+              <p className="mt-1 text-xs text-muted">Enterprise data isolation, resilient uptime, and replication across team workspaces.</p>
             </div>
-
-            <div className="mt-6 rounded-xl border border-border bg-surface p-4 flex items-center justify-between">
+            <div className="mt-6 flex items-center justify-between rounded-xl border border-border bg-surface p-4">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">📁</span>
+                <span className="text-2xl" aria-hidden="true">📁</span>
                 <div>
-                  <p className="text-xs font-semibold text-foreground">Enterprise Organization Tree</p>
-                  <p className="text-[10px] text-muted">Zero-leak row-level access boundaries</p>
+                  <p className="text-xs font-semibold text-foreground">Enterprise organization tree</p>
+                  <p className="text-[10px] text-muted">Row-level access boundaries</p>
                 </div>
               </div>
               <span className="font-mono text-xs text-emerald-400">Encrypted</span>
@@ -276,4 +189,3 @@ export function ProductIllustrations() {
     </section>
   )
 }
-

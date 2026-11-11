@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 
-type NotificationInput = { recipientId: string; actorId: string; type: 'LIKE' | 'COMMENT' | 'REPLY' | 'FOLLOW' | 'NEW_POST'; entityId?: string | null; targetSlug?: string | null; targetTitle?: string | null }
+type NotificationInput = { recipientId: string; actorId: string; type: 'LIKE' | 'COMMENT' | 'REPLY' | 'FOLLOW' | 'NEW_POST' | 'MENTION' | 'REPOST'; entityId?: string | null; targetSlug?: string | null; targetTitle?: string | null }
 
 export async function createNotification(supabase: SupabaseClient, input: NotificationInput) {
   if (input.recipientId === input.actorId) return

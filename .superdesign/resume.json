@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "/": {
+      "targetKind": "existing-ui",
+      "projectId": "e1cef678-429b-4820-8cec-96de4ffd68bd",
+      "baselineDraftId": "7a729bde-19f9-46be-b4d5-74795ff741ad",
+      "activeDraftId": "831fd1ad-d8cb-4d66-b400-06a4a1c83a83",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [
+        "eb6d4663-1c5f-4167-a12a-b7f410374a9d"
+      ],
+      "contextFiles": [
+        "components/landing/navbar.tsx",
+        "components/landing/hero.tsx",
+        "app/globals.css",
+        "tailwind.config.ts",
+        "components/ui/button.tsx",
+        ".superdesign/design-system.md",
+        "lib/design-tokens.ts"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "85a9333ba755dd66a9671853ed92fff383ad1b8dec84fbfbad9da8ff4988a21a",
+        "components/landing/navbar.tsx": "14e8ea4ff6a314748bcf540803a2428002e8a36c16d31c0cb1ee8140aa1a054d",
+        "components/landing/hero.tsx": "020ea57986dcbc6ba6c039aac0aadf353869c9bb9e99a2e16e3609b1e0acf7bb",
+        "app/globals.css": "b32346dcabd02746cafaac2f20253fd8ab1f9e23be269ace9999e290d0ea7762",
+        "tailwind.config.ts": "8eb06e87aecf93eba6689a535fb4c135520f5a4e8dc2941efbd9b2d718e96ef6",
+        "components/ui/button.tsx": "00c55de85b20c36f2aa56b635bfdac5d96b73be025911c6fd6af50eb48aae893",
+        "lib/design-tokens.ts": "15e53d4e12b4f2adaf606e54cc0229bc4845912108e9d7b82587dc3c115d5984",
+        "components/dashboard/productivity-dashboard.tsx": "e5fdde8dcd0973a055afb759bbcdeff8d3c2a7678cf3290b00b55ecc1226cb3f",
+        "components/layout/app-shell.tsx": "3b5cfc8450224d074f89afa69f14e63faeab54f38cbf22d2c9b78fbd68c8c103"
+      },
+      "components": [
+        {
+          "name": "PublicNav",
+          "id": "2dfda5aa-1950-4b22-a51c-9fa75d00b649",
+          "sourcePath": "components/landing/navbar.tsx"
+        },
+        {
+          "name": "CommunFooter",
+          "id": "080f1702-10af-4101-868c-fb6a289f77ae",
+          "sourcePath": "components/landing/footer.tsx"
+        },
+        {
+          "name": "WorkspaceTopbar",
+          "id": "87015e21-aac2-4a24-8ab2-4b3978954168",
+          "sourcePath": "components/layout/app-shell.tsx"
+        },
+        {
+          "name": "WorkspaceSidebar",
+          "id": "a5bdf313-1226-452e-b3fd-c71345e3407e",
+          "sourcePath": "components/layout/app-shell.tsx"
+        }
+      ],
+      "drafts": {
+        "7a729bde-19f9-46be-b4d5-74795ff741ad": {
+          "title": "Commun landing \u2014 faithful baseline",
+          "visualDirection": "faithful reproduction",
+          "currentVersion": 1
+        },
+        "b51362d8-08d6-4672-9340-6a3056a0a8ea": {
+          "title": "Commun Premium Landing",
+          "visualDirection": "white-first, precise ambient glass",
+          "parentDraftId": "7a729bde-19f9-46be-b4d5-74795ff741ad",
+          "currentVersion": 1
+        },
+        "831fd1ad-d8cb-4d66-b400-06a4a1c83a83": {
+          "title": "Commun Landing \u2014 Refined Round 2",
+          "visualDirection": "refined white-first ambient glass, compact controls, responsive preview",
+          "currentVersion": 3,
+          "parentDraftId": "b51362d8-08d6-4672-9340-6a3056a0a8ea"
+        }
+      },
+      "updatedAt": "2026-11-06T19:34:06.864559+00:00"
+    },
+    "/dashboard": {
+      "targetKind": "existing-ui",
+      "projectId": "e1cef678-429b-4820-8cec-96de4ffd68bd",
+      "activeDraftId": "a4b2f9b9-f2cb-478c-a1e5-c63ac9e1e6d7",
+      "sourceTarget": "/",
+      "sourceDraftId": "b51362d8-08d6-4672-9340-6a3056a0a8ea",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [
+        "eb6d4663-1c5f-4167-a12a-b7f410374a9d"
+      ],
+      "contextFiles": [
+        "components/dashboard/productivity-dashboard.tsx",
+        "components/layout/app-shell.tsx",
+        "app/globals.css",
+        "lib/design-tokens.ts"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "85a9333ba755dd66a9671853ed92fff383ad1b8dec84fbfbad9da8ff4988a21a",
+        "components/landing/navbar.tsx": "14e8ea4ff6a314748bcf540803a2428002e8a36c16d31c0cb1ee8140aa1a054d",
+        "components/landing/hero.tsx": "020ea57986dcbc6ba6c039aac0aadf353869c9bb9e99a2e16e3609b1e0acf7bb",
+        "app/globals.css": "b32346dcabd02746cafaac2f20253fd8ab1f9e23be269ace9999e290d0ea7762",
+        "tailwind.config.ts": "8eb06e87aecf93eba6689a535fb4c135520f5a4e8dc2941efbd9b2d718e96ef6",
+        "components/ui/button.tsx": "00c55de85b20c36f2aa56b635bfdac5d96b73be025911c6fd6af50eb48aae893",
+        "lib/design-tokens.ts": "15e53d4e12b4f2adaf606e54cc0229bc4845912108e9d7b82587dc3c115d5984",
+        "components/dashboard/productivity-dashboard.tsx": "e5fdde8dcd0973a055afb759bbcdeff8d3c2a7678cf3290b00b55ecc1226cb3f",
+        "components/layout/app-shell.tsx": "3b5cfc8450224d074f89afa69f14e63faeab54f38cbf22d2c9b78fbd68c8c103"
+      },
+      "components": [
+        {
+          "name": "WorkspaceTopbar",
+          "id": "87015e21-aac2-4a24-8ab2-4b3978954168",
+          "sourcePath": "components/layout/app-shell.tsx"
+        },
+        {
+          "name": "WorkspaceSidebar",
+          "id": "a5bdf313-1226-452e-b3fd-c71345e3407e",
+          "sourcePath": "components/layout/app-shell.tsx"
+        }
+      ],
+      "drafts": {
+        "1733a66d-d475-49bd-a649-62f5bfa17b9d": {
+          "title": "Commun dashboard \u2014 companion workspace",
+          "visualDirection": "companion style to Commun Premium Landing",
+          "parentDraftId": "b51362d8-08d6-4672-9340-6a3056a0a8ea",
+          "currentVersion": 1
+        },
+        "a4b2f9b9-f2cb-478c-a1e5-c63ac9e1e6d7": {
+          "title": "Commun Dashboard \u2014 Refined Round 2",
+          "visualDirection": "companion shell with compact translucent navigation and solid data panels",
+          "currentVersion": 1,
+          "parentDraftId": "1733a66d-d475-49bd-a649-62f5bfa17b9d"
+        }
+      },
+      "updatedAt": "2026-11-06T19:34:06.864559+00:00"
+    }
+  }
+}

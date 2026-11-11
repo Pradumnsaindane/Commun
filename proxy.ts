@@ -16,6 +16,7 @@ const protectedPaths = [
   '/saved',
   '/notifications',
   '/feed',
+  '/compose',
   '/write',
   '/community',
   '/moderation',

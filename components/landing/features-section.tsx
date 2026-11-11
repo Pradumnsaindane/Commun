@@ -107,6 +107,7 @@ export function FeaturesSection() {
           {featureBlocks.map((feature) => (
             <div
               key={feature.title}
+              data-scroll-item
               className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-card flex flex-col justify-between hover:border-border-strong transition-all"
             >
               <div>

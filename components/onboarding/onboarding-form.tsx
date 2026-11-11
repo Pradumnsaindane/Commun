@@ -2,7 +2,6 @@
 
 import { FormEvent, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 import { ONBOARDING_INTERESTS, isValidUsername } from '@/lib/onboarding'
 
 export { ONBOARDING_INTERESTS }
@@ -70,37 +69,30 @@ export function OnboardingForm({
     setError('')
 
     try {
-      const supabase = createClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        router.push('/login?next=/onboarding')
-        return
-      }
-
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .update({
-          display_name: name.trim(),
+      // The browser never writes account status. A server route derives identity
+      // from the session, validates the profile, and performs the ACTIVE
+      // transition with a whitelisted payload.
+      const response = await fetch('/api/profile/finalize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          displayName: name.trim(),
           username: username.trim().toLowerCase(),
-          bio: bio.trim() || null,
-          github: github.trim() || null,
-          website: website.trim() || null,
+          bio: bio.trim(),
+          github: github.trim(),
+          website: website.trim(),
           interests: selected,
-          onboarding_completed: true,
-          status: 'ACTIVE',
-        })
-        .eq('id', user.id)
+        }),
+      })
+      const result = await response.json().catch(() => null)
 
-      if (updateError) {
-        setError(`Unable to save profile: ${updateError.message || 'Please check your connection and retry.'}`)
+      if (!response.ok) {
+        setError(result?.error ?? 'Please check your connection and retry.')
         setLoading(false)
         return
       }
 
-      router.push('/dashboard')
+      router.push('/feed')
       router.refresh()
     } catch (err) {
       const message = err instanceof Error ? err.message : 'An unexpected error occurred.'

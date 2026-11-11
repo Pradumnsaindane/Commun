@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -68,9 +67,8 @@ export function Navbar() {
           </a>
         </nav>
 
-        {/* Actions & Theme */}
+        {/* Actions */}
         <div className="hidden xl:flex items-center gap-3">
-          <ThemeToggle />
           <Link
             href="/login"
             className="rounded-lg px-3.5 py-2 text-xs font-semibold text-muted hover:text-foreground transition-colors"
@@ -87,7 +85,6 @@ export function Navbar() {
 
         {/* Mobile menu button */}
         <div className="flex xl:hidden items-center gap-2">
-          <ThemeToggle />
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { orIlikeFilter, sanitizeSearchTerm } from '@/lib/search-query'
 import { DeveloperCard, DiscoveryEmpty, type Developer } from '@/components/discovery/developer-card'
 
 export default async function DiscoverPage({ searchParams }: { searchParams: Promise<{ q?: string; interest?: string; page?: string }> }) {
@@ -11,7 +12,8 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   let profileQuery = supabase.from('profiles').select('id,display_name,username,bio,avatar_url,interests').not('username', 'is', null).neq('id', user?.id ?? '')
-  if (query) profileQuery = profileQuery.or(`display_name.ilike.%${query}%,username.ilike.%${query}%,bio.ilike.%${query}%`)
+  const filter = orIlikeFilter(['display_name', 'username', 'bio'], sanitizeSearchTerm(query))
+  if (filter) profileQuery = profileQuery.or(filter)
   if (interest) profileQuery = profileQuery.contains('interests', [interest])
   const { data: rows, error } = await profileQuery.order('display_name').range((page - 1) * perPage, page * perPage - 1)
   const developers: Developer[] = []

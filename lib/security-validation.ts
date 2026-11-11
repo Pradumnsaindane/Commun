@@ -1,4 +1,4 @@
-export const TRUSTED_NOTIFICATION_TYPES = ['LIKE', 'COMMENT', 'REPLY', 'FOLLOW', 'NEW_POST', 'MODERATION'] as const
+export const TRUSTED_NOTIFICATION_TYPES = ['LIKE', 'COMMENT', 'REPLY', 'FOLLOW', 'NEW_POST', 'MENTION', 'REPOST', 'MODERATION'] as const
 export type TrustedNotificationType = (typeof TRUSTED_NOTIFICATION_TYPES)[number]
 
 export function isTrustedNotificationType(value: string): value is TrustedNotificationType {

@@ -1,14 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-
-const areas = [
-  { title: 'Milestones', description: 'Project checkpoints and target dates', icon: '◇' },
-  { title: 'Team', description: 'People and ownership', icon: '◎' },
-  { title: 'Deadlines', description: 'Upcoming delivery dates', icon: '◷' },
-]
 
 export default async function ProjectsPage() {
   const supabase = await createClient()
@@ -20,7 +13,7 @@ export default async function ProjectsPage() {
       <header className="flex flex-col gap-5 border-b border-border/80 pb-7 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="mb-2 font-mono text-[10px] uppercase tracking-[.2em] text-accent">Workspace / Projects</p>
-          <div className="flex flex-wrap items-center gap-3"><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Projects</h1><Badge variant="outline">Preview</Badge></div>
+          <div className="flex flex-wrap items-center gap-3"><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Projects</h1><span className="text-xs text-muted">Workspace overview</span></div>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">Bring initiatives, milestones, owners, and deadlines into one clear view.</p>
         </div>
         <Button variant="primary" size="sm" disabled title="Project persistence is not connected yet">New project unavailable</Button>
@@ -34,19 +27,21 @@ export default async function ProjectsPage() {
         <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-border bg-surface px-3 py-1.5 text-xs text-muted">Data unavailable</span>
       </Card>
 
-      <section aria-labelledby="project-overview-title">
-        <div className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">Project workspace</p><h2 id="project-overview-title" className="mt-1 text-lg font-semibold">Overview</h2></div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {areas.map((area) => <Card key={area.title} className="interactive-surface bg-surface p-5"><div className="flex items-start justify-between"><span className="grid size-9 place-items-center rounded-xl bg-background text-base text-accent" aria-hidden="true">{area.icon}</span><Badge variant="muted">Unavailable</Badge></div><h3 className="mt-5 text-sm font-semibold">{area.title}</h3><p className="mt-1 text-xs leading-5 text-muted">{area.description}</p><div className="mt-5 border-t border-border/80 pt-4 text-xs text-muted">No project data source connected</div></Card>)}
-        </div>
-      </section>
-
       <section aria-labelledby="project-list-title">
-        <div className="mb-4 flex items-end justify-between gap-4"><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">Portfolio</p><h2 id="project-list-title" className="mt-1 text-lg font-semibold">All projects</h2></div><span className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs text-muted">Awaiting data</span></div>
-        <Card className="flex min-h-56 flex-col items-center justify-center border-dashed bg-surface/70 p-8 text-center">
-          <span className="grid size-11 place-items-center rounded-xl border border-border bg-background text-xl text-muted" aria-hidden="true">◇</span>
-          <h3 className="mt-4 text-sm font-semibold">Project list unavailable</h3>
-          <p className="mt-2 max-w-md text-xs leading-5 text-muted">When project storage is connected, this space can show project status, milestones, ownership, and upcoming deadlines.</p>
+        <div className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[.18em] text-muted">Portfolio</p><h2 id="project-list-title" className="mt-1 text-lg font-semibold">All projects</h2></div>
+        <Card className="overflow-hidden border-border bg-card">
+          <div className="grid gap-5 p-5 sm:grid-cols-[minmax(0,1.2fr)_minmax(220px,.8fr)] sm:p-7">
+            <div className="max-w-xl">
+              <p className="text-xs font-medium uppercase tracking-[.12em] text-muted">Project records unavailable</p>
+              <h3 className="mt-3 text-xl font-semibold tracking-tight">Your portfolio will appear here</h3>
+              <p className="mt-2 text-sm leading-6 text-muted">This workspace doesn’t have a connected project data source. No sample initiatives or progress figures are shown.</p>
+            </div>
+            <dl className="grid grid-cols-3 gap-3 self-end border-t border-border/80 pt-4 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
+              <div><dt className="text-xs text-muted">Milestones</dt><dd className="mt-1 text-sm font-medium">Unavailable</dd></div>
+              <div><dt className="text-xs text-muted">Owners</dt><dd className="mt-1 text-sm font-medium">Unavailable</dd></div>
+              <div><dt className="text-xs text-muted">Deadlines</dt><dd className="mt-1 text-sm font-medium">Unavailable</dd></div>
+            </dl>
+          </div>
         </Card>
       </section>
     </div>

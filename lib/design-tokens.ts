@@ -1,15 +1,16 @@
 /**
- * Commun SaaS Design System Tokens
- * Defines the unified visual language for Commun productivity & work-management platform.
+ * Commun.dev Design System Tokens
+ * Defines the shared visual language for the developer social platform.
  */
 
 export const tokens = {
   brand: {
     name: 'Commun',
-    tagline: 'One workspace. Better work. More time.',
-    mission: 'Work smarter. Learn faster. Make time for what matters.',
+    tagline: 'Discover. Connect. Create. Collaborate. Earn.',
+    mission:
+      'Build a global ecosystem where developers share technical knowledge, showcase their work, collaborate, and grow professionally.',
     supportText:
-      'Commun helps professionals and teams organize their work, collaborate effectively, manage knowledge, and make more time for meaningful progress.',
+      'Commun.dev is a global developer community for technical publishing, social connection, project showcases, and professional opportunity.',
   },
   colors: {
     dark: {
@@ -34,33 +35,11 @@ export const tokens = {
       highlightSky: 'hsl(199, 89%, 48%)',
       highlightViolet: 'hsl(262, 83%, 68%)',
     },
-    light: {
-      background: 'hsl(210, 20%, 98%)', // #f8fafc
-      foreground: 'hsl(222, 47%, 11%)', // #0f172a
-      surface: 'hsl(0, 0%, 100%)', // #ffffff
-      surfaceHover: 'hsl(210, 20%, 95%)',
-      elevated: 'hsl(0, 0%, 100%)',
-      border: 'hsl(214, 32%, 91%)', // #e2e8f0
-      borderSubtle: 'hsl(214, 32%, 94%)',
-      borderStrong: 'hsl(215, 25%, 82%)',
-      accent: 'hsl(24, 94%, 50%)',
-      accentMuted: 'hsla(24, 94%, 50%, 0.1)',
-      accentHover: 'hsl(24, 94%, 45%)',
-      accentForeground: 'hsl(0, 0%, 100%)',
-      muted: 'hsl(215, 16%, 47%)',
-      subtle: 'hsl(215, 16%, 65%)',
-      card: 'hsl(0, 0%, 100%)',
-      cardBorder: 'hsl(214, 32%, 89%)',
-      highlightIndigo: 'hsl(238, 70%, 55%)',
-      highlightEmerald: 'hsl(152, 65%, 38%)',
-      highlightSky: 'hsl(199, 85%, 42%)',
-      highlightViolet: 'hsl(262, 70%, 55%)',
-    },
   },
   typography: {
-    fontSans: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    fontMono: '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-    fontDisplay: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+    fontSans: 'Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif',
+    fontMono: '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+    fontDisplay: 'Geist, ui-sans-serif, system-ui, sans-serif',
   },
   radii: {
     sm: '0.375rem', // 6px

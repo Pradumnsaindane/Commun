@@ -19,3 +19,6 @@ next-env.d.ts
 supabase/.temp/
 .env.local
 .env.local
+
+# Superdesign generated temporary component templates
+.superdesign/tmp/

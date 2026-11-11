@@ -28,7 +28,7 @@ export function ReportActions({ reportId, status }: { reportId: string; status: 
     <div className="mt-4 space-y-3">
       <button type="button" disabled={busy} onClick={() => void act('RESOLVE')} className="min-h-10 w-full rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50">{busy ? 'Saving…' : 'Resolve report'}</button>
       <button type="button" disabled={busy} onClick={() => void act('DISMISS')} className="min-h-10 w-full rounded-lg border border-border bg-surface px-4 py-2 text-sm font-semibold transition-colors hover:bg-surface-hover disabled:cursor-not-allowed disabled:opacity-50">Dismiss report</button>
-      <button type="button" disabled={busy} onClick={() => void act('REMOVE')} className="min-h-10 w-full rounded-lg border border-red-500/30 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-red-400/5 dark:text-red-200 dark:hover:bg-red-400/10">Remove reported content</button>
+      <button type="button" disabled={busy} onClick={() => void act('REMOVE')} className="min-h-10 w-full rounded-lg border border-red-400/30 bg-red-400/5 px-4 py-2 text-sm font-semibold text-red-200 transition-colors hover:bg-red-400/10 disabled:cursor-not-allowed disabled:opacity-50">Remove reported content</button>
       {message && <p role="status" aria-live="polite" className="rounded-lg border border-border bg-background p-3 text-xs text-muted">{message}</p>}
     </div>
   )
