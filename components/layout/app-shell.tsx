@@ -144,7 +144,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     avatar_url: string | null
   } | null>(null)
 
-  const isPublicLanding = pathname === '/'
+  const isPublicLanding = pathname === '/' || pathname === '/cinematic-demo'
   const isAuthRoute = [
     '/login',
     '/register',
