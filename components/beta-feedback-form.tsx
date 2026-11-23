@@ -2,9 +2,11 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { ApiError, errorMessage as apiErrorMessage } from '@/features/api-client'
+import { submitFeedback, type FeedbackCategory } from '@/features/feedback/api'
 
 export function BetaFeedbackForm() {
-  const [category, setCategory] = useState<'GENERAL' | 'BUG' | 'FEATURE' | 'CONFUSION'>('GENERAL')
+  const [category, setCategory] = useState<FeedbackCategory>('GENERAL')
   const [message, setMessage] = useState('')
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -17,38 +19,27 @@ export function BetaFeedbackForm() {
     setIsUnauthenticated(false)
 
     try {
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          category,
-          message: message.trim(),
-          path: typeof window !== 'undefined' ? window.location.pathname : '/',
-        }),
+      await submitFeedback({
+        category,
+        message: message.trim(),
+        path: typeof window !== 'undefined' ? window.location.pathname : '/',
       })
-
-      const data = await response.json().catch(() => ({}))
-
-      if (response.ok) {
-        setState('sent')
-        setMessage('')
-      } else {
-        setState('error')
-        if (response.status === 401) {
-          setIsUnauthenticated(true)
-          setErrorMessage('You must be signed in to submit beta feedback.')
-        } else if (response.status === 429) {
-          const retryAfter = response.headers.get('Retry-After')
-          setErrorMessage(
-            `Rate limit reached. Please wait ${retryAfter ? `${retryAfter} seconds` : 'a moment'} before sending another feedback message.`
-          )
-        } else {
-          setErrorMessage(data.error ?? 'Could not submit feedback. Please check your connection and retry.')
-        }
-      }
-    } catch {
+      setState('sent')
+      setMessage('')
+    } catch (requestError) {
       setState('error')
-      setErrorMessage('Network error occurred. Please verify your connection and retry.')
+      const status = requestError instanceof ApiError ? requestError.status : 0
+      if (status === 401) {
+        setIsUnauthenticated(true)
+        setErrorMessage('You must be signed in to submit beta feedback.')
+      } else if (status === 429) {
+        const retryAfter = requestError instanceof ApiError ? requestError.headers?.get('Retry-After') : null
+        setErrorMessage(
+          `Rate limit reached. Please wait ${retryAfter ? `${retryAfter} seconds` : 'a moment'} before sending another feedback message.`
+        )
+      } else {
+        setErrorMessage(apiErrorMessage(requestError, 'Could not submit feedback. Please check your connection and retry.'))
+      }
     }
   }
 
@@ -61,7 +52,7 @@ export function BetaFeedbackForm() {
         <select
           id="feedback-category"
           value={category}
-          onChange={(event) => setCategory(event.target.value as any)}
+          onChange={(event) => setCategory(event.target.value as FeedbackCategory)}
           className="min-h-11 rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
         >
           <option value="GENERAL">General feedback</option>
@@ -104,14 +95,14 @@ export function BetaFeedbackForm() {
             {state === 'sending' ? 'Sending…' : 'Send feedback'}
           </button>
           {state === 'sent' && (
-            <span role="status" className="text-sm font-medium text-emerald-300">
+            <span role="status" className="text-sm font-medium text-emerald-700">
               ✓ Thanks — your feedback has been received.
             </span>
           )}
         </div>
 
         {state === 'error' && (
-          <div role="alert" className="mt-2 rounded-lg border border-red-500/30 bg-red-400/10 p-3 text-xs text-red-200">
+          <div role="alert" className="mt-2 rounded-lg border border-red-500/30 bg-red-400/10 p-3 text-xs text-red-700">
             <p>{errorMessage}</p>
             {isUnauthenticated ? (
               <Link href="/login?next=/settings" className="mt-2 inline-block font-semibold text-accent underline">
@@ -121,7 +112,7 @@ export function BetaFeedbackForm() {
               <button
                 type="button"
                 onClick={submit}
-                className="mt-2 text-xs font-semibold underline hover:text-white"
+                className="mt-2 text-xs font-semibold underline hover:text-foreground"
               >
                 Click here to retry
               </button>

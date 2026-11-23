@@ -2,8 +2,10 @@
 
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { createComment, listComments } from '@/features/comments/api'
+import { getPostInteraction, togglePostInteraction } from '@/features/interactions/api'
 
-type Author = { display_name: string; username: string | null; avatar_url: string | null }
+type Author = { display_name: string | null; username: string | null; avatar_url: string | null }
 type Comment = { id: string; author_id: string; parent_id: string | null; content: string; pinned: boolean; created_at: string; author?: Author | null }
 type Stats = { likes: number; saves: number; liked: boolean; saved: boolean }
 
@@ -17,12 +19,16 @@ export function ArticleInteractions({ postId, viewerId }: { postId: string; post
   const [pending, setPending] = useState(false)
 
   const load = useCallback(async () => {
-    const [statsResponse, commentsResponse] = await Promise.all([
-      fetch(`/api/interactions/post?postId=${postId}`),
-      fetch(`/api/comments?postId=${postId}`),
-    ])
-    if (statsResponse.ok) setStats(await statsResponse.json())
-    if (commentsResponse.ok) setComments((await commentsResponse.json()).comments ?? [])
+    try {
+      const [interactionState, commentPage] = await Promise.all([
+        getPostInteraction(postId),
+        listComments(postId),
+      ])
+      setStats(interactionState)
+      setComments(commentPage.comments)
+    } catch (loadError) {
+      setMessage(loadError instanceof Error ? loadError.message : 'Unable to load discussion activity.')
+    }
   }, [postId])
 
   // The panel hydrates its server-backed counters after the article shell is interactive.
@@ -41,12 +47,7 @@ export function ArticleInteractions({ postId, viewerId }: { postId: string; post
       saves: action === 'save' ? stats.saves + 1 : action === 'unsave' ? Math.max(0, stats.saves - 1) : stats.saves,
     })
     try {
-      const response = await fetch('/api/interactions/post', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ postId, action }),
-      })
-      if (!response.ok) throw new Error((await response.json().catch(() => null))?.error ?? 'Please sign in first.')
+      await togglePostInteraction(postId, action)
       await load()
     } catch (error) {
       setStats(previous)
@@ -62,12 +63,7 @@ export function ArticleInteractions({ postId, viewerId }: { postId: string; post
     if (!text.trim()) return
     setPending(true); setMessage('')
     try {
-      const response = await fetch('/api/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ postId, content: text, parentId }),
-      })
-      if (!response.ok) throw new Error((await response.json().catch(() => null))?.error ?? 'Unable to comment.')
+      await createComment({ postId, content: text, parentId })
       if (parentId) { setReplyContent(''); setReplyTo(null) } else { setContent('') }
       await load()
     } catch (error) {
@@ -154,7 +150,7 @@ export function ArticleInteractions({ postId, viewerId }: { postId: string; post
             <Link href="/login" className="font-semibold text-accent">Sign in</Link> to join the discussion.
           </p>
         )}
-        {message && <p role="status" className="mt-3 text-sm text-red-400">{message}</p>}
+        {message && <p role="status" className="mt-3 text-sm text-red-600">{message}</p>}
         <div className="mt-6 space-y-3">
           {topLevel.length ? topLevel.map((comment) => <CommentBody key={comment.id} comment={comment} />) : (
             <p className="rounded-xl border border-dashed border-border p-6 text-sm text-muted">No comments yet. Start the discussion.</p>

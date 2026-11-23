@@ -13,27 +13,29 @@ export const tokens = {
       'Commun.dev is a global developer community for technical publishing, social connection, project showcases, and professional opportunity.',
   },
   colors: {
-    dark: {
-      background: 'hsl(228, 27%, 5%)', // #090a0f
-      foreground: 'hsl(220, 20%, 94%)', // #eceef2
-      surface: 'hsl(226, 22%, 10%)', // #141720
-      surfaceHover: 'hsl(226, 22%, 14%)',
-      elevated: 'hsl(226, 21%, 13%)', // #1a1e2a
-      border: 'hsl(225, 19%, 17%)', // #1f2330
-      borderSubtle: 'hsl(225, 19%, 14%)',
-      borderStrong: 'hsl(225, 19%, 25%)',
-      accent: 'hsl(24, 94%, 53%)', // #f97316 (signature Commun warm orange)
-      accentMuted: 'hsla(24, 94%, 53%, 0.12)',
-      accentHover: 'hsl(24, 94%, 48%)',
+    // Permanent light palette. Mirrors app/globals.css so design decisions have
+    // one documented source even outside Tailwind.
+    light: {
+      background: 'hsl(0, 0%, 100%)', // #ffffff
+      foreground: 'hsl(221, 39%, 11%)', // #111827
+      surface: 'hsl(0, 0%, 100%)', // #ffffff
+      surfaceHover: 'hsl(210, 40%, 98%)', // #f8fafc
+      elevated: 'hsl(210, 40%, 96%)', // #f1f5f9
+      border: 'hsl(214, 32%, 91%)', // #e2e8f0
+      borderSubtle: 'hsl(210, 40%, 96%)', // #f1f5f9
+      borderStrong: 'hsl(213, 27%, 84%)', // #cbd5e1
+      accent: 'hsl(21, 90%, 40%)', // #c2410c, accessible brand orange on white
+      accentMuted: 'hsla(21, 90%, 40%, 0.10)',
+      accentHover: 'hsl(21, 90%, 34%)',
       accentForeground: 'hsl(0, 0%, 100%)',
-      muted: 'hsl(220, 10%, 62%)',
-      subtle: 'hsl(220, 10%, 42%)',
-      card: 'hsl(226, 22%, 9%)',
-      cardBorder: 'hsl(225, 19%, 16%)',
-      highlightIndigo: 'hsl(238, 84%, 67%)',
-      highlightEmerald: 'hsl(152, 69%, 45%)',
-      highlightSky: 'hsl(199, 89%, 48%)',
-      highlightViolet: 'hsl(262, 83%, 68%)',
+      muted: 'hsl(215, 16%, 47%)', // #475569
+      subtle: 'hsl(215, 16%, 55%)', // #64748b
+      card: 'hsl(0, 0%, 100%)',
+      cardBorder: 'hsl(214, 32%, 91%)',
+      highlightIndigo: 'hsl(243, 75%, 45%)',
+      highlightEmerald: 'hsl(160, 84%, 28%)',
+      highlightSky: 'hsl(201, 90%, 32%)',
+      highlightViolet: 'hsl(262, 60%, 45%)',
     },
   },
   typography: {
@@ -50,11 +52,11 @@ export const tokens = {
     full: '9999px',
   },
   shadows: {
-    subtle: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
-    elevated: '0 10px 30px -10px rgba(0, 0, 0, 0.4)',
-    glow: '0 0 35px -5px hsla(24, 94%, 53%, 0.25)',
-    card: '0 14px 40px -28px rgba(0, 0, 0, 0.85)',
-    darkNav: '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)',
+    subtle: '0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px -1px rgb(15 23 42 / 0.06)',
+    elevated: '0 12px 32px -16px rgb(15 23 42 / 0.18)',
+    glow: '0 0 35px -12px hsl(21 90% 40% / 0.18)',
+    card: '0 16px 40px -32px rgb(15 23 42 / 0.16)',
+    header: '0 12px 30px -24px rgb(15 23 42 / 0.18), 0 1px 0 rgb(15 23 42 / 0.04)',
   },
   breakpoints: {
     sm: '640px',

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import type { FeedItem } from '@/lib/feed'
 import { hostnameOf } from '@/lib/social-posts'
+import { togglePostInteraction } from '@/features/interactions/api'
 
 function formatDate(value: string | null) {
   if (!value) return 'Recently'
@@ -34,15 +35,7 @@ export function FeedCard({ item }: { item: FeedItem }) {
     }
 
     try {
-      const response = await fetch('/api/interactions/post', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ postId: item.id, action }),
-      })
-      if (!response.ok) {
-        const payload = await response.json().catch(() => null)
-        throw new Error(payload?.error ?? 'Unable to update this interaction.')
-      }
+      await togglePostInteraction(item.id, action)
     } catch (error) {
       setLiked(previous.liked)
       setSaved(previous.saved)

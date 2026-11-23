@@ -120,6 +120,40 @@ async function recordEarning(admin: AdminClient, invoice: Stripe.Invoice) {
   if (error && error.code !== '23505') logServer('error', 'stripe.earning.insert_failed', { invoiceId: invoice.id, code: error.code ?? 'unknown' })
 }
 
+function invoiceIdOfCharge(charge: Stripe.Charge): string | null {
+  // Stripe's generated types for the pinned API version no longer expose the
+  // legacy `invoice` link on Charge, but it is still present on events created
+  // by the subscription billing flow. Read it defensively so an API version
+  // change cannot crash refund processing.
+  const legacy = (charge as Stripe.Charge & { invoice?: string | { id: string } | null }).invoice
+  if (!legacy) return null
+  return typeof legacy === 'string' ? legacy : legacy.id
+}
+
+async function markEarningRefunded(admin: AdminClient, charge: Stripe.Charge) {
+  if (!charge.refunded) {
+    // Partial refunds are recorded by Stripe on the charge but the ledger has
+    // no partial-refund model yet. Leave the earning unchanged and flag it for
+    // manual reconciliation instead of overstating the refund.
+    logServer('warn', 'stripe.refund.partial', { chargeId: charge.id, amountRefunded: charge.amount_refunded ?? 0 })
+    return
+  }
+
+  const invoiceId = invoiceIdOfCharge(charge)
+  if (!invoiceId) {
+    logServer('warn', 'stripe.refund.unmapped', { chargeId: charge.id })
+    return
+  }
+
+  const { error } = await admin
+    .from('earnings')
+    .update({ status: 'refunded', updated_at: new Date().toISOString() })
+    .eq('stripe_invoice_id', invoiceId)
+  if (error) {
+    throw new Error(`Unable to mark earning refunded: ${error.code ?? 'unknown'}`)
+  }
+}
+
 async function syncConnectAccount(admin: AdminClient, account: Stripe.Account) {
   const { error } = await admin.from('creator_accounts').update({
     details_submitted: Boolean(account.details_submitted),
@@ -159,6 +193,18 @@ async function processEvent(event: Stripe.Event) {
     }
     case 'invoice.payment_failed': {
       logServer('warn', 'stripe.invoice.payment_failed', { invoiceId: (event.data.object as Stripe.Invoice).id })
+      return
+    }
+    case 'charge.refunded': {
+      await markEarningRefunded(admin, event.data.object as Stripe.Charge)
+      return
+    }
+    case 'charge.dispute.created': {
+      // The earnings ledger has no dispute state, so this event is acknowledged
+      // for idempotency but requires manual reconciliation.
+      const dispute = event.data.object as Stripe.Dispute
+      const charge = typeof dispute.charge === 'string' ? dispute.charge : dispute.charge?.id
+      logServer('warn', 'stripe.dispute.created', { disputeId: dispute.id, chargeId: charge ?? 'unknown' })
       return
     }
     case 'account.updated': {

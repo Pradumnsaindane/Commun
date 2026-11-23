@@ -2,6 +2,7 @@
 
 import { FormEvent, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { createDiscussion } from '@/features/discussions/api'
 
 function DiscussionForm() {
   const router = useRouter()
@@ -19,20 +20,10 @@ function DiscussionForm() {
     setSaving(true)
     setError('')
     try {
-      const response = await fetch('/api/discussions', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ title, content }),
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        setError(data.error ?? 'Unable to create discussion.')
-        setSaving(false)
-        return
-      }
+      const data = await createDiscussion({ title, content })
       router.push(`/discussions/${data.discussion.id}`)
-    } catch {
-      setError('Network error occurred. Please check your connection and retry.')
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : 'Network error occurred. Please check your connection and retry.')
       setSaving(false)
     }
   }
@@ -43,7 +34,7 @@ function DiscussionForm() {
       <h1 className="text-4xl font-semibold tracking-tight">Start a discussion</h1>
       <form onSubmit={submit} className="mt-8 space-y-5">
         <label className="block">
-          <span className="mb-2 block text-sm text-slate-300">Title</span>
+          <span className="mb-2 block text-sm text-foreground">Title</span>
           <input
             required
             minLength={3}
@@ -55,7 +46,7 @@ function DiscussionForm() {
           />
         </label>
         <label className="block">
-          <span className="mb-2 block text-sm text-slate-300">Details</span>
+          <span className="mb-2 block text-sm text-foreground">Details</span>
           <textarea
             required
             maxLength={10000}
@@ -65,7 +56,7 @@ function DiscussionForm() {
             placeholder="Share context, examples, or your question..."
           />
         </label>
-        {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+        {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
         <button
           disabled={saving}
           className="rounded-lg bg-accent px-5 py-3 font-semibold text-background transition hover:brightness-110 disabled:opacity-50"

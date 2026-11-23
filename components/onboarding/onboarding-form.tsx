@@ -3,6 +3,7 @@
 import { FormEvent, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ONBOARDING_INTERESTS, isValidUsername } from '@/lib/onboarding'
+import { finalizeProfile } from '@/features/profiles/api'
 
 export { ONBOARDING_INTERESTS }
 
@@ -72,25 +73,14 @@ export function OnboardingForm({
       // The browser never writes account status. A server route derives identity
       // from the session, validates the profile, and performs the ACTIVE
       // transition with a whitelisted payload.
-      const response = await fetch('/api/profile/finalize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          displayName: name.trim(),
-          username: username.trim().toLowerCase(),
-          bio: bio.trim(),
-          github: github.trim(),
-          website: website.trim(),
-          interests: selected,
-        }),
+      await finalizeProfile({
+        displayName: name.trim(),
+        username: username.trim().toLowerCase(),
+        bio: bio.trim(),
+        github: github.trim(),
+        website: website.trim(),
+        interests: selected,
       })
-      const result = await response.json().catch(() => null)
-
-      if (!response.ok) {
-        setError(result?.error ?? 'Please check your connection and retry.')
-        setLoading(false)
-        return
-      }
 
       router.push('/feed')
       router.refresh()
@@ -121,11 +111,11 @@ export function OnboardingForm({
           </div>
         </div>
 
-        <section className="rounded-2xl border border-border bg-surface p-6 shadow-2xl shadow-black/20 sm:p-10">
+        <section className="rounded-2xl border border-border bg-surface p-6 shadow-elevated sm:p-10">
           {error && (
             <div
               role="alert"
-              className="mb-6 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300"
+              className="mb-6 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-600"
             >
               {error}
             </div>

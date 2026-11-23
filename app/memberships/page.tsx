@@ -67,7 +67,7 @@ export default async function MembershipsPage({ searchParams }: { searchParams: 
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  {row.cancel_at_period_end && <span className="font-mono text-[10px] uppercase tracking-wider text-amber-300">Ends at period end</span>}
+                  {row.cancel_at_period_end && <span className="font-mono text-[10px] uppercase tracking-wider text-amber-700">Ends at period end</span>}
                   <StatusBadge tone={active ? 'accent' : 'neutral'}>{active ? (row.status as string) : 'Inactive'}</StatusBadge>
                 </div>
               </Surface>

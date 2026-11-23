@@ -30,8 +30,8 @@ type SectionShellProps = {
 function StatusPill({ status }: { status: SectionStatus }) {
   if (status === 'live') {
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-600/25 bg-emerald-500/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-emerald-300">
-        <span className="size-1.5 rounded-full bg-emerald-300" aria-hidden="true" />
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-600/25 bg-emerald-500/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-emerald-700">
+        <span className="size-1.5 rounded-full bg-emerald-600" aria-hidden="true" />
         Live today
       </span>
     )
@@ -435,7 +435,7 @@ export function SocialLandingPage() {
                     <span
                       className={`rounded border px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.08em] ${
                         item.state === 'Implemented'
-                          ? 'border-emerald-600/25 text-emerald-300'
+                          ? 'border-emerald-600/25 text-emerald-700'
                           : 'border-border text-subtle'
                       }`}
                     >
@@ -515,7 +515,7 @@ export function SocialLandingPage() {
                       <span
                         className={`rounded border px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.08em] ${
                           item.state === 'Live'
-                            ? 'border-emerald-600/25 text-emerald-300'
+                            ? 'border-emerald-600/25 text-emerald-700'
                             : 'border-border text-subtle'
                         }`}
                       >
@@ -539,16 +539,16 @@ export function SocialLandingPage() {
           </div>
         </SectionShell>
 
-        <section className="bg-foreground text-background">
+        <section className="border-y border-border bg-elevated">
           <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-background/60">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
                 Join Commun.dev
               </p>
-              <h2 className="mt-4 max-w-[22ch] text-[clamp(1.9rem,3.6vw,3rem)] font-semibold leading-[1.1] tracking-[-0.03em]">
+              <h2 className="mt-4 max-w-[22ch] text-[clamp(1.9rem,3.6vw,3rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-foreground">
                 Your next collaborator is already building.
               </h2>
-              <p className="mt-4 max-w-[50ch] text-[15px] leading-[1.7] text-background/70 sm:text-base">
+              <p className="mt-4 max-w-[50ch] text-[15px] leading-[1.7] text-muted sm:text-base">
                 Create a developer identity, publish what you know, and find the
                 people and opportunities that move your work forward.
               </p>
@@ -562,7 +562,7 @@ export function SocialLandingPage() {
               </Link>
               <Link
                 href="/discover"
-                className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-lg border border-background/25 px-5 text-sm font-semibold text-background transition-colors hover:bg-background/10"
+                className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-5 text-sm font-semibold text-foreground transition-colors hover:bg-surface-hover"
               >
                 Explore developers
                 <span aria-hidden="true">→</span>

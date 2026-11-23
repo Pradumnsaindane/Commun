@@ -9,10 +9,11 @@ describe('Commun Design Tokens', () => {
     expect(tokens.brand.supportText).toContain('developer community')
   })
 
-  it('defines the permanent dark palette with Commun orange accent', () => {
-    expect(tokens.colors.dark.accent).toContain('24, 94%')
-    expect(tokens.colors.dark.background).toContain('228, 27%, 5%')
-    expect(tokens.colors.dark.surface).toContain('226, 22%, 10%')
+  it('defines the permanent light palette with an accessible Commun orange accent', () => {
+    expect(tokens.colors.light.accent).toContain('21, 90%, 40%')
+    expect(tokens.colors.light.background).toContain('0, 0%, 100%')
+    expect(tokens.colors.light.surface).toContain('0, 0%, 100%')
+    expect(tokens.colors.light.foreground).toContain('221, 39%, 11%')
   })
 
   it('defines typography, radii, and breakpoints', () => {

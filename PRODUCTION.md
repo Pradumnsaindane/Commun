@@ -18,7 +18,7 @@ Public browser variables are limited to `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC
 
 ## Validation and deployment
 
-Use `npm test`, `npm run typecheck`, `npm run lint`, and `npm run build` before deployment. Verify Supabase Auth redirect configuration, email confirmation, RLS policies, Realtime publication membership, and production HTTPS. Protected route and public route smoke checks should be run against the deployed preview with at least one real account per role.
+Use `npm test`, `npm run typecheck`, `npm run lint`, and `npm run build` before deployment. Canonical application traffic uses `/api/v1/*`; unversioned routes are compatibility adapters. See `ARCHITECTURE.md`, `docs/api-contracts.md`, and `docs/deployment.md` for layer ownership and the endpoint inventory. Verify Supabase Auth redirect configuration, email confirmation, RLS policies, Realtime publication membership, and production HTTPS. Protected route and public route smoke checks should be run against the deployed preview with at least one real account per role.
 
 ## Creator monetization
 
@@ -33,4 +33,4 @@ Commun uses Stripe for memberships, paid publications, and creator payouts:
 
 ## Known limitations
 
-Abuse-sensitive report submissions use Upstash Redis sliding-window limits keyed by authenticated user and request IP. The app accepts the integration's injected `KV_REST_API_URL`/`KV_REST_API_TOKEN` names as well as canonical `UPSTASH_REDIS_REST_*` names. Keep platform/WAF limits enabled as a second layer for traffic spikes and unavailable-integration fallback. Full multi-account moderator/admin smoke testing requires provisioned accounts for each role. CSP is report-only until deployed traffic has been observed and all legitimate script/connect origins are confirmed; this avoids breaking Supabase auth and preview tooling during rollout.
+Abuse-sensitive report submissions use Upstash Redis sliding-window limits keyed by authenticated user and request IP. The app accepts the integration's injected `KV_REST_API_URL`/`KV_REST_API_TOKEN` names as well as canonical `UPSTASH_REDIS_REST_*` names. When no Redis configuration is present, `lib/rate-limit.ts` falls back to an in-process fixed window so endpoints remain available; multi-instance deployments must configure Redis for shared limits. Keep platform/WAF limits enabled as a second layer for traffic spikes. Full multi-account moderator/admin smoke testing requires provisioned accounts for each role. CSP is report-only until deployed traffic has been observed and all legitimate script/connect origins are confirmed; this avoids breaking Supabase auth and preview tooling during rollout.

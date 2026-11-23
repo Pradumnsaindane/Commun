@@ -3,33 +3,34 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
-  /* Permanent Commun dark palette: one source of truth for every route. */
-  --background: 228 27% 5%;
-  --foreground: 220 20% 94%;
-  --surface: 226 22% 10%;
-  --surface-hover: 226 22% 14%;
-  --elevated: 226 21% 13%;
-  --border: 225 19% 17%;
-  --border-subtle: 225 19% 14%;
-  --border-strong: 225 19% 25%;
-  --accent: 24 94% 53%;
-  --accent-readable: 24 94% 53%;
-  --accent-muted: 24 94% 53% / 0.12;
-  --accent-hover: 24 94% 48%;
+  /* Permanent Commun light palette: one source of truth for every route. */
+  color-scheme: light;
+  --background: 0 0% 100%;
+  --foreground: 221 39% 11%;
+  --surface: 0 0% 100%;
+  --surface-hover: 210 40% 98%;
+  --elevated: 210 40% 96%;
+  --border: 214 32% 91%;
+  --border-subtle: 210 40% 96%;
+  --border-strong: 213 27% 84%;
+  /* Deep brand orange for accessible text and filled actions on white. */
+  --accent: 21 90% 40%;
+  --accent-readable: 21 90% 40%;
+  --accent-muted: 21 90% 40% / 0.10;
+  --accent-hover: 21 90% 34%;
   --accent-foreground: 0 0% 100%;
-  --muted: 220 10% 65%;
-  --subtle: 220 10% 48%;
-  --card: 226 22% 9%;
-  --card-border: 225 19% 16%;
-  --glass: 226 22% 10% / 0.78;
-  --glass-border: 225 19% 28% / 0.72;
+  --muted: 215 16% 47%;
+  --subtle: 215 16% 55%;
+  --card: 0 0% 100%;
+  --card-border: 214 32% 91%;
+  --glass: 0 0% 100% / 0.84;
+  --glass-border: 214 32% 91% / 0.85;
 
   /* Shared, static-first ambient lighting tokens */
-  --ambient-landing-orange: 24 94% 53% / 0.17;
-  --ambient-landing-neutral: 220 20% 90% / 0.05;
-  --ambient-dashboard-orange: 24 94% 53% / 0.055;
-  --ambient-dashboard-neutral: 220 20% 86% / 0.035;
+  --ambient-landing-orange: 24 94% 53% / 0.08;
+  --ambient-landing-neutral: 221 39% 11% / 0.03;
+  --ambient-dashboard-orange: 24 94% 53% / 0.04;
+  --ambient-dashboard-neutral: 221 39% 11% / 0.02;
   --ambient-landing-blur: 108px;
   --ambient-dashboard-blur: 124px;
   --ambient-landing-duration: 24s;
@@ -539,8 +540,9 @@ button, a, input, textarea, select {
   font-style: italic;
 }
 .article-body code {
+  border: 1px solid hsl(var(--accent) / 0.16);
   border-radius: 0.35rem;
-  background: hsl(var(--surface));
+  background: hsl(var(--accent) / 0.07);
   padding: 0.15rem 0.35rem;
   font-family: ui-monospace, monospace;
   font-size: 0.9em;
@@ -550,7 +552,7 @@ button, a, input, textarea, select {
   overflow-x: auto;
   border: 1px solid hsl(var(--border));
   border-radius: 0.75rem;
-  background: hsl(var(--surface));
+  background: hsl(var(--surface-hover));
   padding: 1rem;
   color: hsl(var(--foreground));
 }
@@ -570,20 +572,20 @@ button, a, input, textarea, select {
   border-top: 1px solid hsl(var(--border));
 }
 
-/* Phase 1B — rendered code blocks and copy controls */
+/* Phase 1B — rendered code blocks and copy controls (light syntax theme) */
 .code-block {
   position: relative;
   margin: 0;
   border-radius: 0;
-  background: color-mix(in srgb, var(--surface) 88%, var(--foreground) 4%);
-  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: hsl(var(--surface-hover));
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-variant-ligatures: none;
   tab-size: 2;
 }
 
 .article-body pre.code-block {
   margin: 1.5rem 0;
-  border: 1px solid var(--border);
+  border: 1px solid hsl(var(--border));
   border-radius: 0.75rem;
   padding: 1.1rem 1.15rem;
   overflow-x: auto;
@@ -594,10 +596,10 @@ button, a, input, textarea, select {
   white-space: pre;
 }
 
-.code-block .tok-comment { color: var(--muted); font-style: italic; }
-.code-block .tok-string { color: var(--accent); }
-.code-block .tok-number { color: var(--accent-hover); }
-.code-block .tok-keyword { color: var(--foreground); font-weight: 600; }
+.code-block .tok-comment { color: hsl(var(--muted)); font-style: italic; }
+.code-block .tok-string { color: hsl(160 84% 26%); }
+.code-block .tok-number { color: hsl(201 90% 30%); }
+.code-block .tok-keyword { color: hsl(262 60% 42%); font-weight: 600; }
 
 .code-copy {
   position: absolute;
@@ -605,11 +607,11 @@ button, a, input, textarea, select {
   right: 0.55rem;
   min-height: 1.9rem;
   padding: 0 0.6rem;
-  border: 1px solid var(--border);
+  border: 1px solid hsl(var(--border));
   border-radius: 0.45rem;
-  background: var(--surface);
-  color: var(--muted);
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  background: hsl(var(--surface));
+  color: hsl(var(--muted));
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.65rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -623,8 +625,8 @@ button, a, input, textarea, select {
 }
 
 .code-copy:hover {
-  color: var(--foreground);
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--accent) / 0.45);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button'
 const columns = [
   { title: 'To do', description: 'Ready to begin', tone: 'text-muted', marker: 'bg-border' },
   { title: 'In progress', description: 'Work in motion', tone: 'text-accent', marker: 'bg-accent' },
-  { title: 'In review', description: 'Awaiting review', tone: 'text-indigo-300', marker: 'bg-indigo-400' },
-  { title: 'Completed', description: 'Finished work', tone: 'text-emerald-300', marker: 'bg-emerald-400' },
+  { title: 'In review', description: 'Awaiting review', tone: 'text-indigo-700', marker: 'bg-indigo-600' },
+  { title: 'Completed', description: 'Finished work', tone: 'text-emerald-700', marker: 'bg-emerald-600' },
 ]
 
 export default async function TasksPage() {

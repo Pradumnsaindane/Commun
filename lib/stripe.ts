@@ -1,17 +1,18 @@
 import Stripe from 'stripe'
+import { isConfiguredValue } from '@/lib/env'
 
 let client: Stripe | null = null
 
 export function stripeSecretKey() {
-  return process.env.STRIPE_SECRET_KEY ?? ''
+  return isConfiguredValue(process.env.STRIPE_SECRET_KEY) ? process.env.STRIPE_SECRET_KEY : ''
 }
 
 export function isStripeConfigured() {
-  return stripeSecretKey().startsWith('sk_') && Boolean(process.env.STRIPE_WEBHOOK_SECRET)
+  return stripeSecretKey().startsWith('sk_') && isConfiguredValue(process.env.STRIPE_WEBHOOK_SECRET)
 }
 
 export function hasMembershipPrice() {
-  return Boolean(process.env.STRIPE_PRICE_MEMBERSHIP_MONTHLY)
+  return isConfiguredValue(process.env.STRIPE_PRICE_MEMBERSHIP_MONTHLY)
 }
 
 export function canBill() {
@@ -26,7 +27,7 @@ export function getStripe(): Stripe | null {
 }
 
 export function stripeWebhookSecret() {
-  return process.env.STRIPE_WEBHOOK_SECRET ?? ''
+  return isConfiguredValue(process.env.STRIPE_WEBHOOK_SECRET) ? process.env.STRIPE_WEBHOOK_SECRET : ''
 }
 
 export function siteUrl() {

@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { errorMessage } from '@/features/api-client'
+import { openBillingPortal, startMembershipCheckout } from '@/features/billing/api'
 
 type State = 'guest' | 'owner' | 'member' | 'none'
 
@@ -15,16 +17,10 @@ export function SubscribeButton({ creatorId, state, billingReady, profileHref = 
     setBusy(true)
     setError(null)
     try {
-      const response = await fetch('/api/billing/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ creatorId }) })
-      const result = await response.json().catch(() => ({}))
-      if (!response.ok || !result.url) {
-        setError(result.error ?? 'Unable to start checkout.')
-        setBusy(false)
-        return
-      }
-      window.location.href = result.url
-    } catch {
-      setError('Unable to start checkout.')
+      const url = await startMembershipCheckout(creatorId)
+      window.location.href = url
+    } catch (requestError) {
+      setError(errorMessage(requestError, 'Unable to start checkout.'))
       setBusy(false)
     }
   }
@@ -33,16 +29,9 @@ export function SubscribeButton({ creatorId, state, billingReady, profileHref = 
     setBusy(true)
     setError(null)
     try {
-      const response = await fetch('/api/billing/portal', { method: 'POST' })
-      const result = await response.json().catch(() => ({}))
-      if (!response.ok || !result.url) {
-        setError(result.error ?? 'Billing portal unavailable.')
-        setBusy(false)
-        return
-      }
-      window.location.href = result.url
-    } catch {
-      setError('Billing portal unavailable.')
+      window.location.href = await openBillingPortal()
+    } catch (requestError) {
+      setError(errorMessage(requestError, 'Billing portal unavailable.'))
       setBusy(false)
     }
   }
@@ -54,7 +43,7 @@ export function SubscribeButton({ creatorId, state, billingReady, profileHref = 
         <button type="button" onClick={() => void openPortal()} disabled={busy} className="font-mono text-[10px] uppercase tracking-wider text-muted hover:text-accent disabled:opacity-50">
           {busy ? 'Opening…' : 'Manage membership'}
         </button>
-        {error && <p className="text-xs text-red-300">{error}</p>}
+        {error && <p className="text-xs text-red-600">{error}</p>}
       </div>
     )
   }
@@ -74,7 +63,7 @@ export function SubscribeButton({ creatorId, state, billingReady, profileHref = 
       <button type="button" onClick={() => void startCheckout()} disabled={busy} className="inline-flex rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-background hover:brightness-110 disabled:opacity-60">
         {busy ? 'Redirecting…' : 'Become a member'}
       </button>
-      {error && <p className="text-xs text-red-300">{error}</p>}
+      {error && <p className="text-xs text-red-600">{error}</p>}
     </div>
   )
 }

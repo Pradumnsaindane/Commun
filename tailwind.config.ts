@@ -33,11 +33,12 @@ export default {
           border: 'hsl(var(--card-border))',
         },
         brand: {
-          orange: 'hsl(24, 94%, 53%)',
-          indigo: 'hsl(238, 84%, 67%)',
-          emerald: 'hsl(152, 69%, 45%)',
-          sky: 'hsl(199, 89%, 48%)',
-          violet: 'hsl(262, 83%, 68%)',
+          // Accessible on white surfaces; these are text/icon colors, not fills.
+          orange: 'hsl(21, 90%, 40%)',
+          indigo: 'hsl(243, 75%, 45%)',
+          emerald: 'hsl(160, 84%, 28%)',
+          sky: 'hsl(201, 90%, 32%)',
+          violet: 'hsl(262, 60%, 45%)',
         },
       },
       fontFamily: {
@@ -46,12 +47,12 @@ export default {
         mono: ['var(--font-mono)', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        subtle: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
-        elevated: '0 10px 30px -10px rgba(0, 0, 0, 0.4)',
-        glow: '0 0 35px -5px hsla(24, 94%, 53%, 0.25)',
-        'glow-indigo': '0 0 35px -5px hsla(238, 84%, 67%, 0.25)',
-        'dark-nav': '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)',
-        card: '0 14px 40px -28px rgba(0, 0, 0, 0.85)',
+        subtle: '0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px -1px rgb(15 23 42 / 0.06)',
+        elevated: '0 12px 32px -16px rgb(15 23 42 / 0.18)',
+        glow: '0 0 35px -12px hsl(21 90% 40% / 0.18)',
+        'glow-indigo': '0 0 35px -12px hsl(243 75% 45% / 0.15)',
+        header: '0 12px 30px -24px rgb(15 23 42 / 0.18), 0 1px 0 rgb(15 23 42 / 0.04)',
+        card: '0 16px 40px -32px rgb(15 23 42 / 0.16)',
       },
       keyframes: {
         'beam-dash': {

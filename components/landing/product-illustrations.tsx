@@ -167,7 +167,7 @@ export function ProductIllustrations() {
           <Card className="flex flex-col justify-between p-6">
             <div>
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs uppercase tracking-wider text-emerald-400">Platform reliability</span>
+                <span className="font-mono text-xs uppercase tracking-wider text-emerald-700">Platform reliability</span>
                 <Badge variant="emerald" dot>Resilient architecture</Badge>
               </div>
               <h3 className="mt-2 text-lg font-bold text-foreground">Secure & available enterprise backbone</h3>
@@ -181,7 +181,7 @@ export function ProductIllustrations() {
                   <p className="text-[10px] text-muted">Row-level access boundaries</p>
                 </div>
               </div>
-              <span className="font-mono text-xs text-emerald-400">Encrypted</span>
+              <span className="font-mono text-xs text-emerald-700">Encrypted</span>
             </div>
           </Card>
         </div>

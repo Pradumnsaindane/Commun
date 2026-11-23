@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { errorMessage } from '@/features/api-client'
+import { openBillingPortal } from '@/features/billing/api'
 
 export function ManageBilling({ billingReady }: { billingReady: boolean }) {
   const [busy, setBusy] = useState(false)
@@ -10,16 +12,9 @@ export function ManageBilling({ billingReady }: { billingReady: boolean }) {
     setBusy(true)
     setError(null)
     try {
-      const response = await fetch('/api/billing/portal', { method: 'POST' })
-      const result = await response.json().catch(() => ({}))
-      if (!response.ok || !result.url) {
-        setError(result.error ?? 'Billing portal unavailable.')
-        setBusy(false)
-        return
-      }
-      window.location.href = result.url
-    } catch {
-      setError('Billing portal unavailable.')
+      window.location.href = await openBillingPortal()
+    } catch (requestError) {
+      setError(errorMessage(requestError, 'Billing portal unavailable.'))
       setBusy(false)
     }
   }
@@ -31,7 +26,7 @@ export function ManageBilling({ billingReady }: { billingReady: boolean }) {
       <button type="button" onClick={() => void openPortal()} disabled={busy} className="inline-flex rounded-lg border border-border px-4 py-2 text-sm font-medium hover:border-accent disabled:opacity-50">
         {busy ? 'Opening…' : 'Manage billing'}
       </button>
-      {error && <p className="text-xs text-red-300">{error}</p>}
+      {error && <p className="text-xs text-red-600">{error}</p>}
     </div>
   )
 }

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useRef, useState } from 'react'
 import type { FeedItem, FeedTab } from '@/lib/feed'
+import { getFeed } from '@/features/posts/api'
 import { FeedCard } from './feed-card'
 
 type Props = {
@@ -25,15 +26,11 @@ export function SocialFeed({ initialItems, initialCursor, initialTab, initialErr
     setLoading(true)
     setError(null)
     try {
-      const params = new URLSearchParams({ tab: nextTab })
-      if (nextCursor) params.set('cursor', nextCursor)
-      const response = await fetch(`/api/feed?${params.toString()}`)
-      const payload = await response.json().catch(() => null)
-      if (!response.ok) throw new Error(payload?.error ?? 'Unable to load the feed.')
+      const payload = await getFeed({ tab: nextTab, cursor: nextCursor })
       if (id !== requestId.current) return
-      const incoming: FeedItem[] = payload.items ?? []
+      const incoming: FeedItem[] = payload.items
       setItems((current) => (nextCursor ? [...current, ...incoming.filter((item) => !current.some((existing) => existing.id === item.id))] : incoming))
-      setCursor(payload.nextCursor ?? null)
+      setCursor(payload.nextCursor)
     } catch (loadError) {
       if (id === requestId.current) setError(loadError instanceof Error ? loadError.message : 'Unable to load the feed.')
     } finally {
@@ -79,7 +76,7 @@ export function SocialFeed({ initialItems, initialCursor, initialTab, initialErr
       </div>
 
       {error && (
-        <div role="alert" className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
+        <div role="alert" className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-700">
           <p className="font-semibold">The feed could not load.</p>
           <p className="mt-1 text-xs">{error}</p>
           <button type="button" onClick={() => void load(tab, null)} className="mt-3 rounded-lg border border-red-400/40 px-3 py-1.5 text-xs font-semibold">Try again</button>

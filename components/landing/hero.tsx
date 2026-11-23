@@ -188,12 +188,12 @@ export function Hero() {
 
                     <div className="rounded-xl border border-border bg-surface p-3.5 space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-[10px] text-emerald-400 uppercase">Completed</span>
-                        <span className="text-[10px] rounded bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5">8</span>
+                        <span className="font-mono text-[10px] text-emerald-700 uppercase">Completed</span>
+                        <span className="text-[10px] rounded bg-emerald-500/20 text-emerald-700 px-1.5 py-0.5">8</span>
                       </div>
                       <div className="rounded-lg border border-border/80 bg-background p-2.5 opacity-80">
                         <p className="text-xs font-medium text-muted line-through">Security key rotation runbook</p>
-                        <span className="mt-2 block text-[10px] text-emerald-400">✓ Verified in staging</span>
+                        <span className="mt-2 block text-[10px] text-emerald-700">✓ Verified in staging</span>
                       </div>
                     </div>
                   </div>
@@ -248,7 +248,7 @@ export function Hero() {
                       </div>
                     </div>
                     <div className="rounded-xl border border-border bg-surface p-4">
-                      <span className="font-mono text-[10px] text-emerald-400 uppercase">Architecture</span>
+                      <span className="font-mono text-[10px] text-emerald-700 uppercase">Architecture</span>
                       <h4 className="mt-1 text-sm font-semibold text-foreground">Multi-Tenant Tenant Isolation Model</h4>
                       <p className="mt-1 text-xs text-muted">Row-level security enforcement and data sovereignty specifications.</p>
                       <div className="mt-3 flex items-center justify-between text-[10px] text-muted">

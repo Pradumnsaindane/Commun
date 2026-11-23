@@ -40,7 +40,7 @@ export function Modal({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
     >
       <div
-        className="fixed inset-0 bg-slate-950/35 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[hsl(var(--foreground)/0.10)] backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />

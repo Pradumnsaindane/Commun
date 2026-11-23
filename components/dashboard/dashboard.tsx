@@ -341,8 +341,8 @@ export function Dashboard({
                         <span
                           className={`rounded px-2 py-0.5 font-mono text-[10px] font-semibold uppercase ${
                             post.status === 'PUBLISHED'
-                              ? 'bg-emerald-500/15 text-emerald-400'
-                              : 'bg-amber-500/15 text-amber-400'
+                              ? 'bg-emerald-500/15 text-emerald-700'
+                              : 'bg-amber-500/15 text-amber-700'
                           }`}
                         >
                           {post.status}

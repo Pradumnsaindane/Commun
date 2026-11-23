@@ -26,7 +26,7 @@ export function Navbar() {
         className={cn(
           'mx-auto max-w-7xl flex h-16 items-center justify-between rounded-2xl border px-5 transition-all duration-300',
           scrolled
-            ? 'border-border/80 bg-background/85 backdrop-blur-xl shadow-dark-nav'
+            ? 'border-border/80 bg-background/85 backdrop-blur-xl shadow-header'
             : 'border-border/50 bg-background/60 backdrop-blur-md'
         )}
       >

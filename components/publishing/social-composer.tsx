@@ -3,15 +3,16 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { CodeBlock } from '@/components/ui/code-block'
-import { HIGHLIGHT_LANGUAGES, LANGUAGE_LABELS, normalizeLanguage } from '@/lib/highlight'
-import { hostnameOf, MAX_POST_LENGTH, MAX_SNIPPET_LENGTH, SOCIAL_POST_TYPES, type SocialPostType } from '@/lib/social-posts'
+import { HIGHLIGHT_LANGUAGES, LANGUAGE_LABELS, normalizeLanguage, type HighlightLanguage } from '@/lib/highlight'
+import { hostnameOf, MAX_POST_LENGTH, MAX_SNIPPET_LENGTH, SOCIAL_POST_TYPES, type SocialPostInput, type SocialPostType } from '@/lib/social-posts'
+import { createSocialPost } from '@/features/posts/api'
 
 type Result = { slug: string; degraded: boolean } | null
 
 export function SocialComposer({ authorName }: { authorName: string }) {
   const [type, setType] = useState<SocialPostType>('POST')
   const [body, setBody] = useState('')
-  const [language, setLanguage] = useState('typescript')
+  const [language, setLanguage] = useState<HighlightLanguage>('typescript')
   const [linkUrl, setLinkUrl] = useState('')
   const [title, setTitle] = useState('')
   const [pending, setPending] = useState(false)
@@ -25,20 +26,14 @@ export function SocialComposer({ authorName }: { authorName: string }) {
     setPending(true)
     setError('')
     try {
-      const payload =
+      const payload: SocialPostInput =
         type === 'LINK'
           ? { type, linkUrl: linkUrl.trim(), body: body.trim(), title: title.trim() || undefined }
           : type === 'SNIPPET'
             ? { type, body, language, title: title.trim() || undefined }
             : { type, body, title: title.trim() || undefined }
-      const response = await fetch('/api/social-posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      const data = await response.json().catch(() => null)
-      if (!response.ok) throw new Error(data?.error ?? 'Unable to publish your post.')
-      setResult({ slug: data.post.slug, degraded: Boolean(data.degraded) })
+      const data = await createSocialPost(payload)
+      setResult({ slug: data.post.slug, degraded: data.degraded })
       setBody('')
       setLinkUrl('')
       setTitle('')
@@ -122,7 +117,7 @@ export function SocialComposer({ authorName }: { authorName: string }) {
             <span className="font-medium">Language</span>
             <select
               value={language}
-              onChange={(event) => setLanguage(event.target.value)}
+              onChange={(event) => setLanguage(normalizeLanguage(event.target.value))}
               className="mt-1.5 w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-accent"
             >
               {HIGHLIGHT_LANGUAGES.map((option) => (
@@ -167,7 +162,7 @@ export function SocialComposer({ authorName }: { authorName: string }) {
           </div>
         )}
 
-        {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
+        {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-700">{error}</p>}
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
           <p className="max-w-sm text-xs leading-5 text-muted">Posts publish immediately and can be edited or removed by you.</p>

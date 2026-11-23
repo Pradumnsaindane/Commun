@@ -3,11 +3,13 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { getNotifications, markNotificationsRead } from '@/features/notifications/api'
+import type { NotificationView } from '@shared/index'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
-type Notification = { id: string; actor_id: string | null; type: string; target_slug: string | null; target_title: string | null; read: boolean; created_at: string; actor: { username: string | null; name: string | null } | null }
+type Notification = NotificationView
 
 function label(item: Notification) {
   const actor = item.actor?.name || item.actor?.username || 'Someone'
@@ -29,10 +31,8 @@ export function NotificationCenter({ page = false }: { page?: boolean }) {
   const load = useCallback(async () => {
     setError('')
     try {
-      const response = await fetch('/api/notifications')
-      const data = await response.json().catch(() => null)
-      if (!response.ok) throw new Error(data?.error ?? 'Unable to load notifications.')
-      setItems(data?.notifications ?? [])
+      const data = await getNotifications()
+      setItems(data.notifications)
     } catch {
       setError('Notifications are temporarily unavailable. Try again shortly.')
     } finally {
@@ -56,9 +56,7 @@ export function NotificationCenter({ page = false }: { page?: boolean }) {
     setUpdating(true)
     setError('')
     try {
-      const response = await fetch('/api/notifications', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(id ? { id } : {}) })
-      const data = await response.json().catch(() => null)
-      if (!response.ok) throw new Error(data?.error ?? 'Unable to update notifications.')
+      await markNotificationsRead(id)
       setItems((current) => current.map((item) => id && item.id !== id ? item : { ...item, read: true }))
     } catch {
       setError('Your read status could not be saved. Please try again.')
@@ -71,7 +69,7 @@ export function NotificationCenter({ page = false }: { page?: boolean }) {
   const body = loading ? (
     <div className="space-y-3" role="status" aria-label="Loading notifications"><div className="skeleton h-16" /><div className="skeleton h-16" /><div className="skeleton h-16" /></div>
   ) : error ? (
-    <div className="rounded-xl border border-red-500/25 bg-red-400/5 p-5 text-sm text-red-200" role="alert"><p>{error}</p><Button type="button" variant="outline" size="sm" className="mt-3" onClick={() => { setLoading(true); void load() }}>Try again</Button></div>
+    <div className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-700" role="alert"><p>{error}</p><Button type="button" variant="outline" size="sm" className="mt-3" onClick={() => { setLoading(true); void load() }}>Try again</Button></div>
   ) : items.length === 0 ? (
     <div className="rounded-xl border border-dashed border-border bg-background/70 p-8 text-center"><p className="font-medium">No notifications yet</p><p className="mt-2 text-sm text-muted">New account and community activity will appear here.</p></div>
   ) : (

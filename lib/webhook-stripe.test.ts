@@ -295,6 +295,69 @@ describe('POST /api/webhooks/stripe', () => {
     expect(h.store.get('creator_accounts')?.[0]).toMatchObject({ details_submitted: true, charges_enabled: true, payouts_enabled: false })
   })
 
+  it('marks a fully refunded invoice as refunded and stays idempotent', async () => {
+    h.store.set('earnings', [
+      {
+        creator_id: 'creator-1',
+        membership_id: 'membership-1',
+        stripe_invoice_id: 'in_refund',
+        gross_amount: 1000,
+        platform_fee_amount: 100,
+        net_amount: 900,
+        status: 'paid',
+      },
+    ])
+    const event = {
+      id: 'evt_refund',
+      type: 'charge.refunded',
+      data: { object: { id: 'ch_refund', invoice: 'in_refund', refunded: true, amount_refunded: 1000 } },
+    }
+
+    const response = await stripeWebhook(webhookRequest(event))
+    expect(response.status).toBe(200)
+    expect(h.store.get('earnings')?.[0]).toMatchObject({ status: 'refunded' })
+    expect(h.store.get('stripe_webhook_events')?.[0]).toMatchObject({ event_id: 'evt_refund', status: 'processed' })
+
+    const duplicate = await stripeWebhook(webhookRequest(event))
+    expect(duplicate.status).toBe(200)
+    await expect(duplicate.json()).resolves.toMatchObject({ received: true, duplicate: true })
+    expect(h.store.get('earnings')?.[0]).toMatchObject({ status: 'refunded' })
+  })
+
+  it('leaves earnings unchanged for partial refunds and disputes', async () => {
+    h.store.set('earnings', [
+      {
+        creator_id: 'creator-1',
+        membership_id: 'membership-1',
+        stripe_invoice_id: 'in_partial',
+        gross_amount: 1000,
+        platform_fee_amount: 100,
+        net_amount: 900,
+        status: 'paid',
+      },
+    ])
+
+    const partial = await stripeWebhook(
+      webhookRequest({
+        id: 'evt_partial_refund',
+        type: 'charge.refunded',
+        data: { object: { id: 'ch_partial', invoice: 'in_partial', refunded: false, amount_refunded: 250 } },
+      }),
+    )
+    expect(partial.status).toBe(200)
+    expect(h.store.get('earnings')?.[0]).toMatchObject({ status: 'paid' })
+
+    const dispute = await stripeWebhook(
+      webhookRequest({
+        id: 'evt_dispute',
+        type: 'charge.dispute.created',
+        data: { object: { id: 'dp_1', charge: 'ch_partial', status: 'needs_response' } },
+      }),
+    )
+    expect(dispute.status).toBe(200)
+    expect(h.store.get('earnings')?.[0]).toMatchObject({ status: 'paid' })
+  })
+
   it('marks the event failed and returns 500 when processing throws, allowing retry', async () => {
     h.stripeState.retrieveError = true
     const brokenEvent = {

@@ -4,6 +4,7 @@ import {
   canAccessPost,
   formatMoney,
   gatedPostPayload,
+  isConnectReady,
   isMembershipActive,
   membershipLabel,
   membershipState,
@@ -147,5 +148,16 @@ describe('accountStatus', () => {
     expect(accountStatus({ details_submitted: false, charges_enabled: false, payouts_enabled: false }).ready).toBe(false)
     expect(accountStatus({ details_submitted: true, charges_enabled: true, payouts_enabled: true }).ready).toBe(true)
     expect(accountStatus({ details_submitted: true, charges_enabled: false, payouts_enabled: false }).ready).toBe(false)
+  })
+
+  it('requires payouts to be enabled before checkout can transfer funds', () => {
+    expect(accountStatus({ details_submitted: true, charges_enabled: true, payouts_enabled: false })).toMatchObject({
+      ready: false,
+      detailsSubmitted: true,
+      chargesEnabled: true,
+      payoutsEnabled: false,
+    })
+    expect(isConnectReady({ details_submitted: true, charges_enabled: true, payouts_enabled: false })).toBe(false)
+    expect(isConnectReady({ details_submitted: true, charges_enabled: true, payouts_enabled: true })).toBe(true)
   })
 })

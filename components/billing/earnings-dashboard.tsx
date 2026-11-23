@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { PageContainer } from '@/components/ui/primitives'
 import { StatusBadge, Surface } from '@/components/ui/product-surfaces'
+import { errorMessage } from '@/features/api-client'
+import { startConnectOnboarding } from '@/features/billing/api'
 import { formatMoney } from '@/lib/monetization'
 
 type Account = { details_submitted: boolean; charges_enabled: boolean; payouts_enabled: boolean } | null
@@ -27,16 +29,9 @@ export function EarningsDashboard({ billingReady, feePercent, account, activeMem
     setBusy(true)
     setError(null)
     try {
-      const response = await fetch('/api/billing/connect', { method: 'POST' })
-      const result = await response.json().catch(() => ({}))
-      if (!response.ok || !result.url) {
-        setError(result.error ?? 'Unable to start payout setup.')
-        setBusy(false)
-        return
-      }
-      window.location.href = result.url
-    } catch {
-      setError('Unable to start payout setup.')
+      window.location.href = await startConnectOnboarding()
+    } catch (requestError) {
+      setError(errorMessage(requestError, 'Unable to start payout setup.'))
       setBusy(false)
     }
   }
@@ -49,7 +44,7 @@ export function EarningsDashboard({ billingReady, feePercent, account, activeMem
     >
       {!billingReady && (
         <Surface className="border-amber-400/30 p-5">
-          <p className="font-mono text-[10px] uppercase tracking-wider text-amber-300">Payments not configured</p>
+          <p className="font-mono text-[10px] uppercase tracking-wider text-amber-700">Payments not configured</p>
           <p className="mt-2 text-sm leading-6 text-muted">Add the Stripe secret key, webhook secret, and membership price on the server to enable checkout and payouts.</p>
         </Surface>
       )}
@@ -84,7 +79,7 @@ export function EarningsDashboard({ billingReady, feePercent, account, activeMem
           <div>
             <p className="font-mono text-[10px] uppercase tracking-wider text-accent">Payout setup</p>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">Connect a Stripe payout account so membership revenue can be transferred to you. Subscriptions only become available to readers once this is complete.</p>
-            {error && <p className="mt-2 text-sm text-red-300">{error}</p>}
+            {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
           </div>
           <button type="button" onClick={() => void startOnboarding()} disabled={busy || !billingReady} className="inline-flex shrink-0 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-background hover:brightness-110 disabled:opacity-50">
             {busy ? 'Redirecting…' : ready ? 'Update payout details' : 'Set up payouts'}

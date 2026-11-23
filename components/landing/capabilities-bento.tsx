@@ -37,7 +37,7 @@ const capabilities = [
       <div className="mt-4 rounded-xl border border-border bg-surface p-3 space-y-1.5">
         <div className="flex items-center justify-between text-xs">
           <span className="font-medium text-foreground">Sprint Deliverable</span>
-          <span className="font-mono text-[10px] text-emerald-400">On Track</span>
+          <span className="font-mono text-[10px] text-emerald-700">On Track</span>
         </div>
         <div className="w-full bg-border rounded-full h-1.5">
           <div className="bg-emerald-400 h-1.5 rounded-full w-4/5" />

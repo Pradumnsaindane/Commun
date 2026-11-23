@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { HIGHLIGHT_LANGUAGES, LANGUAGE_LABELS } from '@/lib/highlight'
-import type { SocialPostType } from '@/lib/social-posts'
+import { HIGHLIGHT_LANGUAGES, LANGUAGE_LABELS, normalizeLanguage, type HighlightLanguage } from '@/lib/highlight'
+import { deleteSocialPost, updateSocialPost } from '@/features/posts/api'
+import type { SocialPostInput, SocialPostType } from '@/lib/social-posts'
 
 export function PostOwnerActions({
   postId,
@@ -21,7 +22,7 @@ export function PostOwnerActions({
   const router = useRouter()
   const [editing, setEditing] = useState(false)
   const [body, setBody] = useState(initialType === 'LINK' && initialLinkUrl ? initialBody.replace(initialLinkUrl, '').trim() : initialBody)
-  const [language, setLanguage] = useState(initialLanguage ?? 'typescript')
+  const [language, setLanguage] = useState<HighlightLanguage>(normalizeLanguage(initialLanguage))
   const [linkUrl, setLinkUrl] = useState(initialLinkUrl ?? '')
   const [pending, setPending] = useState(false)
   const [error, setError] = useState('')
@@ -30,19 +31,13 @@ export function PostOwnerActions({
     setPending(true)
     setError('')
     try {
-      const payload =
+      const payload: SocialPostInput =
         initialType === 'LINK'
           ? { type: initialType, linkUrl, body }
           : initialType === 'SNIPPET'
             ? { type: initialType, body, language }
             : { type: initialType, body }
-      const response = await fetch(`/api/social-posts/${postId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      const data = await response.json().catch(() => null)
-      if (!response.ok) throw new Error(data?.error ?? 'Unable to update this post.')
+      await updateSocialPost(postId, payload)
       setEditing(false)
       router.refresh()
     } catch (saveError) {
@@ -57,11 +52,7 @@ export function PostOwnerActions({
     setPending(true)
     setError('')
     try {
-      const response = await fetch(`/api/social-posts/${postId}`, { method: 'DELETE' })
-      if (!response.ok) {
-        const data = await response.json().catch(() => null)
-        throw new Error(data?.error ?? 'Unable to remove this post.')
-      }
+      await deleteSocialPost(postId)
       router.push('/feed')
       router.refresh()
     } catch (removeError) {
@@ -98,7 +89,7 @@ export function PostOwnerActions({
           {initialType === 'SNIPPET' && (
             <select
               value={language}
-              onChange={(event) => setLanguage(event.target.value)}
+              onChange={(event) => setLanguage(normalizeLanguage(event.target.value))}
               className="rounded-lg border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-accent"
               aria-label="Code language"
             >
@@ -120,7 +111,7 @@ export function PostOwnerActions({
         </div>
       )}
 
-      {error && <p role="alert" className="mt-3 text-xs text-red-400">{error}</p>}
+      {error && <p role="alert" className="mt-3 text-xs text-red-600">{error}</p>}
     </section>
   )
 }

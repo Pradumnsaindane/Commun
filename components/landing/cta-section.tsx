@@ -26,9 +26,9 @@ export function CtaSection() {
               </div>
             </div>
             <div className="w-56 rounded-xl border border-border bg-surface p-3 text-left shadow-lg">
-              <span className="font-mono text-[9px] text-emerald-400">MEETING ACTION</span>
+              <span className="font-mono text-[9px] text-emerald-700">MEETING ACTION</span>
               <p className="text-xs font-semibold text-foreground mt-1">Security Audit Sign-off</p>
-              <span className="text-[10px] text-emerald-400">✓ Delegated</span>
+              <span className="text-[10px] text-emerald-700">✓ Delegated</span>
             </div>
           </div>
 

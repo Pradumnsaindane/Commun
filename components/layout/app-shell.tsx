@@ -145,6 +145,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   } | null>(null)
 
   const isPublicLanding = pathname === '/'
+  const isStandaloneDemo = pathname === '/cinematic-hero'
   const isAuthRoute = [
     '/login',
     '/register',
@@ -156,7 +157,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const isAuthCallback = pathname.startsWith('/auth/')
 
   useEffect(() => {
-    if (isPublicLanding || isAuthRoute || isAuthCallback) return
+    if (isPublicLanding || isAuthRoute || isAuthCallback || isStandaloneDemo) return
 
     const client = createClient()
     void client.auth.getUser().then(({ data: { user } }) => {
@@ -172,7 +173,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         })
       }
     })
-  }, [pathname, isPublicLanding, isAuthRoute, isAuthCallback])
+  }, [pathname, isPublicLanding, isAuthRoute, isAuthCallback, isStandaloneDemo])
 
   const handleLogout = async () => {
     setUserMenuOpen(false)
@@ -205,7 +206,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('keydown', closeOnEscape)
   }, [mobileMenuOpen, userMenuOpen])
 
-  if (isPublicLanding) {
+  if (isPublicLanding || isStandaloneDemo) {
     return <div className="min-h-screen bg-background">{children}</div>
   }
 
@@ -295,7 +296,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   />
                   <div
                     role="menu"
-                    className="absolute right-0 top-full z-50 mt-2 w-60 rounded-xl border border-border bg-surface p-2 shadow-lg shadow-black/10"
+                    className="absolute right-0 top-full z-50 mt-2 w-60 rounded-xl border border-border bg-surface p-2 shadow-card"
                   >
                     <div className="border-b border-border px-3 py-2.5">
                       <p className="truncate text-sm font-medium text-foreground">
@@ -329,7 +330,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                         role="menuitem"
                         type="button"
                         onClick={() => void handleLogout()}
-                        className="flex min-h-9 w-full items-center rounded-lg px-3 text-left text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10"
+                        className="flex min-h-9 w-full items-center rounded-lg px-3 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
                       >
                         Log out
                       </button>
@@ -378,7 +379,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden" role="dialog" aria-modal="true" aria-label="Navigation">
           <div
-            className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm"
+            className="fixed inset-0 bg-[hsl(var(--foreground)/0.10)] backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
@@ -419,7 +420,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => void handleLogout()}
-                className="mt-1 flex min-h-10 w-full items-center justify-center rounded-lg border border-red-500/25 bg-red-500/10 text-sm font-medium text-red-400"
+                className="mt-1 flex min-h-10 w-full items-center justify-center rounded-lg border border-red-500/25 bg-red-500/10 text-sm font-medium text-red-600"
               >
                 Log out
               </button>

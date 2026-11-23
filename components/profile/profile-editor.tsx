@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { profileCompleteness } from '@/lib/profile'
+import { updateOwnProfile } from '@/features/profiles/api'
 
 type InitialProfile = {
   display_name: string | null
@@ -64,29 +65,23 @@ export function ProfileEditor({ profile }: { profile: InitialProfile }) {
     setNotice('')
     setSkipped([])
     try {
-      const response = await fetch('/api/profile', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          displayName: form.displayName,
-          username: form.username,
-          headline: form.headline,
-          bio: form.bio,
-          location: form.location,
-          website: form.website,
-          github: form.github,
-          portfolioUrl: form.portfolioUrl,
-          avatarUrl: form.avatarUrl,
-          coverImagePath: form.coverImagePath,
-          skills: form.skills ? form.skills.split(',').map((item) => item.trim()).filter(Boolean) : [],
-          technologies: form.technologies ? form.technologies.split(',').map((item) => item.trim()).filter(Boolean) : [],
-          interests: form.interests ? form.interests.split(',').map((item) => item.trim()).filter(Boolean) : [],
-        }),
+      const data = await updateOwnProfile({
+        displayName: form.displayName,
+        username: form.username,
+        headline: form.headline,
+        bio: form.bio,
+        location: form.location,
+        website: form.website,
+        github: form.github,
+        portfolioUrl: form.portfolioUrl,
+        avatarUrl: form.avatarUrl,
+        coverImagePath: form.coverImagePath,
+        skills: form.skills ? form.skills.split(',').map((item) => item.trim()).filter(Boolean) : [],
+        technologies: form.technologies ? form.technologies.split(',').map((item) => item.trim()).filter(Boolean) : [],
+        interests: form.interests ? form.interests.split(',').map((item) => item.trim()).filter(Boolean) : [],
       })
-      const data = await response.json().catch(() => null)
-      if (!response.ok) throw new Error(data?.error ?? 'Unable to save your profile.')
       setNotice('Profile saved.')
-      setSkipped(data?.skipped ?? [])
+      setSkipped(data.skipped)
     } catch (saveError) {
       setError(saveError instanceof Error ? saveError.message : 'Unable to save your profile.')
     } finally {
@@ -136,7 +131,7 @@ export function ProfileEditor({ profile }: { profile: InitialProfile }) {
         <label className="block text-sm"><span className="font-medium">Professional interests</span><input value={form.interests} onChange={(event) => set('interests')(event.target.value)} placeholder="Distributed systems, developer tools" className="mt-1.5 w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-accent" /></label>
       </fieldset>
 
-      {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
+      {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-700">{error}</p>}
       {notice && <p role="status" className="rounded-lg border border-accent/30 bg-accent/10 p-3 text-sm text-accent">{notice}{skipped.length > 0 && ` The following fields need the Phase 1B database update and were not saved: ${skipped.join(', ')}.`}</p>}
 
       <div className="flex items-center justify-end gap-3">

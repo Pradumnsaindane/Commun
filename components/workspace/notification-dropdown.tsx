@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
+import { getNotifications } from '@/features/notifications/api'
 import { cn } from '@/lib/utils'
 
 interface NotificationItem {
@@ -28,10 +29,8 @@ export function NotificationDropdown({ className }: { className?: string }) {
       try {
         setLoading(true)
         setError('')
-        const res = await fetch('/api/notifications')
-        if (!res.ok) throw new Error('Unable to load notifications')
-        const data = await res.json()
-        if (!ignore) setItems(data?.notifications ?? [])
+        const data = await getNotifications()
+        if (!ignore) setItems(data.notifications)
       } catch {
         if (!ignore) setError('Notifications are unavailable right now.')
       } finally {

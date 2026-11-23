@@ -131,9 +131,17 @@ export function accountStatus(account: { details_submitted: boolean; charges_ena
   const detailsSubmitted = Boolean(account?.details_submitted)
   const chargesEnabled = Boolean(account?.charges_enabled)
   const payoutsEnabled = Boolean(account?.payouts_enabled)
-  return { ready: detailsSubmitted && chargesEnabled, detailsSubmitted, chargesEnabled, payoutsEnabled }
+  // Destination charges transfer funds to the connected account. Stripe only
+  // reports payouts_enabled once the transfers capability is active, so a
+  // creator without payouts must not be able to accept memberships.
+  return {
+    ready: detailsSubmitted && chargesEnabled && payoutsEnabled,
+    detailsSubmitted,
+    chargesEnabled,
+    payoutsEnabled,
+  }
 }
 
-export function isConnectReady(account: { details_submitted: boolean; charges_enabled: boolean } | null): boolean {
+export function isConnectReady(account: { details_submitted: boolean; charges_enabled: boolean; payouts_enabled?: boolean } | null): boolean {
   return accountStatus(account).ready
 }
