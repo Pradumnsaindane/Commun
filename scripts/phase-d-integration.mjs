@@ -22,6 +22,9 @@
  *   PHASE_D_ADMIN_EMAIL=... PHASE_D_ADMIN_PASSWORD=... \
  *     npm run verify:integration
  *
+ * PHASE5_* aliases are accepted for every PHASE_D_* variable so the same
+ * isolated export can drive all Phase 5 verification scripts.
+ *
  * Exit codes:
  *   0  every executed check passed (skips are reported)
  *   1  configuration missing, unsafe target, or account sign-in failed
@@ -83,6 +86,14 @@ function normalizeUrl(value) {
   }
 }
 
+/**
+ * PHASE_D_* names remain the canonical harness variables. PHASE5_* aliases are
+ * accepted so one isolated staging export can drive every Phase 5 script.
+ */
+function phaseEnv(name) {
+  return process.env[`PHASE_D_${name}`] ?? process.env[`PHASE5_${name}`]
+}
+
 const accounts = [
   { key: 'USER_A', role: 'USER' },
   { key: 'USER_B', role: 'USER' },
@@ -91,15 +102,15 @@ const accounts = [
 ].map(({ key, role }) => ({
   key,
   role,
-  email: process.env[`PHASE_D_${key}_EMAIL`],
-  password: process.env[`PHASE_D_${key}_PASSWORD`],
+  email: phaseEnv(`${key}_EMAIL`),
+  password: phaseEnv(`${key}_PASSWORD`),
 }))
 
-const url = process.env.PHASE_D_SUPABASE_URL
-const anon = process.env.PHASE_D_SUPABASE_ANON_KEY
-const service = process.env.PHASE_D_SUPABASE_SERVICE_ROLE_KEY
-const projectRef = process.env.PHASE_D_PROJECT_REF
-const confirmed = process.env.PHASE_D_CONFIRM_ISOLATED === 'yes'
+const url = phaseEnv('SUPABASE_URL')
+const anon = phaseEnv('SUPABASE_ANON_KEY')
+const service = phaseEnv('SUPABASE_SERVICE_ROLE_KEY')
+const projectRef = phaseEnv('PROJECT_REF')
+const confirmed = phaseEnv('CONFIRM_ISOLATED') === 'yes'
 
 const report = {
   mode: 'phase-d-read-only-integration',
@@ -149,36 +160,36 @@ function fail(reason, exitCode = 1) {
 
 async function main() {
   if (!confirmed) {
-    return fail('Refusing to run: set PHASE_D_CONFIRM_ISOLATED=yes only for a disposable, isolated project.')
+    return fail('Refusing to run: set PHASE_D_CONFIRM_ISOLATED=yes (or PHASE5_CONFIRM_ISOLATED=yes) only for a disposable, isolated project.')
   }
   if (!configured(url) || !configured(anon) || !configured(service)) {
-    return fail('PHASE_D_SUPABASE_URL, PHASE_D_SUPABASE_ANON_KEY, and PHASE_D_SUPABASE_SERVICE_ROLE_KEY are required and must not be placeholders.')
+    return fail('PHASE_D_*/PHASE5_* SUPABASE_URL, ANON_KEY, and SERVICE_ROLE_KEY are required and must not be placeholders.')
   }
   if (!/^[a-z0-9]{20}$/.test(projectRef ?? '')) {
-    return fail('PHASE_D_PROJECT_REF must be the 20-character project reference of the isolated project.')
+    return fail('PROJECT_REF (PHASE_D_* or PHASE5_*) must be the 20-character project reference of the isolated project.')
   }
 
   let parsed
   try {
     parsed = new URL(url)
   } catch {
-    return fail('PHASE_D_SUPABASE_URL is not a valid URL.')
+    return fail('The isolated SUPABASE_URL is not a valid URL.')
   }
   if (parsed.protocol !== 'https:' || !parsed.hostname.endsWith('.supabase.co')) {
-    return fail('PHASE_D_SUPABASE_URL must be an https://<ref>.supabase.co project URL.')
+    return fail('The isolated SUPABASE_URL must be an https://<ref>.supabase.co project URL.')
   }
 
   const hostRef = parsed.hostname.split('.')[0]
   report.projectRefMatchesHost = hostRef === projectRef
   if (!report.projectRefMatchesHost) {
-    return fail('PHASE_D_PROJECT_REF does not match the hostname in PHASE_D_SUPABASE_URL.')
+    return fail('PROJECT_REF does not match the hostname in the isolated SUPABASE_URL.')
   }
 
   const applicationUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   if (configured(applicationUrl) && normalizeUrl(applicationUrl) === normalizeUrl(url)) {
-    return fail('Refusing to run: PHASE_D_SUPABASE_URL is the same project as NEXT_PUBLIC_SUPABASE_URL.')
+    return fail('Refusing to run: the isolated SUPABASE_URL is the same project as NEXT_PUBLIC_SUPABASE_URL.')
   }
-  if (process.env.PHASE_D_ALLOW_WRITES === 'true') {
+  if (phaseEnv('ALLOW_WRITES') === 'true') {
     skip('write assertions', 'This harness is read-only by design; write verification belongs in the runbook with a disposable project.')
   }
 

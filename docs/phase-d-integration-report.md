@@ -530,6 +530,10 @@ The same infrastructure gaps remain: no reachable Supabase project, no four-acco
 5. Configure Stripe test mode and the CLI; replay the events in §9.
 6. Update this report with actual status codes and row counts. Do not mark any feature verified until that evidence exists.
 
+### Phase 5 follow-up
+
+Phase 5 added `docs/staging-infrastructure.md`, `docs/phase-5-infrastructure-readiness.md`, and `docs/phase-5-integration-report.md`, plus `npm run verify:infra` and `npm run verify:workflows`. The read-only harness below now also accepts `PHASE5_*` aliases. No live verification was possible; the Phase D verdict is unchanged.
+
 ## 18. Sign-off
 
 Phase D completed the diagnosis, the static security/contract audit, targeted hardening, and all verification possible without external infrastructure. It did **not** verify real Supabase repositories, RLS, authenticated authorization, Stripe test mode, or end-to-end journeys, and this report does not claim otherwise.

@@ -5,6 +5,8 @@ Branch: `main`
 Baseline: `6aeca21` (Phase 3)
 Verification mode: local code, tests, build, and unauthenticated smoke. No live Supabase/Stripe/E2E verification was possible.
 
+> **Phase 5 update:** staging tooling and runbooks were added after this matrix. The statuses below remain accurate; no row has been promoted to `VERIFIED` without real infrastructure. See `docs/phase-5-infrastructure-readiness.md` and `docs/phase-5-integration-report.md`.
+
 ## Status legend
 
 - **VERIFIED** — executed successfully against real infrastructure in this environment.
