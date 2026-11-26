@@ -6,9 +6,11 @@ import { getRequestContext } from '@/server/http/auth'
 import { failure, success } from '@/server/http/result'
 import { readJson } from '@/server/http/response'
 import {
+  deleteComment as deleteCommentRepo,
   findCommentAuthor,
   insertComment,
   listCommentsForPost,
+  updateComment as updateCommentRepo,
 } from '@/server/repositories/comments'
 import { findPostNotificationTarget } from '@/server/repositories/posts'
 
@@ -26,6 +28,33 @@ export async function listComments(request: Request) {
   const { comments, error } = await listCommentsForPost(supabase, postId)
   if (error) return failure('Unable to load comments.', 500)
   return success({ comments })
+}
+
+const updateSchema = z.object({
+  content: z.string().trim().min(1).max(2000),
+})
+
+export async function updateComment(request: Request, commentId: string) {
+  const parsed = updateSchema.safeParse(await readJson(request))
+  if (!parsed.success) return failure('Write a comment under 2,000 characters.', 400)
+
+  const { supabase, user } = await getRequestContext()
+  if (!user) return failure('Sign in to edit comments.', 401)
+
+  const { data: comment, error } = await updateCommentRepo(supabase, commentId, user.id, parsed.data.content)
+  if (error) return failure('Unable to update comment.', 400)
+  if (!comment) return failure('Comment not found or not owned by you.', 404)
+  return success({ comment })
+}
+
+export async function deleteComment(request: Request, commentId: string) {
+  const { supabase, user } = await getRequestContext()
+  if (!user) return failure('Sign in to delete comments.', 401)
+
+  const { data: comment, error } = await deleteCommentRepo(supabase, commentId, user.id)
+  if (error) return failure('Unable to delete comment.', 400)
+  if (!comment) return failure('Comment not found or not owned by you.', 404)
+  return success(undefined, 204)
 }
 
 export async function createComment(request: Request) {

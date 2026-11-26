@@ -56,3 +56,29 @@ export async function insertComment(
 export async function findCommentAuthor(supabase: SupabaseClient, commentId: string) {
   return supabase.from('comments').select('author_id').eq('id', commentId).maybeSingle()
 }
+export async function updateComment(
+  supabase: SupabaseClient,
+  commentId: string,
+  authorId: string,
+  content: string
+) {
+  return supabase
+    .from('comments')
+    .update({ content })
+    .eq('id', commentId)
+    .eq('author_id', authorId)
+    .eq('is_removed', false)
+    .select('id,post_id,author_id,parent_id,content,pinned,created_at')
+    .maybeSingle()
+}
+
+export async function deleteComment(supabase: SupabaseClient, commentId: string, authorId: string) {
+  return supabase
+    .from('comments')
+    .update({ is_removed: true })
+    .eq('id', commentId)
+    .eq('author_id', authorId)
+    .eq('is_removed', false)
+    .select('id')
+    .maybeSingle()
+}

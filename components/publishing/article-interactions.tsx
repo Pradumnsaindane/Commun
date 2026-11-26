@@ -2,7 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { createComment, listComments } from '@/features/comments/api'
+import { createComment, deleteComment, listComments, updateComment } from '@/features/comments/api'
 import { getPostInteraction, togglePostInteraction } from '@/features/interactions/api'
 
 type Author = { display_name: string | null; username: string | null; avatar_url: string | null }
@@ -15,6 +15,8 @@ export function ArticleInteractions({ postId, viewerId }: { postId: string; post
   const [content, setContent] = useState('')
   const [replyTo, setReplyTo] = useState<string | null>(null)
   const [replyContent, setReplyContent] = useState('')
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editContent, setEditContent] = useState('')
   const [message, setMessage] = useState('')
   const [pending, setPending] = useState(false)
 
@@ -79,6 +81,36 @@ export function ArticleInteractions({ postId, viewerId }: { postId: string; post
   function CommentBody({ comment }: { comment: Comment }) {
     const name = comment.author?.display_name ?? 'Community member'
     const href = comment.author?.username ? `/profile/${comment.author.username}` : null
+    const canManage = Boolean(viewerId && viewerId === comment.author_id)
+    const isEditing = editingId === comment.id
+
+    async function saveEdit() {
+      if (!editContent.trim()) return
+      setPending(true); setMessage('')
+      try {
+        await updateComment(comment.id, editContent)
+        setEditingId(null); setEditContent('')
+        await load()
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : 'Unable to update comment.')
+      } finally {
+        setPending(false)
+      }
+    }
+
+    async function remove() {
+      if (!window.confirm('Delete this comment?')) return
+      setPending(true); setMessage('')
+      try {
+        await deleteComment(comment.id)
+        await load()
+      } catch (error) {
+        setMessage(error instanceof Error ? error.message : 'Unable to delete comment.')
+      } finally {
+        setPending(false)
+      }
+    }
+
     return (
       <article className="rounded-xl border border-border bg-surface/50 p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -91,16 +123,34 @@ export function ArticleInteractions({ postId, viewerId }: { postId: string; post
           </div>
           <time className="font-mono text-[10px] text-muted" dateTime={comment.created_at}>{new Date(comment.created_at).toLocaleDateString()}</time>
         </div>
-        <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-foreground/90">{comment.content}</p>
-        {comment.parent_id === null && (
-          <button
-            type="button"
-            onClick={() => { setReplyTo(replyTo === comment.id ? null : comment.id); setReplyContent('') }}
-            className="mt-2 min-h-8 rounded-md px-2 text-[11px] font-semibold text-muted hover:text-accent"
-          >
-            {replyTo === comment.id ? 'Cancel reply' : 'Reply'}
-          </button>
+        {isEditing ? (
+          <div className="mt-2 flex flex-col gap-2">
+            <textarea value={editContent} onChange={(event) => setEditContent(event.target.value)} rows={3} maxLength={2000} className="w-full resize-y rounded-lg border border-border bg-background p-3 text-sm outline-none focus:border-accent" />
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={() => { setEditingId(null); setEditContent('') }} className="rounded-md px-3 py-1.5 text-xs font-semibold text-muted hover:text-accent">Cancel</button>
+              <button disabled={pending || !editContent.trim()} onClick={() => void saveEdit()} className="rounded-md bg-accent px-3 py-1.5 text-xs font-semibold text-accent-foreground disabled:opacity-50">Save</button>
+            </div>
+          </div>
+        ) : (
+          <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-foreground/90">{comment.content}</p>
         )}
+        <div className="mt-2 flex flex-wrap items-center gap-3">
+          {comment.parent_id === null && (
+            <button
+              type="button"
+              onClick={() => { setReplyTo(replyTo === comment.id ? null : comment.id); setReplyContent('') }}
+              className="min-h-8 rounded-md px-2 text-[11px] font-semibold text-muted hover:text-accent"
+            >
+              {replyTo === comment.id ? 'Cancel reply' : 'Reply'}
+            </button>
+          )}
+          {canManage && !isEditing && (
+            <>
+              <button type="button" onClick={() => { setEditingId(comment.id); setEditContent(comment.content) }} className="min-h-8 rounded-md px-2 text-[11px] font-semibold text-muted hover:text-accent">Edit</button>
+              <button type="button" onClick={() => void remove()} className="min-h-8 rounded-md px-2 text-[11px] font-semibold text-red-600 hover:text-red-700">Delete</button>
+            </>
+          )}
+        </div>
         {replyTo === comment.id && (
           <form onSubmit={(event) => void submit(event, comment.id)} className="mt-2 flex flex-col gap-2">
             <label htmlFor={`reply-${comment.id}`} className="sr-only">Reply to {name}</label>

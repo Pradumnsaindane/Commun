@@ -12,3 +12,11 @@ export function createComment(input: {
 }) {
   return apiRequest<{ comment: CommentView }>('/comments', { method: 'POST', body: input })
 }
+
+export function updateComment(commentId: string, content: string) {
+  return apiRequest<{ comment: CommentView }>(`/comments/${commentId}`, { method: 'PATCH', body: { content } })
+}
+
+export function deleteComment(commentId: string) {
+  return apiRequest<void>(`/comments/${commentId}`, { method: 'DELETE' })
+}
