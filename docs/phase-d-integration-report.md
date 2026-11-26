@@ -488,7 +488,49 @@ Priority order:
 
 **Verdict: not production-ready.** The application is ready to be pointed at an isolated environment and tested, but the Phase D success condition cannot be signed off until the real database, RLS policies, four test accounts, and Stripe test-mode resources are available and the matrix above is executed.
 
-## 16. Sign-off
+## 17. Phase 4 update — 2026-11-27
+
+Baseline for this update: `6aeca21`.
+
+### What changed
+
+- Comment edit and delete were added end-to-end in Phase 3: owner-scoped repository updates, service validation, `PATCH/DELETE /api/v1/comments/[id]`, legacy re-export, and owner-only Edit/Delete controls in the article discussion UI.
+- The feature matrix was expanded into `docs/phase-4-completion-matrix.md` with explicit statuses: verified, implemented but not integration-verified, partial, not implemented, and blocked.
+- Phase 4 re-ran the full local verification suite and the unauthenticated smoke suite.
+
+### Phase 4 verification results
+
+| Check | Result |
+| --- | --- |
+| `npm run typecheck` | PASS |
+| `npm run lint` | PASS — 0 errors, 17 warnings (existing `img`/prototype warnings) |
+| `npm test` | PASS — 21 files, 130 tests |
+| `npm run build` | PASS |
+| `scripts/smoke-test.mjs` | PASS — 20/20 |
+| `npm run verify:connectivity` | BLOCKED — Supabase/KV placeholders only |
+| `npm run verify:integration` | BLOCKED — isolated `PHASE_D_*` resources absent |
+
+### What remains blocked
+
+The same infrastructure gaps remain: no reachable Supabase project, no four-account matrix, no version-controlled core social schema/RLS, no Stripe test credentials, and no isolated payment resources. No live repository, RLS, Stripe, or end-to-end claim is made.
+
+### Security notes from the Phase 3/4 delta
+
+- Comment update/delete are owner-scoped in both the query and the service. Cross-user modification relies on RLS in addition to the `author_id` filter.
+- `comments.is_removed` is used for soft deletion. This column is assumed to exist in the production schema; it is not created by a tracked migration, so it must be confirmed in the isolated schema dump.
+- The new routes follow the existing boundary invariant: v1 uses `toResponse`, legacy re-exports the v1 handler.
+- No new secrets, production data, or destructive operations were introduced.
+
+### Exact next steps
+
+1. Provision the isolated Supabase project and apply the reviewed production-equivalent schema/RLS.
+2. Create USER_A, USER_B, MODERATOR, and ADMIN; populate the fixtures listed in §13.2.
+3. Export `PHASE_D_*` variables and run `npm run verify:integration`.
+4. Execute the HTTP/RLS matrix in §6.3 and the user/admin/payment journeys.
+5. Configure Stripe test mode and the CLI; replay the events in §9.
+6. Update this report with actual status codes and row counts. Do not mark any feature verified until that evidence exists.
+
+## 18. Sign-off
 
 Phase D completed the diagnosis, the static security/contract audit, targeted hardening, and all verification possible without external infrastructure. It did **not** verify real Supabase repositories, RLS, authenticated authorization, Stripe test mode, or end-to-end journeys, and this report does not claim otherwise.
 
