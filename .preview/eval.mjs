@@ -1,0 +1,15 @@
+const [, , url, expr] = process.argv;
+const res = await fetch(`http://127.0.0.1:9223/json/new?${encodeURIComponent(url)}`, { method: "PUT" });
+const target = await res.json();
+const ws = new WebSocket(target.webSocketDebuggerUrl);
+await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});
+let id=0; const pending=new Map();
+ws.onmessage=(e)=>{const m=JSON.parse(e.data); if(m.id&&pending.has(m.id)){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(m.error):p.resolve(m.result);}};
+const send=(method,params={})=>new Promise((resolve,reject)=>{const i=++id;pending.set(i,{resolve,reject});ws.send(JSON.stringify({id:i,method,params}));});
+await send("Page.enable");
+await send("Runtime.enable");
+await send("Page.navigate",{url});
+await new Promise(r=>setTimeout(r,1200));
+const r = await send("Runtime.evaluate",{expression: expr, returnByValue:true, awaitPromise:true});
+console.log(JSON.stringify(r.result.value, null, 2));
+ws.close();
