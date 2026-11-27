@@ -2,7 +2,7 @@
 
 ## Compact token summary
 
-- Light surfaces: background HSL 220 20% 98%, surface/elevated/card white; foreground HSL 222 35% 16%; muted HSL 220 9% 42%; border HSL 220 14% 90%; orange accent HSL 24 94% 53%, readable light text accent HSL 19 88% 40%.
+- Light surfaces: background HSL 220 20% 98%, surface/elevated/card white; foreground HSL 222 35% 16%; muted HSL 220 9% 42%; border HSL 220 14% 90%; blue accent HSL 221 83% 53%, readable light text accent HSL 224 64% 43%.
 - Dark: background HSL 228 27% 5%, surface HSL 226 22% 10%, foreground HSL 220 20% 94%, border HSL 225 19% 17%.
 - Sans: Inter/system. Mono: JetBrains Mono/ui-monospace. Type scale follows Tailwind defaults with app titles 3xl–4xl; metadata ~10–12px.
 - Radius: Tailwind scale; app cards commonly 2xl, buttons xl. Blur is selective via .glass-surface (18px; mobile 10px).
@@ -68,7 +68,7 @@
   border-color: hsl(var(--border));
 }
 
-/* Keep small brand text readable on white while preserving the orange fill. */
+/* Keep small brand text readable on white while preserving the blue fill. */
 .text-accent { color: hsl(var(--accent-readable)); }
 
 html {
@@ -258,7 +258,7 @@ export default {
           border: 'hsl(var(--card-border))',
         },
         brand: {
-          orange: 'hsl(24, 94%, 53%)',
+          blue: 'hsl(221, 83%, 53%)',
           indigo: 'hsl(238, 84%, 67%)',
           emerald: 'hsl(152, 69%, 45%)',
           sky: 'hsl(199, 89%, 48%)',
@@ -272,7 +272,7 @@ export default {
       boxShadow: {
         subtle: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
         elevated: '0 10px 30px -10px rgba(0, 0, 0, 0.4)',
-        glow: '0 0 35px -5px hsla(24, 94%, 53%, 0.25)',
+        glow: '0 0 35px -5px hsl(221 83% 53% / 0.25)',
         'glow-indigo': '0 0 35px -5px hsla(238, 84%, 67%, 0.25)',
         'dark-nav': '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)',
         card: '0 14px 40px -28px rgba(0, 0, 0, 0.85)',
@@ -339,9 +339,9 @@ export const tokens = {
       border: 'hsl(225, 19%, 17%)', // #1f2330
       borderSubtle: 'hsl(225, 19%, 14%)',
       borderStrong: 'hsl(225, 19%, 25%)',
-      accent: 'hsl(24, 94%, 53%)', // #f97316 (signature Commun warm orange)
-      accentMuted: 'hsla(24, 94%, 53%, 0.12)',
-      accentHover: 'hsl(24, 94%, 48%)',
+      accent: 'hsl(221, 83%, 53%)', // #2563EB (signature Commun blue)
+      accentMuted: 'hsl(221 83% 53% / 0.12)',
+      accentHover: 'hsl(224, 76%, 48%)',
       accentForeground: 'hsl(0, 0%, 100%)',
       muted: 'hsl(220, 10%, 62%)',
       subtle: 'hsl(220, 10%, 42%)',
@@ -361,9 +361,9 @@ export const tokens = {
       border: 'hsl(214, 32%, 91%)', // #e2e8f0
       borderSubtle: 'hsl(214, 32%, 94%)',
       borderStrong: 'hsl(215, 25%, 82%)',
-      accent: 'hsl(24, 94%, 50%)',
-      accentMuted: 'hsla(24, 94%, 50%, 0.1)',
-      accentHover: 'hsl(24, 94%, 45%)',
+      accent: 'hsl(221, 83%, 48%)',
+      accentMuted: 'hsl(221 83% 53% / 0.1)',
+      accentHover: 'hsl(224, 64%, 43%)',
       accentForeground: 'hsl(0, 0%, 100%)',
       muted: 'hsl(215, 16%, 47%)',
       subtle: 'hsl(215, 16%, 65%)',
@@ -391,7 +391,7 @@ export const tokens = {
   shadows: {
     subtle: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
     elevated: '0 10px 30px -10px rgba(0, 0, 0, 0.4)',
-    glow: '0 0 35px -5px hsla(24, 94%, 53%, 0.25)',
+    glow: '0 0 35px -5px hsl(221 83% 53% / 0.25)',
     card: '0 14px 40px -28px rgba(0, 0, 0, 0.85)',
     darkNav: '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08)',
   },

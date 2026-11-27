@@ -176,10 +176,6 @@ export function canEditComment(comment: CommentRecord, userId: string | null) { 
 
 export function canDeleteComment(comment: CommentRecord, userId: string | null) { return isCommentAuthor(comment, userId) }
 
-export function canModerate(profile: { role?: string } | null) { return profile?.role === 'MODERATOR' || profile?.role === 'ADMIN' }
-
-export function canPinComment(comment: CommentRecord, postAuthorId: string, userId: string | null, profile: { role?: string } | null) { return canPin(comment) && (postAuthorId === userId || canModerate(profile)) }
-
 export function commentFormLabel(parentId?: string | null) { return parentId ? 'Write a reply' : 'Join the discussion' }
 
 export function commentEmptyMessage() { return 'Be the first to start the discussion.' }

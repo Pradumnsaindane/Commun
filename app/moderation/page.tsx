@@ -15,6 +15,9 @@ export default async function ModerationPage({ searchParams }: { searchParams: P
   const page = Math.max(1, Number(params.page ?? 1))
   const size = 20
   const db = createAdminClient()
+  if (!db) {
+    throw new Error('Moderation service is not configured. Set SUPABASE_SERVICE_ROLE_KEY.')
+  }
   let query = db.from('reports').select('id,target_type,target_id,reason,status,reporter_id,created_at,resolution_note', { count: 'exact' }).order('created_at', { ascending: false }).range((page - 1) * size, page * size - 1)
   if (params.status && filters.includes(params.status) && params.status !== 'ALL') query = query.eq('status', params.status)
   const { data: reports, error } = await query

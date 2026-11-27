@@ -51,6 +51,7 @@ jobs:
         run: npm run build
 
       - name: Audit production runtime dependencies
+        id: production_audit
         run: |
           echo "Auditing production dependencies (failing on high/critical)..."
           npm audit --omit=dev --audit-level=high
@@ -59,7 +60,11 @@ jobs:
         if: always()
         run: |
           echo "### 🔒 Dependency Audit Report" >> $GITHUB_STEP_SUMMARY
-          echo "- **Production Dependencies**: 0 vulnerabilities (Audit passed)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Development Tooling**: Known dev-only advisories (Tailwind 3, Vitest, ESLint) documented in \`docs/security-dependency-audit.md\`" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.production_audit.outcome }}" = "success" ]; then
+            echo "- **Production Dependencies**: 0 vulnerabilities (audit passed)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Production Dependencies**: audit failed (see audit step log)" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "- **Development Tooling**: Known dev-only advisories documented in \`docs/security-dependency-audit.md\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           npm audit || true

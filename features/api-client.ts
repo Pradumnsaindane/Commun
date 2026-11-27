@@ -1,4 +1,14 @@
+import { z } from 'zod'
 import { API_BASE, type ApiErrorPayload } from '@shared/index'
+
+/** Runtime guard for the error envelope returned by the versioned API. */
+const apiErrorPayloadSchema = z.object({
+  error: z.string(),
+  issues: z.array(z.object({ path: z.string(), message: z.string() })).optional(),
+  code: z.string().optional(),
+  skipped: z.array(z.string()).optional(),
+  elevated: z.boolean().optional(),
+}) satisfies z.ZodType<ApiErrorPayload>
 
 /**
  * The only module allowed to build API URLs and translate HTTP failures for
@@ -60,7 +70,8 @@ export async function apiRequest<T>(path: string, init: ApiRequestInit = {}): Pr
   if (response.status === 204) return undefined as T
 
   const payload: unknown = await response.json().catch(() => null)
-  const errorPayload = (payload && typeof payload === 'object' ? payload : null) as ApiErrorPayload | null
+  const parsedError = apiErrorPayloadSchema.safeParse(payload)
+  const errorPayload: ApiErrorPayload | null = parsedError.success ? parsedError.data : null
 
   if (!response.ok) {
     const message = errorPayload?.error ?? (response.status >= 500 ? 'The service is temporarily unavailable.' : 'The request could not be completed.')

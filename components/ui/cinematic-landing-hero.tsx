@@ -140,19 +140,19 @@ const INJECTED_STYLES = `
       box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.1), inset 0 3px 6px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(0,0,0,0.02);
   }
   .btn-modern-accent {
-      background: linear-gradient(180deg, #D94F15 0%, #B93A0A 100%);
+      background: linear-gradient(180deg, #3B82F6 0%, #2563EB 100%);
       color: #FFFFFF;
-      box-shadow: 0 0 0 1px rgba(185, 58, 10, 0.35), 0 10px 22px -12px rgba(185, 58, 10, 0.55);
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35), 0 10px 22px -12px rgba(37, 99, 235, 0.55);
   }
   .btn-modern-accent:hover {
       transform: translateY(-3px);
-      background: linear-gradient(180deg, #E65C1E 0%, #C2410C 100%);
-      box-shadow: 0 0 0 1px rgba(185, 58, 10, 0.4), 0 16px 28px -12px rgba(185, 58, 10, 0.6);
+      background: linear-gradient(180deg, #60A5FA 0%, #1D4ED8 100%);
+      box-shadow: 0 0 0 1px rgba(29, 78, 216, 0.4), 0 16px 28px -12px rgba(37, 99, 235, 0.6);
   }
   .btn-modern-accent:active {
       transform: translateY(1px);
-      background: #B93A0A;
-      box-shadow: inset 0 2px 6px rgba(90, 25, 0, 0.25);
+      background: #1E40AF;
+      box-shadow: inset 0 2px 6px rgba(30, 64, 175, 0.25);
   }
 
   .progress-ring {
@@ -361,10 +361,10 @@ export function CinematicHero({
           {ctaDescription}
         </p>
         <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-          <Link href="/register" className="btn-modern-accent rounded-[1.25rem] px-8 py-4 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 focus:ring-offset-background">
+          <Link href="/register" className="btn-modern-accent rounded-[1.25rem] px-8 py-4 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 focus:ring-offset-background">
             Create your developer profile
           </Link>
-          <Link href="/feed" className="btn-modern-light rounded-[1.25rem] px-8 py-4 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 focus:ring-offset-background">
+          <Link href="/feed" className="btn-modern-light rounded-[1.25rem] px-8 py-4 text-base font-semibold focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 focus:ring-offset-background">
             Explore the feed
           </Link>
         </div>
@@ -427,7 +427,7 @@ export function CinematicHero({
                       <div className="phone-widget relative w-44 h-44 mx-auto flex items-center justify-center mb-8">
                         <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
                           <circle cx="88" cy="88" r="64" fill="none" stroke="#E2E8F0" strokeWidth="12" />
-                          <circle className="progress-ring" cx="88" cy="88" r="64" fill="none" stroke="#C2410C" strokeWidth="12" />
+                          <circle className="progress-ring" cx="88" cy="88" r="64" fill="none" stroke="#2563EB" strokeWidth="12" />
                         </svg>
                         <div className="text-center z-10 flex flex-col items-center">
                           <span className="counter-val text-4xl font-extrabold tracking-tighter text-foreground">0</span>
@@ -437,8 +437,8 @@ export function CinematicHero({
 
                       <div className="space-y-3">
                         <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-orange/15 to-brand-orange/5 flex items-center justify-center mr-3 border border-brand-orange/20 shadow-inner">
-                            <svg className="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-blue/15 to-brand-blue/5 flex items-center justify-center mr-3 border border-brand-blue/20 shadow-inner">
+                            <svg className="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                           </div>

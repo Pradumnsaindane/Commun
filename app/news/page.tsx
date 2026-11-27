@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { getDeveloperNews, NEWS_CATEGORIES } from '@/lib/news'
+import { getDeveloperNews, NEWS_CATEGORIES, parseNewsQuery } from '@/lib/news'
 import { PageContainer, Card } from '@/components/ui/primitives'
 
 export default async function NewsPage({
@@ -9,9 +9,10 @@ export default async function NewsPage({
   searchParams?: Promise<{ category?: string; q?: string; page?: string }>
 }) {
   const params = searchParams ? await searchParams : {}
-  const activeCategory = params?.category || 'All'
-  const searchQuery = params?.q?.trim() || ''
-  const page = Math.max(1, Number(params?.page) || 1)
+  const query = parseNewsQuery(params as Record<string, string | string[] | undefined>)
+  const activeCategory = query.category
+  const searchQuery = query.q
+  const page = query.page
   const limit = 15
 
   const supabase = await createClient()

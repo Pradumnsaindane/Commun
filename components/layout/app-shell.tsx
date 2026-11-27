@@ -143,6 +143,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     name: string | null
     avatar_url: string | null
   } | null>(null)
+  const [sessionResolved, setSessionResolved] = useState(false)
 
   const isPublicLanding = pathname === '/' || pathname === '/cinematic-demo' || pathname === '/cinematic-hero'
   const isStandaloneDemo = pathname === '/cinematic-hero' || pathname === '/cinematic-demo'
@@ -161,6 +162,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
     const client = createClient()
     void client.auth.getUser().then(({ data: { user } }) => {
+      setSessionResolved(true)
       if (user) {
         setUserProfile({
           email: user.email ?? null,
@@ -171,6 +173,8 @@ export function AppShell({ children }: { children: ReactNode }) {
             'Developer',
           avatar_url: user.user_metadata?.avatar_url ?? null,
         })
+      } else {
+        setUserProfile(null)
       }
     })
   }, [pathname, isPublicLanding, isAuthRoute, isAuthCallback, isStandaloneDemo])
@@ -303,7 +307,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                         {userProfile?.name || 'Developer'}
                       </p>
                       <p className="truncate font-mono text-[10px] text-muted">
-                        {userProfile?.email || 'Signed in'}
+                        {userProfile?.email ||
+                          (sessionResolved ? 'Not signed in' : 'Checking session…')}
                       </p>
                     </div>
 
@@ -326,14 +331,25 @@ export function AppShell({ children }: { children: ReactNode }) {
                     </div>
 
                     <div className="border-t border-border pt-1">
-                      <button
-                        role="menuitem"
-                        type="button"
-                        onClick={() => void handleLogout()}
-                        className="flex min-h-9 w-full items-center rounded-lg px-3 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
-                      >
-                        Log out
-                      </button>
+                      {userProfile ? (
+                        <button
+                          role="menuitem"
+                          type="button"
+                          onClick={() => void handleLogout()}
+                          className="flex min-h-9 w-full items-center rounded-lg px-3 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
+                        >
+                          Log out
+                        </button>
+                      ) : (
+                        <Link
+                          role="menuitem"
+                          href="/login"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="flex min-h-9 items-center rounded-lg px-3 text-sm font-medium text-accent transition-colors hover:bg-surface"
+                        >
+                          Log in
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </>
@@ -364,7 +380,13 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <p className="truncate text-xs font-medium text-foreground">
                     {userProfile?.name || 'Developer'}
                   </p>
-                  <p className="truncate font-mono text-[10px] text-muted">Signed in</p>
+                  <p className="truncate font-mono text-[10px] text-muted">
+                    {!sessionResolved
+                      ? 'Checking session…'
+                      : userProfile
+                        ? 'Signed in'
+                        : 'Not signed in'}
+                  </p>
                 </div>
               </div>
             </div>

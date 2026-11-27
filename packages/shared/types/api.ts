@@ -97,13 +97,67 @@ export type NotificationView = {
   actor: { username: string | null; name: string | null } | null
 }
 
+export type NotificationPageResponse = {
+  notifications: NotificationView[]
+  page: number
+  limit: number
+  total: number
+  hasNextPage: boolean
+  unreadCount: number
+}
+
+export type SearchDeveloper = {
+  id: string
+  display_name: string | null
+  username: string | null
+  bio: string | null
+  avatar_url: string | null
+  interests: string[] | null
+}
+
+export type SearchAuthor = {
+  id: string
+  display_name: string | null
+  username: string | null
+  avatar_url: string | null
+}
+
+export type SearchArticle = {
+  id: string
+  author_id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  reading_time_minutes: number
+  published_at: string | null
+  author: SearchAuthor | null
+}
+
+export type SearchDiscussion = {
+  id: string
+  author_id: string
+  topic_id: string | null
+  title: string
+  content: string
+  is_closed: boolean
+  is_pinned: boolean
+  created_at: string
+  author: SearchAuthor | null
+  topic: { id: string; name: string } | null
+}
+
+export type SearchTopic = {
+  id: string
+  name: string
+}
+
 export type SearchResponse = {
   query: string
   type: 'all' | 'developers' | 'articles' | 'discussions' | 'topics'
-  developers: Paginated<Record<string, unknown>>
-  articles: Paginated<Record<string, unknown>>
-  discussions: Paginated<Record<string, unknown>>
-  topics: Paginated<Record<string, unknown>>
+  developers: Paginated<SearchDeveloper>
+  articles: Paginated<SearchArticle>
+  discussions: Paginated<SearchDiscussion>
+  topics: Paginated<SearchTopic>
 }
 
 export type DiscussionView = {

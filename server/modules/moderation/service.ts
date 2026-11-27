@@ -14,8 +14,9 @@ const querySchema = z.object({
   status: z.enum(['OPEN', 'IN_REVIEW', 'RESOLVED', 'DISMISSED']).optional(),
   reason: z.string().optional(),
   targetType: z.string().optional(),
-  page: z.coerce.number().int().min(1).catch(1),
+  page: z.coerce.number().int().min(1).max(100).catch(1),
 })
+const idSchema = z.string().uuid()
 const actionSchema = z.object({
   action: z.enum(['RESOLVE', 'DISMISS', 'REMOVE', 'RESTORE']),
   note: z.string().trim().max(1000).optional(),
@@ -35,12 +36,9 @@ export async function listModerationReports(request: Request) {
   if (!parsed.success) return failure('Invalid report query.', 422)
 
   const pageSize = 20
-  const { data, count, error: listError } = await listReports(
-    createAdminClient(),
-    parsed.data,
-    parsed.data.page,
-    pageSize
-  )
+  const db = createAdminClient()
+  if (!db) return failure('Moderation service is not configured. Set SUPABASE_SERVICE_ROLE_KEY.', 500)
+  const { data, count, error: listError } = await listReports(db, parsed.data, parsed.data.page, pageSize)
   if (listError) return failure('Unable to load reports.', 500)
 
   return success({ reports: data ?? [], total: count ?? 0, page: parsed.data.page, pageSize })
@@ -51,7 +49,10 @@ export async function getModerationReport(params: { id: string }) {
   if (error) return error
 
   const { id } = params
-  const { data, error: findError } = await findReport(createAdminClient(), id)
+  if (!idSchema.safeParse(id).success) return failure('Invalid report id.', 422)
+  const db = createAdminClient()
+  if (!db) return failure('Moderation service is not configured. Set SUPABASE_SERVICE_ROLE_KEY.', 500)
+  const { data, error: findError } = await findReport(db, id)
   if (findError || !data) return failure('Report not found.', 404)
 
   return success({ report: data })
@@ -65,12 +66,18 @@ export async function actOnModerationReport(request: Request, params: { id: stri
   if (!parsed.success) return failure('Invalid action.', 422)
 
   const { id } = params
+  if (!idSchema.safeParse(id).success) return failure('Invalid report id.', 422)
   const db = createAdminClient()
+  if (!db) return failure('Moderation service is not configured. Set SUPABASE_SERVICE_ROLE_KEY.', 500)
   const { data: report } = await findReport(db, id)
   if (!report) return failure('Report not found.', 404)
 
-  if (['RESOLVE', 'DISMISS'].includes(parsed.data.action) && !['OPEN', 'IN_REVIEW'].includes(report.status)) {
+  const terminalAction = ['RESOLVE', 'DISMISS', 'REMOVE'].includes(parsed.data.action)
+  if (terminalAction && !['OPEN', 'IN_REVIEW'].includes(report.status)) {
     return failure('Report is already closed.', 409)
+  }
+  if (parsed.data.action === 'RESTORE' && report.status !== 'RESOLVED') {
+    return failure('Only a resolved report can be restored.', 409)
   }
 
   if (parsed.data.action === 'RESOLVE' || parsed.data.action === 'DISMISS') {
@@ -83,11 +90,12 @@ export async function actOnModerationReport(request: Request, params: { id: stri
     })
     if (updateError) return failure('Unable to update the report.', 400)
 
-    await writeAudit(context, `REPORT_${status}`, 'REPORT', id, {
+    const auditWritten = await writeAudit(context, `REPORT_${status}`, 'REPORT', id, {
       note: parsed.data.note ?? null,
       targetType: report.target_type,
       targetId: report.target_id,
     })
+    if (!auditWritten) return failure('Report was updated but the audit entry could not be recorded.', 500)
     await notifyUser(
       report.reporter_id,
       context.user.id,
@@ -120,7 +128,8 @@ export async function actOnModerationReport(request: Request, params: { id: stri
     if (reportError) return failure('Content was updated, but the report could not be closed.', 409)
   }
 
-  await writeAudit(context, removed ? 'CONTENT_REMOVED' : 'CONTENT_RESTORED', report.target_type, report.target_id, { reportId: id })
+  const auditWritten = await writeAudit(context, removed ? 'CONTENT_REMOVED' : 'CONTENT_RESTORED', report.target_type, report.target_id, { reportId: id })
+  if (!auditWritten) return failure('Content was updated but the audit entry could not be recorded.', 500)
   await notifyUser(
     target.author_id,
     context.user.id,

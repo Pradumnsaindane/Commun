@@ -4,14 +4,15 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { searchCommun, type SearchType } from '@/features/search/api'
+import type {
+  SearchArticle,
+  SearchDeveloper,
+  SearchDiscussion,
+  SearchResponse as SearchData,
+  SearchTopic,
+} from '@shared/index'
 
-type SearchData = { developers: Bucket<Developer>; articles: Bucket<Article>; discussions: Bucket<Discussion>; topics: Bucket<Topic> }
-type Bucket<T> = { items: T[]; page: number; limit: number; total: number; hasNextPage: boolean }
-type Developer = { id: string; display_name: string | null; username: string | null; bio: string | null; avatar_url: string | null; interests: string[] | null }
-type Author = { id: string; display_name: string | null; username: string | null; avatar_url: string | null } | null
-type Article = { id: string; slug: string; title: string; excerpt: string | null; reading_time_minutes: number; published_at: string | null; author: Author }
-type Discussion = { id: string; title: string; content: string; created_at: string; is_closed: boolean; author: Author; topic: { id: string; name: string } | null }
-type Topic = { id: string; name: string; description: string | null }
+type SearchResultItem = SearchDeveloper | SearchArticle | SearchDiscussion | SearchTopic
 
 const tabs: { label: string; value: SearchType }[] = [{ label: 'All', value: 'all' }, { label: 'Developers', value: 'developers' }, { label: 'Articles', value: 'articles' }, { label: 'Discussions', value: 'discussions' }, { label: 'Topics', value: 'topics' }]
 const emptyCopy: Record<SearchType, string> = { all: 'Try a broader keyword or explore what the community has already published.', developers: 'No active developer profiles matched that search.', articles: 'No published articles matched that search.', discussions: 'No open discussions matched that search.', topics: 'No topics matched that search.' }
@@ -23,7 +24,7 @@ export function SearchInterface() {
   const loading = loadedKey !== requestKey
   useEffect(() => {
     let ignore = false
-    void searchCommun<SearchData>({ q: query, type, page, limit: 12 })
+    void searchCommun({ q: query, type, page, limit: 12 })
       .then((result) => { if (!ignore) { setData(result); setError(''); setLoadedKey(requestKey) } })
       .catch(() => { if (!ignore) { setError('Search is temporarily unavailable.'); setLoadedKey(requestKey) } })
     return () => { ignore = true }
@@ -37,5 +38,84 @@ export function SearchInterface() {
 
 function SearchPrompt({ title, description, type, onChoose }: { title: string; description: string; type: SearchType; onChoose: (next: { type: SearchType; page: number }) => void }) { return <button type="button" onClick={() => onChoose({ type, page: 1 })} className="rounded-xl border border-border bg-surface p-5 text-left transition hover:-translate-y-0.5 hover:border-accent/50"><p className="text-sm font-semibold">{title}</p><p className="mt-2 text-sm leading-6 text-muted">{description}</p><span className="mt-5 block text-xs font-semibold text-accent">Start exploring →</span></button> }
 function AllResults({ data }: { data: SearchData }) { return <div className="space-y-10"><ResultSection type="developers" items={data.developers.items.slice(0, 4)} /><ResultSection type="articles" items={data.articles.items.slice(0, 4)} /><ResultSection type="discussions" items={data.discussions.items.slice(0, 4)} /><ResultSection type="topics" items={data.topics.items.slice(0, 4)} /></div> }
-function ResultSection({ type, items }: { type: SearchType; items: unknown[] }) { if (!items.length) return null; const labels: Record<string, string> = { developers: 'Developers', articles: 'Articles', discussions: 'Discussions', topics: 'Topics' }; return <section><div className="mb-3 flex items-center justify-between"><h2 className="text-lg font-semibold">{labels[type]}</h2></div><div className="grid gap-3">{items.map((item: any) => type === 'developers' ? <Link key={item.id} href={`/profile/${item.username}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50"><p className="font-medium">{item.display_name || item.username}</p><p className="mt-1 text-xs text-muted">@{item.username}</p><p className="mt-2 line-clamp-2 text-sm text-muted">{item.bio || (item.interests ?? []).join(' · ')}</p></Link> : type === 'articles' ? <Link key={item.id} href={`/post/${item.slug}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50"><p className="font-medium">{item.title}</p><p className="mt-2 line-clamp-2 text-sm text-muted">{item.excerpt || 'Published article'}</p><p className="mt-3 text-xs text-muted">{item.author?.display_name || item.author?.username || 'Commun developer'} · {item.reading_time_minutes} min read</p></Link> : type === 'discussions' ? <Link key={item.id} href={`/discussions/${item.id}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50"><p className="font-medium">{item.title}</p><p className="mt-2 line-clamp-2 text-sm text-muted">{item.content}</p><p className="mt-3 text-xs text-muted">{item.topic?.name || 'Discussion'} · {item.is_closed ? 'Closed' : 'Open'}</p></Link> : <Link key={item.id} href={`/explore?topic=${item.id}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50"><p className="font-medium">{item.name}</p><p className="mt-2 line-clamp-2 text-sm text-muted">{item.description || 'Explore articles and discussions on this topic.'}</p></Link>)}</div></section> }
+function isDeveloper(item: SearchResultItem): item is SearchDeveloper {
+  return 'username' in item && 'display_name' in item
+}
+
+function isArticle(item: SearchResultItem): item is SearchArticle {
+  return 'slug' in item && 'title' in item
+}
+
+function isDiscussion(item: SearchResultItem): item is SearchDiscussion {
+  return 'is_closed' in item && 'content' in item
+}
+
+function isTopic(item: SearchResultItem): item is SearchTopic {
+  return 'name' in item
+}
+
+function ResultSection({
+  type,
+  items,
+}: {
+  type: Exclude<SearchType, 'all'>
+  items: SearchResultItem[]
+}) {
+  if (!items.length) return null
+  const labels: Record<Exclude<SearchType, 'all'>, string> = {
+    developers: 'Developers',
+    articles: 'Articles',
+    discussions: 'Discussions',
+    topics: 'Topics',
+  }
+
+  return (
+    <section>
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="text-lg font-semibold">{labels[type]}</h2>
+      </div>
+      <div className="grid gap-3">
+        {items.map((item) => {
+          if (type === 'developers' && isDeveloper(item)) {
+            return (
+              <Link key={item.id} href={`/profile/${item.username ?? ''}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50">
+                <p className="font-medium">{item.display_name || item.username}</p>
+                <p className="mt-1 text-xs text-muted">@{item.username}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-muted">{item.bio || (item.interests ?? []).join(' · ')}</p>
+              </Link>
+            )
+          }
+          if (type === 'articles' && isArticle(item)) {
+            return (
+              <Link key={item.id} href={`/post/${item.slug}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50">
+                <p className="font-medium">{item.title}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-muted">{item.excerpt || 'Published article'}</p>
+                <p className="mt-3 text-xs text-muted">{item.author?.display_name || item.author?.username || 'Commun developer'} · {item.reading_time_minutes} min read</p>
+              </Link>
+            )
+          }
+          if (type === 'discussions' && isDiscussion(item)) {
+            return (
+              <Link key={item.id} href={`/discussions/${item.id}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50">
+                <p className="font-medium">{item.title}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-muted">{item.content}</p>
+                <p className="mt-3 text-xs text-muted">{item.topic?.name || 'Discussion'} · {item.is_closed ? 'Closed' : 'Open'}</p>
+              </Link>
+            )
+          }
+          if (type === 'topics' && isTopic(item)) {
+            return (
+              <Link key={item.id} href={`/explore?topic=${item.id}`} className="rounded-xl border border-border bg-surface p-4 hover:border-accent/50">
+                <p className="font-medium">{item.name}</p>
+                <p className="mt-2 line-clamp-2 text-sm text-muted">Explore articles and discussions on this topic.</p>
+              </Link>
+            )
+          }
+          return null
+        })}
+      </div>
+    </section>
+  )
+}
+
 function Pagination({ page, hasNextPage, onChange }: { page: number; hasNextPage: boolean; onChange: (page: number) => void }) { return <div className="mt-8 flex items-center justify-between border-t border-border pt-5"><button type="button" disabled={page === 1} onClick={() => onChange(page - 1)} className="rounded-lg border border-border px-3 py-2 text-xs text-muted disabled:opacity-40">Previous</button><span className="font-mono text-xs text-muted">Page {page}</span><button type="button" disabled={!hasNextPage} onClick={() => onChange(page + 1)} className="rounded-lg border border-border px-3 py-2 text-xs text-muted disabled:opacity-40">Next</button></div> }

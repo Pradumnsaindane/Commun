@@ -1,0 +1,108 @@
+{
+  "$schema": "https://supabase.com/schemas/config/v1.json",
+  // Phase 11C: disposable local Supabase stack for Commun.dev.
+  // This is the canonical config format for the pinned CLI (supabase@3.4.0).
+  // Ports deliberately avoid the existing Phase 8 local stack (54321-54327)
+  // so neither stack has to be stopped. No secrets are stored here.
+  "project_id": "commun-dev-local",
+
+  "api": {
+    "enabled": true,
+    "port": 54331,
+    "schemas": ["public", "graphql_public"],
+    "extra_search_path": ["public", "extensions"],
+    "max_rows": 1000,
+    "tls": { "enabled": false }
+  },
+
+  "db": {
+    "port": 54332,
+    "shadow_port": 54330,
+    "health_timeout": "2m",
+    "major_version": 17,
+    "pooler": {
+      "enabled": false,
+      "port": 54335,
+      "pool_mode": "transaction",
+      "default_pool_size": 20,
+      "max_client_conn": 100
+    },
+    "migrations": {
+      "enabled": true,
+      "schema_paths": []
+    },
+    "seed": {
+      "enabled": true,
+      "sql_paths": ["./seed.sql"]
+    },
+    "network_restrictions": {
+      "enabled": false,
+      "allowed_cidrs": ["0.0.0.0/0"],
+      "allowed_cidrs_v6": ["::/0"]
+    }
+  },
+
+  "realtime": { "enabled": true },
+
+  "studio": {
+    "enabled": true,
+    "port": 54333,
+    "api_url": "http://127.0.0.1"
+  },
+
+  "local_smtp": {
+    "enabled": true,
+    "port": 54334
+  },
+
+  "storage": {
+    "enabled": true,
+    "file_size_limit": "50MiB",
+    "s3_protocol": { "enabled": true },
+    "analytics": { "enabled": false },
+    "vector": { "enabled": true, "max_buckets": 10, "max_indexes": 5 }
+  },
+
+  // Logflare is not needed for Phase 11 verification. Disabling it also
+  // avoids the default port 54327 already used by the Phase 8 local stack.
+  "analytics": { "enabled": false },
+
+  "auth": {
+    "enabled": true,
+    "site_url": "http://localhost:3000",
+    "additional_redirect_urls": [
+      "http://localhost:3000/**",
+      "http://127.0.0.1:3000/**"
+    ],
+    "jwt_expiry": 3600,
+    "enable_refresh_token_rotation": true,
+    "refresh_token_reuse_interval": 10,
+    "enable_signup": true,
+    "enable_anonymous_sign_ins": false,
+    "minimum_password_length": 8,
+    "password_requirements": "letters_digits",
+    "email": {
+      "enabled": true,
+      "double_confirm_changes": true,
+      // Real email verification and password-recovery flows are testable via
+      // the local Mailpit inbox at http://localhost:54334.
+      "enable_confirmations": true,
+      "secure_password_change": false,
+      "max_frequency": "1s",
+      "otp_length": 6,
+      "otp_expiry": 3600
+    },
+    "sms": { "enabled": false },
+    "mfa": {
+      "max_enrolled_factors": 10,
+      "totp": { "enroll_enabled": false, "verify_enabled": false },
+      "phone": {
+        "enroll_enabled": false,
+        "verify_enabled": false,
+        "otp_length": 6,
+        "template": "Your code is {{ .Code }}",
+        "max_frequency": "5s"
+      }
+    }
+  }
+}

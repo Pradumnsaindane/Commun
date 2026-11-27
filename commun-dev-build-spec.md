@@ -643,7 +643,7 @@ Execute these phases sequentially. **Rules for Agent Execution:**
 Task: Initialize Next.js 14 App Router project with TypeScript, Tailwind CSS, and shadcn/ui primitives.
 Scope:
 1. Initialize Tailwind theme matching Commun Dark-First palette:
-   - Background: #090a0f, Card/Surface: #141720, Border: #1f2330, Accent: #f97316 (orange-500).
+   - Background: #090a0f, Card/Surface: #141720, Border: #1f2330, Accent: #2563EB (blue-600).
    - Fonts: Inter/Geist (Sans) and JetBrains Mono (Code).
 2. Install shadcn/ui components: button, dialog, dropdown-menu, avatar, toast, tabs, tooltip.
 3. Build responsive app shell layout components in components/nav/:
@@ -871,8 +871,8 @@ npx prisma init
 npx prisma db push
 
 # 3. Setup environment variables in .env.local
-NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
+NEXT_PUBLIC_SUPABASE_URL=https://zfgwzuxmchuvwnvljpos.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_z0NlzjtD8DgyRomtK1eZEA_WuKMwDxt
 SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
 DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:6543/postgres?pgbouncer=true"
 DIRECT_URL="postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres"

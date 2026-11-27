@@ -11,7 +11,7 @@ import { formatMoney } from '@/lib/monetization'
 type Account = { details_submitted: boolean; charges_enabled: boolean; payouts_enabled: boolean } | null
 type EarningRow = { id: string; label: string; gross: number; fee: number; net: number; currency: string; status: string; createdAt: string }
 
-export function EarningsDashboard({ billingReady, feePercent, account, activeMembers, totalMemberships, lifetimeNetCents, earnings, onboarding }: {
+export function EarningsDashboard({ billingReady, feePercent, account, activeMembers, totalMemberships, lifetimeNetCents, earnings, onboarding, provider = 'stripe' }: {
   billingReady: boolean
   feePercent: number
   account: Account
@@ -20,6 +20,7 @@ export function EarningsDashboard({ billingReady, feePercent, account, activeMem
   lifetimeNetCents: number
   earnings: EarningRow[]
   onboarding: string | null
+  provider?: 'stripe' | 'phonepe'
 }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -40,12 +41,16 @@ export function EarningsDashboard({ billingReady, feePercent, account, activeMem
     <PageContainer
       eyebrow="Creator monetization"
       title="Earnings"
-      description={`Members pay a monthly membership. Stripe transfers each payment to your connected payout account minus a ${feePercent}% platform fee.`}
+      description={provider === 'phonepe'
+        ? `Members pay through UPI AutoPay. Revenue is recorded minus a ${feePercent}% platform fee; payout routing is configured separately by the operator.`
+        : `Members pay a monthly membership. Stripe transfers each payment to your connected payout account minus a ${feePercent}% platform fee.`}
     >
       {!billingReady && (
         <Surface className="border-amber-400/30 p-5">
           <p className="font-mono text-[10px] uppercase tracking-wider text-amber-700">Payments not configured</p>
-          <p className="mt-2 text-sm leading-6 text-muted">Add the Stripe secret key, webhook secret, and membership price on the server to enable checkout and payouts.</p>
+          <p className="mt-2 text-sm leading-6 text-muted">{provider === 'phonepe'
+            ? 'Add the PhonePe AutoPay credentials, webhook credentials, and server-trusted plan catalog on the server to enable UPI checkout.'
+            : 'Add the Stripe secret key, webhook secret, and membership price on the server to enable checkout and payouts.'}</p>
         </Surface>
       )}
 
@@ -69,23 +74,36 @@ export function EarningsDashboard({ billingReady, feePercent, account, activeMem
         </Surface>
         <Surface className="p-6">
           <p className="font-mono text-[10px] uppercase tracking-wider text-accent">Payout account</p>
-          <div className="mt-3"><StatusBadge tone={ready ? 'accent' : 'danger'}>{ready ? 'Payouts enabled' : 'Setup required'}</StatusBadge></div>
-          <p className="mt-3 font-mono text-xs text-muted">{account ? (account.payouts_enabled ? 'Stripe pays out on its normal schedule.' : 'Complete onboarding to receive payouts.') : 'No connected account yet.'}</p>
+          <div className="mt-3">
+            <StatusBadge tone={provider === 'phonepe' ? 'neutral' : ready ? 'accent' : 'danger'}>
+              {provider === 'phonepe' ? 'Operator configured' : ready ? 'Payouts enabled' : 'Setup required'}
+            </StatusBadge>
+          </div>
+          <p className="mt-3 font-mono text-xs text-muted">{provider === 'phonepe'
+            ? 'Stripe Connect is not used for PhonePe collections.'
+            : account ? (account.payouts_enabled ? 'Stripe pays out on its normal schedule.' : 'Complete onboarding to receive payouts.') : 'No connected account yet.'}</p>
         </Surface>
       </div>
 
-      <Surface className="p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-wider text-accent">Payout setup</p>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">Connect a Stripe payout account so membership revenue can be transferred to you. Subscriptions only become available to readers once this is complete.</p>
-            {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      {provider === 'stripe' ? (
+        <Surface className="p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-wider text-accent">Payout setup</p>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">Connect a Stripe payout account so membership revenue can be transferred to you. Subscriptions only become available to readers once this is complete.</p>
+              {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+            </div>
+            <button type="button" onClick={() => void startOnboarding()} disabled={busy || !billingReady} className="inline-flex shrink-0 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-background hover:brightness-110 disabled:opacity-50">
+              {busy ? 'Redirecting…' : ready ? 'Update payout details' : 'Set up payouts'}
+            </button>
           </div>
-          <button type="button" onClick={() => void startOnboarding()} disabled={busy || !billingReady} className="inline-flex shrink-0 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-background hover:brightness-110 disabled:opacity-50">
-            {busy ? 'Redirecting…' : ready ? 'Update payout details' : 'Set up payouts'}
-          </button>
-        </div>
-      </Surface>
+        </Surface>
+      ) : (
+        <Surface className="p-5">
+          <p className="font-mono text-[10px] uppercase tracking-wider text-accent">Payout routing</p>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">PhonePe collections are recorded here. Automatic payouts to creators are not enabled until the operator configures and verifies a settlement process.</p>
+        </Surface>
+      )}
 
       <Surface className="overflow-hidden">
         <div className="border-b border-border px-6 py-4">

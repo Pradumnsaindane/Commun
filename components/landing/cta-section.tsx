@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -9,7 +7,7 @@ export function CtaSection() {
   return (
     <section className="py-20 md:py-32 relative overflow-hidden">
       {/* Background radial gradient glow */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,hsla(24,94%,53%,0.12),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.12),transparent_70%)] pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl border border-border/80 bg-gradient-to-b from-surface/90 to-card/90 p-8 sm:p-14 lg:p-20 text-center shadow-2xl overflow-hidden backdrop-blur-xl">

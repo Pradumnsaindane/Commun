@@ -8,6 +8,7 @@ export const NOTIFICATION_TYPES = [
   'FOLLOW',
   'NEW_POST',
   'MENTION',
+  'REPOST',
   'MODERATION',
 ] as const
 

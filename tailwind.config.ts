@@ -1,7 +1,14 @@
 import type { Config } from 'tailwindcss'
 
 export default {
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './features/**/*.{ts,tsx}',
+    './hooks/**/*.{ts,tsx}',
+    './lib/**/*.{ts,tsx}',
+    './packages/shared/**/*.{ts,tsx}',
+  ],
   theme: {
     extend: {
       colors: {
@@ -23,6 +30,16 @@ export default {
           hover: 'hsl(var(--accent-hover))',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          hover: 'hsl(var(--primary-hover))',
+        },
+        secondary: 'hsl(var(--secondary))',
+        'accent-light': 'hsl(var(--accent-light))',
+        'light-blue': 'hsl(var(--light-blue))',
+        'dark-blue': 'hsl(var(--dark-blue))',
+        'dark-text': 'hsl(var(--dark-text))',
+        'secondary-text': 'hsl(var(--secondary-text))',
         muted: {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted))',
@@ -34,7 +51,7 @@ export default {
         },
         brand: {
           // Accessible on white surfaces; these are text/icon colors, not fills.
-          orange: 'hsl(21, 90%, 40%)',
+          blue: 'hsl(224, 64%, 43%)',
           indigo: 'hsl(243, 75%, 45%)',
           emerald: 'hsl(160, 84%, 28%)',
           sky: 'hsl(201, 90%, 32%)',
@@ -49,7 +66,7 @@ export default {
       boxShadow: {
         subtle: '0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px -1px rgb(15 23 42 / 0.06)',
         elevated: '0 12px 32px -16px rgb(15 23 42 / 0.18)',
-        glow: '0 0 35px -12px hsl(21 90% 40% / 0.18)',
+        glow: '0 0 35px -12px hsl(221 83% 53% / 0.18)',
         'glow-indigo': '0 0 35px -12px hsl(243 75% 45% / 0.15)',
         header: '0 12px 30px -24px rgb(15 23 42 / 0.18), 0 1px 0 rgb(15 23 42 / 0.04)',
         card: '0 16px 40px -32px rgb(15 23 42 / 0.16)',

@@ -4,7 +4,7 @@
 - **Product**: **Commun**
 - **Vision**: An authentic, Substack-inspired editorial developer publishing and community platform where engineers and students read, write, discover, discuss, and save high-signal technical content.
 - **Design Philosophy**:
-  - Dark-first editorial palette (`#090a0f` base, `#141720` surface, `#1f2330` border, `#f97316` warm orange accent).
+  - Dark-first editorial palette (`#090a0f` base, `#141720` surface, `#1f2330` border, `#2563EB` blue accent).
   - Modern typography (`Geist` / `Inter` + `JetBrains Mono` code blocks).
   - Clean, flat, distraction-free information architecture (no excessive neon, no glassmorphism, no fake AI cards).
   - 3-column desktop layout (Left Nav, Center Feed/Reader, Right Discovery) collapsing seamlessly to mobile with a bottom navigation bar.

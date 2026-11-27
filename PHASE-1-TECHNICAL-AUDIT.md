@@ -35,7 +35,7 @@ This audit records the repository state before implementing the Phase 1 foundati
 2. **Treat the current static pages as visual reference, not runtime architecture.** Reuse visual intent and route inventory, but do not port hardcoded content into new React component arrays.
 3. **Do not connect auth or persistence in Phase 1.** Those belong to Phase 2+ and require the database/auth integration and schema work specified by the build spec.
 4. **Preserve honest zero states.** The Phase 1 shell should render structural containers and explicit empty states rather than fabricated feed, writer, topic, notification, or project records.
-5. **Centralize tokens during migration.** Carry forward the existing dark palette, orange accent, surface/border colors, sans/mono typography, spacing, and responsive breakpoints into one token layer before extracting shell components.
+5. **Centralize tokens during migration.** Carry forward the existing dark palette, blue accent, surface/border colors, sans/mono typography, spacing, and responsive breakpoints into one token layer before extracting shell components.
 6. **Add validation before feature work.** The new foundation should add strict TypeScript, linting, formatting, and a minimal browser smoke path before Phase 2 begins.
 
 ## Phase 1 implementation boundary

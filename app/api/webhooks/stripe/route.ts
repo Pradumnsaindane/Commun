@@ -16,7 +16,7 @@ type SubscriptionLike = {
   current_period_end?: number | null
 }
 
-type AdminClient = ReturnType<typeof createAdminClient>
+type AdminClient = NonNullable<ReturnType<typeof createAdminClient>>
 
 function readPeriodEnd(subscription: SubscriptionLike): string | null {
   const fromItems = subscription.items?.data?.[0]?.current_period_end
@@ -166,6 +166,10 @@ async function syncConnectAccount(admin: AdminClient, account: Stripe.Account) {
 
 async function processEvent(event: Stripe.Event) {
   const admin = createAdminClient()
+  if (!admin) {
+    logServer('error', 'stripe.webhook.admin_unavailable', {})
+    return
+  }
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session
@@ -236,6 +240,9 @@ export async function POST(request: Request) {
   }
 
   const admin = createAdminClient()
+  if (!admin) {
+    return Response.json({ error: 'Payments are not configured on this deployment.' }, { status: 503 })
+  }
   const { error: claimError } = await admin.from('stripe_webhook_events').insert({ event_id: event.id, event_type: event.type, status: 'received' })
   if (claimError && claimError.code !== '23505') {
     logServer('error', 'stripe.webhook.claim_failed', { eventId: event.id, code: claimError.code ?? 'unknown' })

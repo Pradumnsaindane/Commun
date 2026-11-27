@@ -125,7 +125,7 @@
 ## 3. Technology Stack & Database Audit
 - **Framework**: Next.js 16.3.8 (App Router, React 19.2.0)
 - **Styling**: Tailwind CSS 3.4.17 with CSS custom properties
-- **Palette**: White-first neutral surfaces (`#FFFFFF`, `#F5F6F8`) with ink text, readable Commun orange accents, and a high-contrast dark theme. Shared glass surfaces use restrained blur with solid-surface fallbacks.
+- **Palette**: White-first neutral surfaces (`#FFFFFF`, `#F5F6F8`) with ink text, readable Commun blue accents, and a high-contrast dark theme. Shared glass surfaces use restrained blur with solid-surface fallbacks.
 - **Database Status**:
   - Existing tables: `profiles`, `posts`, `comments`, `discussions`, `replies`, `product_events`, `notifications`, `follows`, `developer_news`, `saved_news`, `beta_feedback`, `audit_logs`.
   - Feed foreign key tracking: `posts.author_id` references both `auth.users(id)` and `profiles(id)`. Existing feed queries in `/feed` remain intact and unmocked.

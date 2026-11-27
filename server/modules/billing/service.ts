@@ -1,5 +1,7 @@
 import { createAdminClient } from '@/lib/admin'
 import { getAuthContext } from '@/lib/auth'
+import { getNewBillingProvider } from '@/lib/billing/config'
+import type { BillingProvider } from '@/lib/billing/types'
 import { logServer } from '@/lib/logger'
 import {
   StripeAccountError,
@@ -12,6 +14,7 @@ import { enforceRateLimit } from '@/lib/rate-limit'
 import { canBill, getStripe, siteUrl } from '@/lib/stripe'
 import { createClient } from '@/lib/supabase/server'
 import { failure, success } from '@/server/http/result'
+import { createPhonePeCheckout } from '@/server/modules/billing/providers/phonepe'
 import {
   findBillingCustomer,
   findCreatorAccount,
@@ -26,6 +29,20 @@ export async function createCheckout(request: Request) {
   const context = await getAuthContext()
   if (!context) return failure('Sign in to become a member.', 401)
   if (context.status !== 'ACTIVE') return failure('Your account must be active to subscribe.', 403)
+
+  let provider: BillingProvider
+  try {
+    provider = getNewBillingProvider()
+  } catch {
+    return failure('Billing provider is not configured on this deployment.', 503)
+  }
+  if (provider === 'phonepe') {
+    const admin = createAdminClient()
+    if (!admin) return failure('Payments are not configured on this deployment.', 503)
+    return createPhonePeCheckout(request, context, admin)
+  }
+
+  // Stripe remains the default and its original request path is unchanged.
   if (!canBill()) return failure('Payments are not configured on this deployment.', 503)
 
   const parsed = checkoutRequestSchema.safeParse(await request.json().catch(() => null))
@@ -42,6 +59,7 @@ export async function createCheckout(request: Request) {
   if (!stripe) return failure('Payments are not configured on this deployment.', 503)
 
   const admin = createAdminClient()
+  if (!admin) return failure('Payments are not configured on this deployment.', 503)
   const [accountResult, membershipResult] = await Promise.all([
     findCreatorAccount(admin, creatorId),
     findMembership(admin, userId, creatorId),
@@ -100,6 +118,7 @@ export async function getConnectStatus() {
   if (!context) return failure('Sign in to view earnings.', 401)
 
   const admin = createAdminClient()
+  if (!admin) return failure('Payments are not configured on this deployment.', 503)
   const [accountResult, membershipsResult] = await Promise.all([
     findCreatorAccount(admin, context.user.id),
     listCreatorMemberships(admin, context.user.id),
@@ -123,6 +142,7 @@ export async function startConnect() {
   if (!stripe) return failure('Payments are not configured on this deployment.', 503)
 
   const admin = createAdminClient()
+  if (!admin) return failure('Payments are not configured on this deployment.', 503)
   try {
     let { data: account } = await findCreatorAccountForLink(admin, context.user.id)
     if (!account) {

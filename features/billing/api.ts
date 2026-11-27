@@ -12,6 +12,10 @@ export function startMembershipCheckout(creatorId: string) {
   }).then((payload) => requireRedirectUrl(payload, 'Checkout could not be created.'))
 }
 
+export function cancelMembership() {
+  return apiRequest<{ status: string }>('/billing/cancel', { method: 'POST' })
+}
+
 export function openBillingPortal() {
   return apiRequest<{ url: string }>('/billing/portal', { method: 'POST' }).then((payload) =>
     requireRedirectUrl(payload, 'Billing portal unavailable.')

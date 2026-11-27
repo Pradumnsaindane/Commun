@@ -52,6 +52,25 @@ describe('Commun Workspace Architecture & Authorization', () => {
     expect(canAdminister(adminContext)).toBe(true)
   })
 
+  it('requires an active account for privileged roles', () => {
+    const suspendedAdmin: AuthContext = {
+      user: { id: 'a-2', app_metadata: { role: 'ADMIN', status: 'SUSPENDED' }, user_metadata: {}, aud: 'authenticated', created_at: '' } as any,
+      role: 'ADMIN',
+      status: 'SUSPENDED',
+      isVerified: true,
+    }
+    const inactiveModerator: AuthContext = {
+      user: { id: 'm-2', app_metadata: { role: 'MODERATOR', status: 'PENDING_VERIFICATION' }, user_metadata: {}, aud: 'authenticated', created_at: '' } as any,
+      role: 'MODERATOR',
+      status: 'PENDING_VERIFICATION',
+      isVerified: false,
+    }
+
+    expect(canAdminister(suspendedAdmin)).toBe(false)
+    expect(canModerate(suspendedAdmin)).toBe(false)
+    expect(canModerate(inactiveModerator)).toBe(false)
+  })
+
   it('blocks suspended or unverified accounts from publishing', () => {
     const unverifiedContext: AuthContext = {
       user: { id: 'u-2', app_metadata: {}, user_metadata: {}, aud: 'authenticated', created_at: '' } as any,

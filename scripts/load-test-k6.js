@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 

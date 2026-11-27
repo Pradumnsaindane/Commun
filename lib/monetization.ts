@@ -12,8 +12,9 @@ export type MembershipRecord = {
   subscriber_id: string
   creator_id: string
   status: string
-  stripe_subscription_id: string
+  stripe_subscription_id?: string | null
   current_period_end: string | null
+  provider?: 'stripe' | 'phonepe'
 }
 
 export function platformFeePercent(raw: unknown = process.env.STRIPE_PLATFORM_FEE_PERCENT): number {
@@ -85,15 +86,54 @@ export function gatedPostPayload<T extends { body: string }>(post: T, allowed: b
   return { post: { ...post, body: '' }, gated: true }
 }
 
+/**
+ * Reads the current membership across providers. Stripe rows are unchanged and
+ * retain priority; PhonePe rows are read from the additive provider-neutral
+ * table using the caller's RLS-scoped client. An active PhonePe row is used
+ * when the Stripe row is absent or no longer active.
+ */
 export async function membershipFor(supabase: any, readerId: string | null, creatorId: string) {
   if (!readerId || readerId === creatorId) return null
-  const { data } = await supabase
-    .from('memberships')
-    .select('status,current_period_end,subscriber_id,creator_id,stripe_subscription_id')
-    .eq('subscriber_id', readerId)
-    .eq('creator_id', creatorId)
-    .maybeSingle()
-  return data ?? null
+  const [stripeResult, providerResult] = await Promise.all([
+    supabase
+      .from('memberships')
+      .select('status,current_period_end,subscriber_id,creator_id,stripe_subscription_id')
+      .eq('subscriber_id', readerId)
+      .eq('creator_id', creatorId)
+      .maybeSingle(),
+    supabase
+      .from('provider_subscriptions')
+      .select('status,paid_through,current_period_end,subscriber_id,creator_id,provider')
+      .eq('provider', 'phonepe')
+      .eq('subscriber_id', readerId)
+      .eq('creator_id', creatorId)
+      .order('created_at', { ascending: false }),
+  ])
+
+  const stripe = (stripeResult.data ?? null) as MembershipRecord | null
+  if (stripe && isMembershipActive(stripe)) return stripe
+
+  const providerRows = (providerResult.data ?? []) as Array<{
+    status: string
+    paid_through: string | null
+    current_period_end: string | null
+    subscriber_id: string
+    creator_id: string
+  }>
+  if (!providerRows.length) return stripe
+
+  const normalize = (provider: (typeof providerRows)[number]): MembershipRecord => ({
+    status: provider.status,
+    current_period_end: provider.paid_through ?? provider.current_period_end,
+    subscriber_id: provider.subscriber_id,
+    creator_id: provider.creator_id,
+    provider: 'phonepe',
+  })
+
+  const activeProvider = providerRows.find((row) => isMembershipActive(normalize(row)))
+  if (activeProvider) return normalize(activeProvider)
+
+  return stripe ?? normalize(providerRows[0])
 }
 
 export async function hasActiveMembership(supabase: any, readerId: string | null, creatorId: string): Promise<boolean> {

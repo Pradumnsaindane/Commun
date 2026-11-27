@@ -25,8 +25,10 @@ export async function getAuthContext(): Promise<AuthContext | null> {
 }
 
 export function canPublish(context: AuthContext) { return context.isVerified && !['SUSPENDED', 'DEACTIVATED', 'DELETED'].includes(context.status) }
-export function canModerate(context: AuthContext) { return context.role === 'MODERATOR' || context.role === 'ADMIN' }
-export function canAdminister(context: AuthContext) { return context.role === 'ADMIN' }
+// Privileged access requires both the role and an active account. A stale
+// privileged claim on a suspended/deactivated account must not grant access.
+export function canModerate(context: AuthContext) { return context.status === 'ACTIVE' && (context.role === 'MODERATOR' || context.role === 'ADMIN') }
+export function canAdminister(context: AuthContext) { return context.status === 'ACTIVE' && context.role === 'ADMIN' }
 export function canModifyResource(context: AuthContext, ownerId: string) { return context.user.id === ownerId && !['SUSPENDED', 'DEACTIVATED', 'DELETED'].includes(context.status) }
 
 export const safeNextPath = safeNextPathValue

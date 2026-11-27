@@ -1,25 +1,39 @@
 import { z } from 'zod'
+import { parseNotificationPage } from '@/lib/notifications'
 import { getRequestContext } from '@/server/http/auth'
 import { failure, success } from '@/server/http/result'
 import { readJson } from '@/server/http/response'
 import {
   clearNotifications,
+  countUnreadNotifications,
+  deleteNotificationForRecipient,
   findNotificationActors,
   listNotificationsForRecipient,
   markNotificationsRead as markNotificationsReadInDb,
 } from '@/server/repositories/notifications'
 
 const readSchema = z.object({ id: z.string().uuid().optional() })
+const deleteSchema = z.object({ id: z.string().uuid() })
+const PRIVATE_CACHE_HEADERS = { 'cache-control': 'private, no-store' }
 
-export async function listNotifications() {
+export async function listNotifications(request: Request) {
   const { supabase, user } = await getRequestContext()
   if (!user) return failure('Authentication required', 401)
 
-  const { data, error } = await listNotificationsForRecipient(supabase, user.id)
-  if (error) return failure('Unable to load notifications', 500)
+  const { page, limit } = parseNotificationPage(new URL(request.url))
 
-  const actorIds = [...new Set((data ?? []).map((item) => item.actor_id).filter(Boolean))]
-  const { data: actors } = await findNotificationActors(supabase, actorIds)
+  const [{ data, error, count }, unreadResult] = await Promise.all([
+    listNotificationsForRecipient(supabase, user.id, { page, limit }),
+    countUnreadNotifications(supabase, user.id),
+  ])
+  if (error) return failure('Unable to load notifications', 500)
+  if (unreadResult.error) return failure('Unable to load notifications', 500)
+
+  const actorIds = [...new Set((data ?? []).map((item) => item.actor_id).filter(Boolean))] as string[]
+  const { data: actors, error: actorError } = await findNotificationActors(supabase, actorIds)
+  if (actorError) {
+    console.error('Notification actor lookup failed', { code: actorError.code ?? null })
+  }
   const actorMap = new Map(
     (actors ?? []).map((actor) => [
       actor.id,
@@ -30,12 +44,22 @@ export async function listNotifications() {
     ])
   )
 
-  return success({
-    notifications: (data ?? []).map((item) => ({
-      ...item,
-      actor: item.actor_id ? actorMap.get(item.actor_id) ?? null : null,
-    })),
-  })
+  const total = count ?? 0
+  return success(
+    {
+      notifications: (data ?? []).map((item) => ({
+        ...item,
+        actor: item.actor_id ? actorMap.get(item.actor_id) ?? null : null,
+      })),
+      page,
+      limit,
+      total,
+      hasNextPage: page * limit < total,
+      unreadCount: unreadResult.count ?? 0,
+    },
+    200,
+    PRIVATE_CACHE_HEADERS
+  )
 }
 
 export async function markNotificationsRead(request: Request) {
@@ -47,6 +71,18 @@ export async function markNotificationsRead(request: Request) {
 
   const { error } = await markNotificationsReadInDb(supabase, user.id, parsed.data.id)
   if (error) return failure('Unable to update notifications', 500)
+  return success({ ok: true })
+}
+
+export async function deleteNotification(request: Request) {
+  const { supabase, user } = await getRequestContext()
+  if (!user) return failure('Authentication required', 401)
+
+  const id = request.url.split('/').filter(Boolean).at(-1) ?? ''
+  if (!deleteSchema.safeParse({ id }).success) return failure('Invalid notification', 422)
+
+  const { error } = await deleteNotificationForRecipient(supabase, user.id, id)
+  if (error) return failure('Unable to delete notification', 500)
   return success({ ok: true })
 }
 

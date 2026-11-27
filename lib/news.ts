@@ -3,6 +3,10 @@
  * Ingestion, deduplication, categorization, and query retrieval from verified developer engineering sources.
  */
 
+import type { SupabaseClient } from '@supabase/supabase-js'
+import { z } from 'zod'
+import { isSearchableTerm, orIlikeFilter, sanitizeSearchTerm } from '@/lib/search-query'
+
 export const NEWS_CATEGORIES = [
   'Artificial Intelligence and Machine Learning',
   'Web Development',
@@ -21,6 +25,30 @@ export const NEWS_CATEGORIES = [
 ] as const
 
 export type NewsCategory = (typeof NEWS_CATEGORIES)[number]
+
+/**
+ * One schema for the news query, shared by the RSC page and the versioned
+ * API route. Invalid values fall back to safe defaults instead of reaching
+ * Supabase: category is constrained to the known enum and search terms are
+ * sanitised before they become a PostgREST `.or()` filter.
+ */
+export const newsQuerySchema = z.object({
+  category: z.enum(['All', ...NEWS_CATEGORIES]).catch('All'),
+  q: z.string().trim().max(120).catch(''),
+  page: z.coerce.number().int().min(1).catch(1),
+  limit: z.coerce.number().int().min(1).max(50).catch(20),
+})
+
+export type NewsQuery = z.infer<typeof newsQuerySchema>
+
+export function parseNewsQuery(input: Record<string, string | string[] | undefined>): NewsQuery {
+  return newsQuerySchema.parse({
+    category: input.category,
+    q: Array.isArray(input.q) ? input.q[0] : input.q,
+    page: input.page,
+    limit: input.limit,
+  })
+}
 
 export interface NewsItem {
   id: string
@@ -522,7 +550,7 @@ export async function getDeveloperNews({
   page = 1,
   limit = 20,
 }: {
-  supabase?: any
+  supabase?: SupabaseClient
   category?: string
   search?: string
   page?: number
@@ -534,6 +562,12 @@ export async function getDeveloperNews({
   limit: number
   lastSynchronizedAt: string | null
 }> {
+  // Normalise the untrusted search term once, before any query is built. The
+  // sanitiser removes PostgREST grammar characters and escapes LIKE wildcards.
+  const term = sanitizeSearchTerm(search, 80)
+  const searchable = isSearchableTerm(term)
+  const orFilter = orIlikeFilter(['title', 'summary'], term)
+
   // If Supabase client is available, attempt querying PostgreSQL table
   if (supabase) {
     try {
@@ -546,9 +580,8 @@ export async function getDeveloperNews({
         query = query.eq('category', category)
       }
 
-      if (search && search.trim()) {
-        const term = search.trim()
-        query = query.or(`title.ilike.%${term}%,summary.ilike.%${term}%`)
+      if (orFilter) {
+        query = query.or(orFilter)
       }
 
       const from = (page - 1) * limit
@@ -602,8 +635,8 @@ export async function getDeveloperNews({
     filtered = filtered.filter((i) => i.category === category)
   }
 
-  if (search && search.trim()) {
-    const q = search.toLowerCase()
+  if (searchable) {
+    const q = term.toLowerCase()
     filtered = filtered.filter(
       (i) => i.title.toLowerCase().includes(q) || i.summary.toLowerCase().includes(q)
     )

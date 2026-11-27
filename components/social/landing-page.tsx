@@ -239,7 +239,7 @@ export function SocialLandingPage() {
             <div className="col-span-12 lg:col-span-6">
               <div className="flex h-full flex-col rounded-xl bg-white p-6 sm:flex-row sm:gap-6">
                 <div className="flex-1">
-                  <img className="h-72 w-full rounded-lg object-cover" alt="" src="/images/users/user-1.png" />
+                  <img className="h-72 w-full rounded-lg object-cover" alt="Portrait of Pradumn Saindane" src="/images/users/pradumn-saindane.png" />
                 </div>
                 <div className="mt-4 flex w-full flex-col justify-between sm:mt-0 sm:w-5/12">
                   <div>
@@ -247,8 +247,8 @@ export function SocialLandingPage() {
                     <p className="text-base text-gray-700">The community layout is incredibly clean and easy to customize. We launched our developer portal weeks faster than expected.</p>
                   </div>
                   <div className="mt-6">
-                    <h4 className="text-base font-medium text-gray-900">Erin Philips</h4>
-                    <span className="text-sm text-gray-500">UX Lead, DataLoop</span>
+                    <h4 className="text-base font-medium text-gray-900">Pradumn Saindane</h4>
+                    <span className="text-sm text-gray-500">Founder,Commun.dev</span>
                   </div>
                 </div>
               </div>
@@ -260,8 +260,8 @@ export function SocialLandingPage() {
                   <p className="text-gray-700">Everything feels thoughtfully designed. The reusable components saved us from rebuilding common UI patterns.</p>
                 </div>
                 <div className="mt-6">
-                  <h4 className="text-base font-medium text-gray-900">Erin Philips</h4>
-                  <span className="text-sm text-gray-500">UX Lead, DataLoop</span>
+                  <h4 className="text-base font-medium text-gray-900">Pradumn Saindane</h4>
+                  <span className="text-sm text-gray-500">Founder,Commun.dev</span>
                 </div>
               </div>
             </div>

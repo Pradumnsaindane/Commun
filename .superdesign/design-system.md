@@ -2,7 +2,7 @@
 
 ## Direction
 
-Commun should feel like one calm, reliable product. The public site introduces the same workspace users continue into after sign-in. Use the existing white-first identity, but reduce visual noise: warm white canvas, ink text, restrained orange accents, consistent compact controls, and quiet surfaces. Prefer actual workspace UI patterns and transparent unavailable states over illustrative operational records.
+Commun should feel like one calm, reliable product. The public site introduces the same workspace users continue into after sign-in. Use the existing white-first identity, but reduce visual noise: warm white canvas, ink text, restrained blue accents, consistent compact controls, and quiet surfaces. Prefer actual workspace UI patterns and transparent unavailable states over illustrative operational records.
 
 ## Shared tokens
 
@@ -14,8 +14,8 @@ Commun should feel like one calm, reliable product. The public site introduces t
 | Primary text | `#172033` | `#F2F4F7` |
 | Secondary text | `#667085` | `#A3ADBC` |
 | Border | `#E5E7EB` | `#293140` |
-| Brand accent | `#F97316` | `#F97316` |
-| Accent text on light | `#C2410C` | `#FDBA74` |
+| Brand accent | `#2563EB` | `#2563EB` |
+| Accent text on light | `#1E40AF` | `#60A5FA` |
 
 - Type: Inter/system sans; JetBrains Mono/system mono only for small metadata and shortcuts. Use a 12/14/16/20/24/32/48 scale; hero max 64px, dashboard page titles 32px. Avoid all-caps labels except short eyebrow metadata.
 - Spacing: 4px base, 8px rhythm; content width 1200px marketing and 1440px workspace; 24px desktop gutters, 16px mobile gutters.
@@ -25,7 +25,7 @@ Commun should feel like one calm, reliable product. The public site introduces t
 
 ## Shared background field
 
-Use one reusable `.ambient-field` on the landing hero and the authenticated workspace canvas. Keep content surfaces above it and opaque enough to preserve contrast. The field consists of two fixed radial lights: a warm orange wash centered at `50% 2%` with a maximum alpha of `.055`, and a neutral cool wash at `88% 18%` with maximum alpha `.035`. No grid, beam, particle, or cursor-following layer.
+Use one reusable `.ambient-field` on the landing hero and the authenticated workspace canvas. Keep content surfaces above it and opaque enough to preserve contrast. The field consists of two fixed radial lights: a blue wash centered at `50% 2%` with a maximum alpha of `.055`, and a neutral cool wash at `88% 18%` with maximum alpha `.035`. No grid, beam, particle, or cursor-following layer.
 
 The one ambient layer may drift along a fixed 12px horizontal / 8px vertical path over 32 seconds using `ease-in-out`, alternating opacity `.5–.8`; the companion wash remains still. Keep all movement on `transform` and `opacity`. On viewports below 768px, lower opacity to `.35` and disable the drift. Under `prefers-reduced-motion: reduce`, keep the static gradient and remove animation. Do not animate the page background color.
 
@@ -40,7 +40,7 @@ The one ambient layer may drift along a fixed 12px horizontal / 8px vertical pat
 ## Responsive and accessibility rules
 
 - Keep focus rings visible on every interactive element; minimum 44px touch targets.
-- Ensure text/background combinations meet WCAG AA; use the readable orange token for small text.
+- Ensure text/background combinations meet WCAG AA; use the readable blue token for small text.
 - At mobile widths, remove expensive blur from large regions and keep cards/form controls solid.
 - Preserve real auth, route behavior, data boundaries, and unavailable states. Never invent operational counts, people, activity, project progress, or security guarantees.
 

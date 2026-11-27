@@ -3,11 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { errorMessage } from '@/features/api-client'
-import { openBillingPortal, startMembershipCheckout } from '@/features/billing/api'
+import { cancelMembership, openBillingPortal, startMembershipCheckout } from '@/features/billing/api'
+import type { BillingProvider } from '@/lib/billing/types'
 
 type State = 'guest' | 'owner' | 'member' | 'none'
 
-export function SubscribeButton({ creatorId, state, billingReady, profileHref = '/settings' }: { creatorId: string; state: State; billingReady: boolean; profileHref?: string }) {
+export function SubscribeButton({ creatorId, state, billingReady, provider = 'stripe', profileHref = '/settings' }: { creatorId: string; state: State; billingReady: boolean; provider?: BillingProvider; profileHref?: string }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -36,12 +37,29 @@ export function SubscribeButton({ creatorId, state, billingReady, profileHref = 
     }
   }
 
+  async function cancel() {
+    setBusy(true)
+    setError(null)
+    try {
+      await cancelMembership()
+      window.location.reload()
+    } catch (requestError) {
+      setError(errorMessage(requestError, 'Unable to cancel this membership.'))
+      setBusy(false)
+    }
+  }
+
   if (state === 'member') {
     return (
       <div className="flex flex-col items-start gap-1">
         <span className="inline-flex rounded-lg border border-accent/40 bg-accent/10 px-4 py-2 text-sm font-semibold text-accent">Member</span>
-        <button type="button" onClick={() => void openPortal()} disabled={busy} className="font-mono text-[10px] uppercase tracking-wider text-muted hover:text-accent disabled:opacity-50">
-          {busy ? 'Opening…' : 'Manage membership'}
+        <button
+          type="button"
+          onClick={() => void (provider === 'phonepe' ? cancel() : openPortal())}
+          disabled={busy}
+          className="font-mono text-[10px] uppercase tracking-wider text-muted hover:text-accent disabled:opacity-50"
+        >
+          {busy ? 'Working…' : provider === 'phonepe' ? 'Cancel membership' : 'Manage membership'}
         </button>
         {error && <p className="text-xs text-red-600">{error}</p>}
       </div>

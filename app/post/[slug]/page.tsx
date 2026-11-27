@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { renderMarkdown, type PostRecord } from '@/lib/posts'
 import { canViewPost, isMembershipActive, membershipFor, type AccessLevel } from '@/lib/monetization'
-import { canBill } from '@/lib/stripe'
+import { isBillingConfigured, isPhonePeNewProvider } from '@/lib/billing/config'
 import { ArticleInteractions } from '@/components/publishing/article-interactions'
 import { ArticleCodeCopy } from '@/components/publishing/article-code-copy'
 import { PostOwnerActions } from '@/components/publishing/post-owner-actions'
@@ -109,7 +109,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                   creatorId={post.author_id}
                   authorName={authorName}
                   loginNext={`/post/${post.slug}`}
-                  billingReady={canBill()}
+                  billingReady={isBillingConfigured()}
+                  provider={isPhonePeNewProvider() ? 'phonepe' : 'stripe'}
                   state={subscribeState === 'guest' ? 'guest' : 'none'}
                 />
               </>

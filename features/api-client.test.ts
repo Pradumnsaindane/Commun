@@ -75,6 +75,19 @@ describe('apiRequest', () => {
     expect((error as ApiError).payload?.issues).toEqual([{ path: 'title', message: 'Required' }])
   })
 
+  it('ignores malformed error envelopes instead of trusting their shape', async () => {
+    mockFetch({
+      ok: false,
+      status: 400,
+      jsonPayload: { error: { nested: 'not a string' }, issues: 'not an array' },
+    })
+
+    const error = await apiRequest('/posts').catch((reason: unknown) => reason)
+    expect(error).toBeInstanceOf(ApiError)
+    expect((error as ApiError).payload).toBeNull()
+    expect((error as ApiError).message).toBe('The request could not be completed.')
+  })
+
   it('does not prefix absolute URLs', async () => {
     const { fetchMock } = mockFetch({ jsonPayload: { ok: true } })
 

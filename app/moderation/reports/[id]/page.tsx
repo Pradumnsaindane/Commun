@@ -10,7 +10,13 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
   if (!context) redirect('/login?next=/moderation')
   if (!canModerate(context)) redirect('/feed')
   const { id } = await params
-  const { data: report } = await createAdminClient().from('reports').select('*').eq('id', id).maybeSingle()
+  const admin = createAdminClient()
+  if (!admin) {
+    throw new Error(
+      'Moderation service is not configured. Set SUPABASE_SERVICE_ROLE_KEY for this deployment.'
+    )
+  }
+  const { data: report } = await admin.from('reports').select('*').eq('id', id).maybeSingle()
   if (!report) notFound()
 
   return (

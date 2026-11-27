@@ -9,6 +9,7 @@ interface AccordionContextType {
 }
 
 const AccordionContext = createContext<AccordionContextType | undefined>(undefined)
+const AccordionItemContext = createContext<string | undefined>(undefined)
 
 export function Accordion({
   type = 'single',
@@ -53,15 +54,12 @@ export function AccordionItem({
   className?: string
   children: React.ReactNode
 }) {
+  // Provide the item value through context instead of cloning children. This
+  // keeps the trigger/content contract typed and works with nested markup.
   return (
-    <div className={cn('py-1', className)}>
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, { 'data-value': value } as any)
-        }
-        return child
-      })}
-    </div>
+    <AccordionItemContext.Provider value={value}>
+      <div className={cn('py-1', className)}>{children}</div>
+    </AccordionItemContext.Provider>
   )
 }
 
@@ -75,8 +73,9 @@ export function AccordionTrigger({
   'data-value'?: string
 }) {
   const context = useContext(AccordionContext)
+  const itemContextValue = useContext(AccordionItemContext)
   if (!context) throw new Error('AccordionTrigger must be used within Accordion')
-  const value = itemValue || ''
+  const value = itemValue ?? itemContextValue ?? ''
   const isOpen = context.openItems.includes(value)
 
   return (
@@ -115,8 +114,9 @@ export function AccordionContent({
   'data-value'?: string
 }) {
   const context = useContext(AccordionContext)
+  const itemContextValue = useContext(AccordionItemContext)
   if (!context) throw new Error('AccordionContent must be used within Accordion')
-  const value = itemValue || ''
+  const value = itemValue ?? itemContextValue ?? ''
   const isOpen = context.openItems.includes(value)
 
   if (!isOpen) return null

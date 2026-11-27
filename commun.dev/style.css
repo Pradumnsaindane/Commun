@@ -41,6 +41,10 @@
   --accent-blue: #3b82f6; /* Electric Blue */
   --accent-blue-subtle: rgba(59, 130, 246, 0.12);
 
+  --accent-brand: #2563eb; /* Commun primary blue */
+  --accent-brand-hover: #1d4ed8;
+  --accent-brand-light: rgba(37, 99, 235, 0.12);
+
   --accent-cyan: #06b6d4;
   --accent-emerald: #10b981; /* Success / Online / Accepted */
   --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
@@ -332,6 +336,12 @@ button, input, select, textarea {
   background: var(--accent-purple-subtle);
   border-color: rgba(168, 85, 247, 0.3);
   color: #d8b4fe;
+}
+.icon-blue {
+  color: var(--accent-brand);
+}
+.tag-blue {
+  color: #93c5fd;
 }
 
 /* Cards & Surfaces */

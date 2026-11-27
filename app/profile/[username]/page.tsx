@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { DeveloperCard, type Developer } from '@/components/discovery/developer-card'
 import { isMembershipActive, membershipFor, type MembershipState } from '@/lib/monetization'
-import { canBill } from '@/lib/stripe'
+import { isBillingConfigured, isPhonePeNewProvider } from '@/lib/billing/config'
 import { SubscribeButton } from '@/components/billing/subscribe-button'
 import { normalizeGithub, normalizeUrl, profileCompleteness } from '@/lib/profile'
 
@@ -96,7 +96,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                 <Link href="/settings/profile" className="inline-flex min-h-10 w-fit items-center rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium transition-colors hover:border-accent/40">Edit profile</Link>
               ) : (
                 <div className="flex flex-wrap items-center gap-3">
-                  <SubscribeButton creatorId={profile.id} state={subscribeState} billingReady={canBill()} profileHref={`/profile/${profile.username}`} />
+                  <SubscribeButton creatorId={profile.id} state={subscribeState} billingReady={isBillingConfigured()} provider={isPhonePeNewProvider() ? 'phonepe' : 'stripe'} profileHref={`/profile/${profile.username}`} />
                   <DeveloperCard developer={developer} authenticated={Boolean(user)} />
                 </div>
               )}

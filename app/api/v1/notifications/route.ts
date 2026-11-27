@@ -6,8 +6,8 @@ import {
   rejectNotificationCreate,
 } from '@/server/modules/notifications/service'
 
-export async function GET() {
-  return toResponse(await listNotifications())
+export async function GET(request: Request) {
+  return toResponse(await listNotifications(request))
 }
 
 export async function PATCH(request: Request) {

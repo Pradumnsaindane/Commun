@@ -9,7 +9,11 @@ export default async function AuditLogsPage() {
   if (!context) redirect('/login?next=/admin/audit-logs')
   if (context.role !== 'ADMIN') redirect('/feed')
 
-  const { data: logs, error } = await createAdminClient().from('audit_logs').select('id,actor_id,action,target_type,target_id,metadata,created_at').order('created_at', { ascending: false }).limit(100)
+  const admin = createAdminClient()
+  if (!admin) {
+    throw new Error('Admin service is not configured. Set SUPABASE_SERVICE_ROLE_KEY.')
+  }
+  const { data: logs, error } = await admin.from('audit_logs').select('id,actor_id,action,target_type,target_id,metadata,created_at').order('created_at', { ascending: false }).limit(100)
 
   return (
     <main className="workspace-enter mx-auto w-full max-w-7xl py-2">

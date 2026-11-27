@@ -1,22 +1,21 @@
 import { createAdminClient, requireAdmin } from '@/lib/admin'
 import { logServer } from '@/lib/logger'
 import { createClient } from '@/lib/supabase/server'
-import { getDeveloperNews, ingestDeveloperNews } from '@/lib/news'
+import { getDeveloperNews, ingestDeveloperNews, parseNewsQuery } from '@/lib/news'
 import { failure, success } from '@/server/http/result'
 
 export async function getNews(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const category = searchParams.get('category')?.slice(0, 60) || undefined
-  const search = searchParams.get('q')?.slice(0, 120) || undefined
-  const page = Math.max(1, Number(searchParams.get('page')) || 1)
-  const limit = Math.min(50, Math.max(1, Number(searchParams.get('limit')) || 20))
+  // One validated query shape is shared with the RSC page. Invalid values are
+  // clamped to safe defaults and search terms are sanitised in getDeveloperNews
+  // before they can reach a PostgREST filter.
+  const parsed = parseNewsQuery(Object.fromEntries(new URL(request.url).searchParams))
 
   const result = await getDeveloperNews({
     supabase: await createClient(),
-    category,
-    search,
-    page,
-    limit,
+    category: parsed.category,
+    search: parsed.q || undefined,
+    page: parsed.page,
+    limit: parsed.limit,
   })
   return success(result)
 }

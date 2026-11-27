@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { Surface } from '@/components/ui/product-surfaces'
+import type { BillingProvider } from '@/lib/billing/types'
 import { SubscribeButton } from './subscribe-button'
 
-export function Paywall({ creatorId, authorName, loginNext, billingReady, state = 'guest' }: { creatorId: string; authorName: string; loginNext: string; billingReady: boolean; state?: 'guest' | 'none' }) {
+export function Paywall({ creatorId, authorName, loginNext, billingReady, state = 'guest', provider = 'stripe' }: { creatorId: string; authorName: string; loginNext: string; billingReady: boolean; state?: 'guest' | 'none'; provider?: BillingProvider }) {
   return (
     <Surface className="mt-10 border-accent/30 p-6 sm:p-8">
       <p className="font-mono text-[10px] uppercase tracking-[.2em] text-accent">Members-only article</p>
@@ -11,7 +12,7 @@ export function Paywall({ creatorId, authorName, loginNext, billingReady, state 
         {authorName} publishes members-only deep dives on Commun. Subscribe to unlock this article and every other members-only piece they publish.
       </p>
       <div className="mt-5 flex flex-wrap items-center gap-3">
-        <SubscribeButton creatorId={creatorId} state={state} billingReady={billingReady} />
+        <SubscribeButton creatorId={creatorId} state={state} billingReady={billingReady} provider={provider} />
         {!billingReady && <p className="text-sm text-muted">Payments are not configured on this deployment yet.</p>}
         {state === 'guest' && (
           <Link href={`/login?next=${encodeURIComponent(loginNext)}`} className="font-mono text-xs uppercase tracking-wider text-muted hover:text-accent">

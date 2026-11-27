@@ -1,15 +1,17 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { getSupabasePublishableKey, getSupabaseUrl } from '@/lib/env'
 
+/**
+ * Server Supabase client.
+ *
+ * Fails fast with a clear error when the Supabase environment is missing or
+ * still a placeholder, instead of silently building a client that would
+ * connect to a fake host.
+ */
 export async function createClient() {
   const cookieStore = await cookies()
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-  const key =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-    'placeholder-anon-key'
-
-  return createServerClient(url, key, {
+  return createServerClient(getSupabaseUrl(), getSupabasePublishableKey(), {
     cookies: {
       getAll() {
         return cookieStore.getAll()

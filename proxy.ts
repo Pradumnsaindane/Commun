@@ -1,6 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
-import { hasSupabaseConfiguration } from '@/lib/env'
+import {
+  getSupabasePublishableKey,
+  getSupabaseUrl,
+  hasSupabaseConfiguration,
+} from '@/lib/env'
 
 const protectedPaths = [
   '/dashboard',
@@ -47,8 +51,8 @@ export async function proxy(request: NextRequest) {
 
   try {
     const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      getSupabaseUrl(),
+      getSupabasePublishableKey(),
       {
         cookies: {
           getAll: () => request.cookies.getAll(),
