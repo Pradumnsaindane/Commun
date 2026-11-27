@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { DashboardPreview } from '@/components/social/landing/dashboard-preview'
 
 const BLUE = 'bg-blue-600'
 const BLUE_HOVER = 'hover:bg-blue-700'
@@ -112,7 +113,7 @@ export function SocialLandingPage() {
             </p>
             <div className="flex flex-col items-center justify-center gap-4 pb-10 sm:flex-row lg:pb-20">
               <PrimaryButton href="/register">Get Started Now</PrimaryButton>
-              <SecondaryButton href="/explore">
+              <SecondaryButton href="#workspace-preview">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M6.375 5.93126L6.375 18.0687C6.375 19.2416 7.66045 19.9607 8.6599 19.347L18.5433 13.2783C19.4967 12.6928 19.4967 11.3072 18.5433 10.7217L8.65989 4.65301C7.66045 4.03931 6.375 4.75844 6.375 5.93126Z" stroke="#1F2937" strokeWidth="1.5" strokeLinejoin="round" />
                 </svg>
@@ -120,9 +121,7 @@ export function SocialLandingPage() {
               </SecondaryButton>
             </div>
           </div>
-          <div className="mx-auto max-w-275 rounded-t-[26px] border border-white bg-[linear-gradient(180deg,rgba(255,255,255,0.25)_0%,rgba(255,255,255,0)_100%)] p-3">
-            <img className="w-full rounded-t-[14px]" alt="Commun dashboard" src="/images/covers/hero-image.png" onError={(e) => ((e.target as HTMLImageElement).src = '/images/covers/hero.jpg')} />
-          </div>
+          <DashboardPreview />
         </div>
       </section>
 
@@ -361,7 +360,7 @@ export function SocialLandingPage() {
             <p className="mb-9 text-base text-gray-500">Use a modern, flexible platform that grows with your product.</p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <PrimaryButton href="/register">Get Started Now</PrimaryButton>
-              <SecondaryButton href="/explore">View Live Demo</SecondaryButton>
+              <SecondaryButton href="#workspace-preview">View Live Demo</SecondaryButton>
             </div>
           </div>
         </div>
